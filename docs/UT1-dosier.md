@@ -55,13 +55,13 @@ Al terminar esta UT deberías ser capaz de:
 
 | Bloque | Contenido |
 |---|---|
-| 1 | Conceptos previos: virtualización, máquinas virtuales e hipervisores |
-| 2 | Contenedores: qué son, en qué se diferencian de una VM y cuándo usarlos |
-| 3 | Contenedores en sistemas Linux: orígenes, *namespaces* y *cgroups* |
-| 4 | Docker: qué es y cómo es su arquitectura |
-| 5 | Arrancar contenedores: el comando base, `docker ps` y las opciones comunes |
-| 6 | Modo *detached*, registros y reinicio automático |
-| 7 | Mapeo de puertos: conectar los contenedores con el exterior |
+| [1](#bloque-1-conceptos-previos-la-virtualizacion) | Conceptos previos: virtualización, máquinas virtuales e hipervisores |
+| [2](#bloque-2-contenedores) | Contenedores: qué son, en qué se diferencian de una VM y cuándo usarlos |
+| [3](#bloque-3-contenedores-en-sistemas-linux) | Contenedores en sistemas Linux: orígenes, *namespaces* y *cgroups* |
+| [4](#bloque-4-docker) | Docker: qué es y cómo es su arquitectura |
+| [5](#bloque-5-arrancar-contenedores-el-comando-base) | Arrancar contenedores: el comando base, `docker ps` y las opciones comunes |
+| [6](#bloque-6-modo-detached-registros-y-reinicio-automatico) | Modo *detached*, registros y reinicio automático |
+| [7](#bloque-7-mapeo-de-puertos-conectar-los-contenedores-con-el-exterior) | Mapeo de puertos: conectar los contenedores con el exterior |
 | Anexos | Glosario, mapa resumen y autoevaluación |
 
 # Bloque 1. Conceptos previos: la virtualización

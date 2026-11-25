@@ -51,10 +51,10 @@ Al terminar esta UT deberías ser capaz de:
 
 | Bloque | Contenido |
 |---|---|
-| 8 | Imágenes, contenedores y dónde vive todo: capas, almacenamiento y registro |
-| 9 | Crear, arrancar y parar: `create`, ID y nombres, `start`/`stop`/`restart`, contenedores interactivos |
-| 10 | Mirar y trabajar dentro: `inspect`, `exec`, `attach`, `cp`, `logs` a fondo, IP y nombres en la red por defecto |
-| 11 | Caso práctico: un servidor web que se toca en caliente |
+| [8](#bloque-8-imagenes-contenedores-y-donde-vive-todo) | Imágenes, contenedores y dónde vive todo: capas, almacenamiento y registro |
+| [9](#bloque-9-crear-arrancar-y-parar) | Crear, arrancar y parar: `create`, ID y nombres, `start`/`stop`/`restart`, contenedores interactivos |
+| [10](#bloque-10-mirar-y-trabajar-dentro-de-un-contenedor) | Mirar y trabajar dentro: `inspect`, `exec`, `attach`, `cp`, `logs` a fondo, IP y nombres en la red por defecto |
+| [11](#bloque-11-caso-practico-un-servidor-web-que-se-toca-en-caliente) | Caso práctico: un servidor web que se toca en caliente |
 | Anexos | Glosario, mapa resumen, autoevaluación y soluciones |
 
 # Bloque 8. Imágenes, contenedores y dónde vive todo
