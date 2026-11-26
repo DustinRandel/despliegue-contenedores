@@ -1,0 +1,1881 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes del módulo IB1107, 2.º ASIX">
+      
+      
+        <meta name="author" content="Dustin Randel de Lara García">
+      
+      
+        <link rel="canonical" href="https://dustinrandel.github.io/despliegue-contenedores/UT4-dosier/">
+      
+      
+        <link rel="prev" href="../UT3-dosier/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Redes y volúmenes - Despliegue y administración de contenedores</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Carlito:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Carlito";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicon-48.png">
+  <link rel="icon" sizes="any" href="../assets/favicon.ico">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ut4-redes-y-volumenes" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Despliegue y administración de contenedores" class="md-header__button md-logo" aria-label="Despliegue y administración de contenedores" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Despliegue y administración de contenedores
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Redes y volúmenes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Cambiar a modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Cambiar a modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/DustinRandel/despliegue-contenedores" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Despliegue y administración de contenedores" class="md-nav__button md-logo" aria-label="Despliegue y administración de contenedores" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    Despliegue y administración de contenedores
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/DustinRandel/despliegue-contenedores" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT1-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT1. Introducción a los contenedores y a Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT2-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT2. Principales acciones con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT3-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT3. Gestión de imágenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT4. Redes y volúmenes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT4. Redes y volúmenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#como-usar-este-dosier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo usar este dosier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo usar este dosier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-vas-a-aprender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué vas a aprender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-18-las-redes-que-ya-tienes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 18. Las redes que ya tienes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 18. Las redes que ya tienes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#181-tres-redes-de-serie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.1 Tres redes de serie
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#182-en-bridge-no-hay-dns-de-nombres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.2 En bridge no hay DNS de nombres
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#183-host-y-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.3 host y none
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-19-crear-una-red-y-conectar-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 19. Crear una red y conectar contenedores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 19. Crear una red y conectar contenedores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#191-docker-network-create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1 docker network create
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#192-conectar-despues-de-crear-connect-y-disconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2 Conectar después de crear: connect y disconnect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#193-ip-fija" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3 IP fija
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-20-bind-una-carpeta-de-la-vm-dentro-del-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 20. Bind: una carpeta de la VM dentro del contenedor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 20. Bind: una carpeta de la VM dentro del contenedor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#201-bind-mount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20.1 Bind mount
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202-lo-que-no-es-un-bind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20.2 Lo que no es un bind
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-21-volumenes-datos-que-gestiona-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 21. Volúmenes: datos que gestiona Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 21. Volúmenes: datos que gestiona Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-crear-y-montar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.1 Crear y montar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-volumen-anonimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2 Volumen anónimo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-bind-frente-a-volumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3 Bind frente a volumen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-22-tmpfs-y-copias-de-seguridad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 22. tmpfs y copias de seguridad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 22. tmpfs y copias de seguridad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-tmpfs-en-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.1 tmpfs: en RAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-copia-de-un-volumen-a-un-tar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.2 Copia de un volumen a un .tar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-plugins-solo-para-situarte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.3 Plugins (solo para situarte)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapa-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapa resumen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autoevaluación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#como-usar-este-dosier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo usar este dosier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo usar este dosier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-vas-a-aprender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué vas a aprender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-18-las-redes-que-ya-tienes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 18. Las redes que ya tienes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 18. Las redes que ya tienes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#181-tres-redes-de-serie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.1 Tres redes de serie
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#182-en-bridge-no-hay-dns-de-nombres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.2 En bridge no hay DNS de nombres
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#183-host-y-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.3 host y none
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-19-crear-una-red-y-conectar-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 19. Crear una red y conectar contenedores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 19. Crear una red y conectar contenedores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#191-docker-network-create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1 docker network create
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#192-conectar-despues-de-crear-connect-y-disconnect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2 Conectar después de crear: connect y disconnect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#193-ip-fija" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3 IP fija
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-20-bind-una-carpeta-de-la-vm-dentro-del-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 20. Bind: una carpeta de la VM dentro del contenedor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 20. Bind: una carpeta de la VM dentro del contenedor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#201-bind-mount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20.1 Bind mount
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202-lo-que-no-es-un-bind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20.2 Lo que no es un bind
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-21-volumenes-datos-que-gestiona-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 21. Volúmenes: datos que gestiona Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 21. Volúmenes: datos que gestiona Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-crear-y-montar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.1 Crear y montar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-volumen-anonimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2 Volumen anónimo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-bind-frente-a-volumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3 Bind frente a volumen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-22-tmpfs-y-copias-de-seguridad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 22. tmpfs y copias de seguridad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 22. tmpfs y copias de seguridad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-tmpfs-en-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.1 tmpfs: en RAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-copia-de-un-volumen-a-un-tar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.2 Copia de un volumen a un .tar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223-plugins-solo-para-situarte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.3 Plugins (solo para situarte)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapa-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapa resumen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autoevaluación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ut4-redes-y-volumenes">UT4. Redes y volúmenes<a class="headerlink" href="#ut4-redes-y-volumenes" title="Permanent link">&para;</a></h1>
+<h2 class="nobreak" id="como-usar-este-dosier">Cómo usar este dosier<a class="headerlink" href="#como-usar-este-dosier" title="Permanent link">&para;</a></h2>
+<p>En la UT3 construiste imágenes. Hasta ahora cada contenedor vivía bastante solo: un Nginx en un puerto, un Alpine en el que hacías <code>exec</code>. En esta UT los <strong>conectas entre sí</strong> y les das <strong>sitio donde guardar datos</strong> que no se pierdan al borrar el contenedor.</p>
+<p>Es un dosier para leer con la terminal abierta. Conéctate por SSH a <code>cont-vm</code> y escribe cada comando a medida que lo leas.</p>
+<p>A lo largo del texto encontrarás cuatro tipos de caja:</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p>Un término que tienes que saber explicar con tus propias palabras.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Un caso concreto, casi siempre con el comando y lo que verás en pantalla.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Un error típico, una confusión frecuente o un detalle que conviene tener muy claro.</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<p>Preguntas cortas al final de cada bloque. Si no sabes contestarlas sin mirar, vuelve a leer el bloque.</p>
+</div>
+<p>Cada bloque termina con un apartado <strong>«Míralo en tu máquina»</strong>. Los bloques continúan la numeración de la UT3, que terminó en el bloque 17.</p>
+<h3 id="que-vas-a-aprender">Qué vas a aprender<a class="headerlink" href="#que-vas-a-aprender" title="Permanent link">&para;</a></h3>
+<p>Al terminar esta UT deberías ser capaz de:</p>
+<ul>
+<li><strong>Listar</strong> las redes de Docker y <strong>distinguir</strong> <code>bridge</code>, <code>host</code> y <code>none</code>.</li>
+<li><strong>Explicar</strong> por qué en la red <code>bridge</code> por defecto no hay DNS de nombres y en una red tuya sí.</li>
+<li><strong>Crear</strong> una red con <code>docker network create</code>, con o sin subred CIDR.</li>
+<li><strong>Conectar y desconectar</strong> un contenedor a una red, con alias y con IP fija.</li>
+<li><strong>Hacer ping</strong> de un contenedor a otro por el nombre.</li>
+<li><strong>Montar</strong> una carpeta de la VM en un contenedor (bind) y <strong>distinguirlo</strong> de un volumen.</li>
+<li><strong>Crear</strong> un volumen, <strong>ver</strong> dónde vive en el disco y <strong>comprobar</strong> que sobrevive a <code>docker rm</code>.</li>
+<li><strong>Usar</strong> <code>tmpfs</code> cuando los datos no deben quedar en disco.</li>
+<li><strong>Hacer</strong> una copia de un volumen a un <code>.tar</code>.</li>
+</ul>
+<h3 id="indice">Índice<a class="headerlink" href="#indice" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Bloque</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#bloque-18-las-redes-que-ya-tienes">18</a></td>
+<td>Las redes que ya tienes</td>
+</tr>
+<tr>
+<td><a href="#bloque-19-crear-una-red-y-conectar-contenedores">19</a></td>
+<td>Crear una red y conectar contenedores</td>
+</tr>
+<tr>
+<td><a href="#bloque-20-bind-una-carpeta-de-la-vm-dentro-del-contenedor">20</a></td>
+<td>Bind: una carpeta de la VM dentro del contenedor</td>
+</tr>
+<tr>
+<td><a href="#bloque-21-volumenes-datos-que-gestiona-docker">21</a></td>
+<td>Volúmenes: datos que gestiona Docker</td>
+</tr>
+<tr>
+<td><a href="#bloque-22-tmpfs-y-copias-de-seguridad">22</a></td>
+<td>tmpfs y copias de seguridad</td>
+</tr>
+<tr>
+<td>Anexos</td>
+<td>Glosario, mapa resumen y autoevaluación</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bloque-18-las-redes-que-ya-tienes">Bloque 18. Las redes que ya tienes<a class="headerlink" href="#bloque-18-las-redes-que-ya-tienes" title="Permanent link">&para;</a></h2>
+<p>Un contenedor, por defecto, no está apagado de red: Docker le pone una interfaz y lo cuelga de una red. Si no dices nada, esa red es <code>bridge</code>.</p>
+<h3 id="181-tres-redes-de-serie">18.1 Tres redes de serie<a class="headerlink" href="#181-tres-redes-de-serie" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>network<span class="w"> </span>ls
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>NETWORK ID     NAME      DRIVER    SCOPE
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>94992496db99   bridge    bridge    local
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>6d021556083e   host      host      local
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>d688b787656c   none      null      local
+</code></pre></div>
+<p>En tu VM pueden salir más (<code>guardies_default</code>, <code>pihole_default</code>…): las crea Compose. Las tres de serie son estas:</p>
+<table>
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Driver</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>bridge</strong></td>
+<td>bridge</td>
+<td>Red por defecto. Cada contenedor tiene IP en <code>172.17.0.0/16</code>. NAT hacia fuera.</td>
+</tr>
+<tr>
+<td><strong>host</strong></td>
+<td>host</td>
+<td>El contenedor usa la pila de red de la VM. No hay IP propia.</td>
+</tr>
+<tr>
+<td><strong>none</strong></td>
+<td>null</td>
+<td>Sin red. Ni ping a 1.1.1.1.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Red <code>bridge</code> por defecto</strong>: red que Docker crea al instalarse (<code>docker0</code> en la VM). Si haces <code>docker run</code> sin <code>--network</code>, el contenedor va aquí.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>network<span class="w"> </span>inspect<span class="w"> </span>bridge<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{json .IPAM.Config}}'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[{"Subnet":"172.17.0.0/16","Gateway":"172.17.0.1"}]
+</code></pre></div>
+<h3 id="182-en-bridge-no-hay-dns-de-nombres">18.2 En <code>bridge</code> no hay DNS de nombres<a class="headerlink" href="#182-en-bridge-no-hay-dns-de-nombres" title="Permanent link">&para;</a></h3>
+<p>Dos contenedores en la red por defecto <strong>se ven por IP</strong>, no por el nombre.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-x<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">120</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-y<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">120</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ut4-x<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">1</span><span class="w"> </span>ut4-y
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ping: bad address 'ut4-y'
+</code></pre></div>
+<p>La IP sí responde:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'</span><span class="w"> </span>ut4-y
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ut4-x<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">172</span>.17.0.3
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>64 bytes from 172.17.0.3: seq=0 ttl=64 time=0.068 ms
+</code></pre></div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>En apuntes antiguos verás «enlázalos con <code>--link</code>». Está <strong>obsoleto</strong>. El camino actual es una red definida por el usuario (bloque 19): ahí el nombre del contenedor <strong>sí</strong> resuelve.</p>
+</div>
+<h3 id="183-host-y-none">18.3 <code>host</code> y <code>none</code><a class="headerlink" href="#183-host-y-none" title="Permanent link">&para;</a></h3>
+<p><code>--network host</code>: el proceso usa los puertos de la VM tal cual. <code>hostname</code> dentro coincide con el de la VM. No hace falta <code>-p</code>. En clase casi no lo usamos: se pierde el aislamiento de red.</p>
+<p><code>--network none</code>: no hay interfaz (salvo loopback). Un <code>ping 1.1.1.1</code> sale <code>Network unreachable</code>. Sirve para un proceso que no debe hablar con nadie.</p>
+<h3 id="miralo-en-tu-maquina">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>network<span class="w"> </span>ls
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>docker<span class="w"> </span>network<span class="w"> </span>inspect<span class="w"> </span>bridge<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{json .IPAM.Config}}'</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-x<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">60</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-y<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">60</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ut4-x<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">1</span><span class="w"> </span>ut4-y<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'</span><span class="w"> </span>ut4-y
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>ut4-x<span class="w"> </span>ut4-y
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>none<span class="w"> </span>alpine:3.20<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span>.1.1.1<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>Si no pones <code>--network</code>, ¿a qué red va el contenedor?</li>
+<li>¿Por qué <code>ping ut4-y</code> falla en <code>bridge</code> y <code>ping 172.17.0.3</code> no?</li>
+<li>¿Qué red usarías para un proceso que no debe tener red?</li>
+<li>¿<code>--link</code> es el camino actual para que dos contenedores se encuentren por nombre?</li>
+</ol>
+</div>
+<h2 id="bloque-19-crear-una-red-y-conectar-contenedores">Bloque 19. Crear una red y conectar contenedores<a class="headerlink" href="#bloque-19-crear-una-red-y-conectar-contenedores" title="Permanent link">&para;</a></h2>
+<p>La red que te interesa en clase (y en Dual) es una <strong>bridge definida por el usuario</strong>. Docker le pone DNS: el nombre del contenedor resuelve a su IP.</p>
+<h3 id="191-docker-network-create">19.1 <code>docker network create</code><a class="headerlink" href="#191-docker-network-create" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Red definida por el usuario</strong>: red que creas tú con <code>docker network create</code>. Por defecto es <code>bridge</code>. A diferencia de la <code>bridge</code> de serie, <strong>tiene DNS interno</strong>: los contenedores se encuentran por el nombre.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>--subnet<span class="w"> </span><span class="m">10</span>.89.0.0/24<span class="w"> </span>--gateway<span class="w"> </span><span class="m">10</span>.89.0.1<span class="w"> </span>ut4-net
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>network<span class="w"> </span>inspect<span class="w"> </span>ut4-net<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Driver}} {{(index .IPAM.Config 0).Subnet}}'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>bridge 10.89.0.0/24
+</code></pre></div>
+<p>El formato de la subred es <strong>CIDR</strong> (<code>10.89.0.0/24</code>: 256 direcciones, de las que Docker reserva la de red y la de gateway). Si no pones <code>--subnet</code>, Docker elige una sola.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-a<span class="w"> </span>--network<span class="w"> </span>ut4-net<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">300</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-b<span class="w"> </span>--network<span class="w"> </span>ut4-net<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">300</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ut4-a<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">2</span><span class="w"> </span>ut4-b
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>PING ut4-b (10.89.0.3): 56 data bytes
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>64 bytes from 10.89.0.3: seq=0 ttl=64 time=0.055 ms
+</code></pre></div>
+<p><code>ut4-a</code> es <code>10.89.0.2</code>, <code>ut4-b</code> es <code>10.89.0.3</code>. El ping va <strong>por el nombre</strong>.</p>
+<figure><img src="imagenes/UT4-redes.png" alt="En una red tuya los contenedores se encuentran por el nombre; en bridge por defecto, no"></figure>
+
+<h3 id="192-conectar-despues-de-crear-connect-y-disconnect">19.2 Conectar después de crear: <code>connect</code> y <code>disconnect</code><a class="headerlink" href="#192-conectar-despues-de-crear-connect-y-disconnect" title="Permanent link">&para;</a></h3>
+<p><code>--network</code> se indica al <strong>crear</strong> el contenedor. Si ya existe, lo enganchas a otra red (un contenedor puede estar en varias):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>ut4-net2
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>docker<span class="w"> </span>network<span class="w"> </span>connect<span class="w"> </span>--alias<span class="w"> </span>web<span class="w"> </span>ut4-net2<span class="w"> </span>ut4-a
+</code></pre></div>
+<p><code>--alias web</code> hace que, <strong>en esa red</strong>, <code>web</code> resuelva a <code>ut4-a</code>. Un contenedor nuevo en <code>ut4-net2</code> puede hacer <code>ping web</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--network<span class="w"> </span>ut4-net2<span class="w"> </span>alpine:3.20<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">1</span><span class="w"> </span>web
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>PING web (172.21.0.2): 56 data bytes
+</code></pre></div>
+<p>Para soltarlo: <code>docker network disconnect ut4-net2 ut4-a</code>.</p>
+<p><code>--network-alias</code> (al hacer <code>run</code>) es lo mismo que <code>--alias</code> en <code>connect</code>.</p>
+<h3 id="193-ip-fija">19.3 IP fija<a class="headerlink" href="#193-ip-fija" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-fijo<span class="w"> </span>--network<span class="w"> </span>ut4-net<span class="w"> </span>--ip<span class="w"> </span><span class="m">10</span>.89.0.50<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">60</span>
+</code></pre></div>
+<p>La IP tiene que estar en la subred de esa red. <code>--ip6</code> hace lo mismo en IPv6 si la red la tiene. En clase, salvo que el enunciado lo pida, deja que Docker asigne.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Publicar un puerto (<code>-p 8080:80</code>) sigue siendo cosa del <strong>anfitrión</strong>, como en la UT1. La red interna es para que <strong>los contenedores hablen entre ellos</strong>. Un Nginx que solo tiene que servir a la VM sigue necesitando <code>-p</code>.</p>
+</div>
+<h3 id="miralo-en-tu-maquina_1">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>--subnet<span class="w"> </span><span class="m">10</span>.89.0.0/24<span class="w"> </span>ut4-net
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-a<span class="w"> </span>--network<span class="w"> </span>ut4-net<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">120</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-b<span class="w"> </span>--network<span class="w"> </span>ut4-net<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">120</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ut4-a<span class="w"> </span>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">2</span><span class="w"> </span>ut4-b
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'</span><span class="w"> </span>ut4-a<span class="w"> </span>ut4-b
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>ut4-a<span class="w"> </span>ut4-b
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>docker<span class="w"> </span>network<span class="w"> </span>rm<span class="w"> </span>ut4-net
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Qué ganas con una red tuya que no tienes en <code>bridge</code>?</li>
+<li>¿Un contenedor puede estar en dos redes a la vez?</li>
+<li>¿<code>--alias web</code> se ve desde todas las redes o solo desde la de <code>connect</code>?</li>
+<li>¿<code>-p 80:80</code> y estar en <code>ut4-net</code> hacen lo mismo?</li>
+</ol>
+</div>
+<h2 id="bloque-20-bind-una-carpeta-de-la-vm-dentro-del-contenedor">Bloque 20. Bind: una carpeta de la VM dentro del contenedor<a class="headerlink" href="#bloque-20-bind-una-carpeta-de-la-vm-dentro-del-contenedor" title="Permanent link">&para;</a></h2>
+<p>El sistema de archivos del contenedor se <strong>borra</strong> con <code>docker rm</code> (UT2). Si la web o la base de datos viven ahí, se van. Un <strong>montaje</strong> pone un directorio de fuera dentro del contenedor.</p>
+<h3 id="201-bind-mount">20.1 Bind mount<a class="headerlink" href="#201-bind-mount" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Bind mount</strong>: una carpeta (o un archivo) de la VM montada en una ruta del contenedor. La ruta del anfitrión la eliges tú. Lo que se escribe en un lado se ve en el otro.</p>
+</div>
+<p>La ruta de la VM tiene que ser <strong>absoluta</strong>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ut4-sitio
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'&lt;h1&gt;Hola desde la VM&lt;/h1&gt;'</span><span class="w"> </span>&gt;<span class="w"> </span>~/ut4-sitio/index.html
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-web<span class="w"> </span>-p<span class="w"> </span><span class="m">18081</span>:80<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span>-v<span class="w"> </span>~/ut4-sitio:/usr/share/nginx/html:ro<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span>nginx:1.29-alpine
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:18081
+</code></pre></div>
+<p><code>:ro</code> es solo lectura dentro del contenedor: Nginx no puede pisar tus archivos. Sin <code>:ro</code>, un proceso del contenedor <strong>sí</strong> puede borrar el <code>index.html</code> de tu carpeta.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>El montaje se indica <strong>al crear</strong> el contenedor (<code>run</code> o <code>create</code>). No se añade después con un flag a un contenedor ya creado. Si te has equivocado de ruta, <code>rm</code> y vuelve a crearlo.</p>
+</div>
+<p>El bind <strong>no se borra</strong> al borrar el contenedor: la carpeta <code>~/ut4-sitio</code> sigue en tu <code>$HOME</code>. Por eso vale para probar una versión nueva de la imagen sin rehacer los archivos: cambias la imagen, montas la misma carpeta.</p>
+<h3 id="202-lo-que-no-es-un-bind">20.2 Lo que no es un bind<a class="headerlink" href="#202-lo-que-no-es-un-bind" title="Permanent link">&para;</a></h3>
+<p><code>-v ut4-datos:/data</code> (sin barra al inicio del origen) <strong>no</strong> es un bind: es un <strong>volumen</strong> (bloque 21). Docker interpreta lo que no empieza por <code>/</code> o <code>./</code> como nombre de volumen.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>alpine:3.20<span class="w"> </span>ls<span class="w"> </span>/data
+</code></pre></div>
+<p>Si <code>ut4-datos</code> no existe, Docker <strong>crea</strong> un volumen con ese nombre. No es tu carpeta <code>ut4-datos</code> del <code>$HOME</code>.</p>
+<h3 id="miralo-en-tu-maquina_2">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ut4-sitio
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'&lt;h1&gt;Hola desde la VM&lt;/h1&gt;'</span><span class="w"> </span>&gt;<span class="w"> </span>~/ut4-sitio/index.html
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-web<span class="w"> </span>-p<span class="w"> </span><span class="m">18081</span>:80<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span>-v<span class="w"> </span>~/ut4-sitio:/usr/share/nginx/html:ro<span class="w"> </span>nginx:1.29-alpine
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:18081
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'&lt;h1&gt;Cambio en caliente&lt;/h1&gt;'</span><span class="w"> </span>&gt;<span class="w"> </span>~/ut4-sitio/index.html
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:18081
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>ut4-web
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>ls<span class="w"> </span>~/ut4-sitio
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿La carpeta de la VM se borra con <code>docker rm</code>?</li>
+<li>¿Puedes añadir un bind a un contenedor que ya está creado?</li>
+<li>¿Qué cambia <code>:ro</code>?</li>
+<li><code>-v datos:/data</code>, ¿es un bind o un volumen? ¿Por qué?</li>
+</ol>
+</div>
+<h2 id="bloque-21-volumenes-datos-que-gestiona-docker">Bloque 21. Volúmenes: datos que gestiona Docker<a class="headerlink" href="#bloque-21-volumenes-datos-que-gestiona-docker" title="Permanent link">&para;</a></h2>
+<p>Un volumen es el camino <strong>recomendado</strong> para datos persistentes de una aplicación (base de datos, uploads). Docker elige dónde vive en disco. Tú le pones un nombre.</p>
+<h3 id="211-crear-y-montar">21.1 Crear y montar<a class="headerlink" href="#211-crear-y-montar" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>ut4-datos
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>docker<span class="w"> </span>volume<span class="w"> </span>ls
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>docker<span class="w"> </span>volume<span class="w"> </span>inspect<span class="w"> </span>ut4-datos<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Mountpoint}}'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>/var/lib/docker/volumes/ut4-datos/_data
+</code></pre></div>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Volumen</strong>: almacén que gestiona Docker. Tiene nombre, vive bajo <code>/var/lib/docker/volumes/</code> y se monta en un contenedor con <code>-v nombre:/ruta</code> o <code>--mount</code>.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>alpine:3.20<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo hola &gt; /data/f.txt'</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>alpine:3.20<span class="w"> </span>cat<span class="w"> </span>/data/f.txt
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>hola
+</code></pre></div>
+<p>El primer contenedor ya no existe. El segundo lee <code>hola</code>. El volumen <strong>no</strong> se ha ido.</p>
+<figure><img src="imagenes/UT4-volumen.png" alt="Dos contenedores, uno detrás de otro, leen y escriben el mismo volumen"></figure>
+
+<p><code>docker rm</code> del contenedor no borra volúmenes. <code>docker volume rm ut4-datos</code> sí, si ningún contenedor lo tiene montado.</p>
+<h3 id="212-volumen-anonimo">21.2 Volumen anónimo<a class="headerlink" href="#212-volumen-anonimo" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut4-anon<span class="w"> </span>-v<span class="w"> </span>/data<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">30</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{range .Mounts}}{{.Name}} {{.Destination}}{{end}}'</span><span class="w"> </span>ut4-anon
+</code></pre></div>
+<p>Sin nombre a la izquierda, Docker crea un volumen con ID largo. Es fácil de olvidar. En clase, <strong>pon nombre</strong>.</p>
+<h3 id="213-bind-frente-a-volumen">21.3 Bind frente a volumen<a class="headerlink" href="#213-bind-frente-a-volumen" title="Permanent link">&para;</a></h3>
+<figure><img src="imagenes/UT4-almacen.png" alt="Bind, volumen y tmpfs: tres sitios distintos para los datos"></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Bind</th>
+<th>Volumen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Origen</td>
+<td>Una ruta tuya en la VM</td>
+<td>Un nombre; Docker elige la ruta</td>
+</tr>
+<tr>
+<td>Dónde vive</td>
+<td>Donde tú digas (<code>~/ut4-sitio</code>)</td>
+<td><code>/var/lib/docker/volumes/…/_data</code></td>
+</tr>
+<tr>
+<td>Quién lo borra</td>
+<td>Tú (<code>rm -rf</code> de la carpeta)</td>
+<td><code>docker volume rm</code></td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td>Código que estás editando, un <code>index.html</code> de pruebas</td>
+<td>Datos de una aplicación (Postgres, uploads)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker volume prune</code> borra los volúmenes que no está usando ningún contenedor. Si acabas de borrar el contenedor de la base de datos, el volumen con los datos <strong>entra</strong> en esa lista. No lo lances a ciegas.</p>
+</div>
+<h3 id="miralo-en-tu-maquina_3">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>ut4-datos
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>alpine:3.20<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo hola &gt; /data/f.txt'</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>alpine:3.20<span class="w"> </span>cat<span class="w"> </span>/data/f.txt
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>docker<span class="w"> </span>volume<span class="w"> </span>inspect<span class="w"> </span>ut4-datos
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>ut4-datos
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿<code>docker rm</code> del contenedor borra el volumen?</li>
+<li>¿Dónde vive en disco un volumen llamado <code>ut4-datos</code>?</li>
+<li>¿Cuándo usarías un bind y cuándo un volumen?</li>
+<li>¿Qué riesgo tiene <code>docker volume prune</code> justo después de borrar un Postgres?</li>
+</ol>
+</div>
+<h2 id="bloque-22-tmpfs-y-copias-de-seguridad">Bloque 22. tmpfs y copias de seguridad<a class="headerlink" href="#bloque-22-tmpfs-y-copias-de-seguridad" title="Permanent link">&para;</a></h2>
+<p>No todo tiene que sobrevivir. Y lo que sí sobrevive conviene poder copiarlo.</p>
+<h3 id="221-tmpfs-en-ram">22.1 tmpfs: en RAM<a class="headerlink" href="#221-tmpfs-en-ram" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>tmpfs</strong>: montaje en memoria. Lo que escribas no va al disco de la VM. Al parar el contenedor, desaparece.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--tmpfs<span class="w"> </span>/scratch<span class="w"> </span>alpine:3.20<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo x &gt; /scratch/a &amp;&amp; cat /scratch/a &amp;&amp; df -t tmpfs'</span>
+</code></pre></div>
+<p>Dentro, <code>/scratch</code> aparece como <code>tmpfs</code>. Sirve para secretos que no quieres dejar en una capa, o para caché que no importa perder.</p>
+<p>No es un bind ni un volumen: no hay carpeta en <code>/var/lib/docker/volumes</code> ni en tu <code>$HOME</code>.</p>
+<h3 id="222-copia-de-un-volumen-a-un-tar">22.2 Copia de un volumen a un <code>.tar</code><a class="headerlink" href="#222-copia-de-un-volumen-a-un-tar" title="Permanent link">&para;</a></h3>
+<p>Docker no tiene <code>volume export</code>. El truco de clase: un contenedor que monta el volumen <strong>y</strong> una carpeta de la VM, y hace <code>tar</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>ut4-datos
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>alpine:3.20<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo hola &gt; /data/f.txt'</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>-v<span class="w"> </span>/tmp:/backup<span class="w"> </span>alpine:3.20<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span>tar<span class="w"> </span>-c<span class="w"> </span>-f<span class="w"> </span>/backup/ut4-datos.tar<span class="w"> </span>-C<span class="w"> </span>/data<span class="w"> </span>.
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/ut4-datos.tar
+</code></pre></div>
+<p>Para restaurar: el mismo esquema, <code>tar -x</code> sobre un volumen vacío.</p>
+<p>Un bind se copia como cualquier carpeta de la VM (<code>tar</code>, <code>cp</code>, rsync). No hace falta un contenedor.</p>
+<h3 id="223-plugins-solo-para-situarte">22.3 Plugins (solo para situarte)<a class="headerlink" href="#223-plugins-solo-para-situarte" title="Permanent link">&para;</a></h3>
+<p>Docker admite <strong>plugins</strong> de volumen (por ejemplo <code>sshfs</code>: el volumen vive en otra máquina por SSH). En este módulo no los instalamos. Si en Dual te los encuentras, el comando sigue siendo <code>-v nombre:/ruta</code>; cambia el driver.</p>
+<h3 id="miralo-en-tu-maquina_4">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--tmpfs<span class="w"> </span>/scratch<span class="w"> </span>alpine:3.20<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo x &gt; /scratch/a &amp;&amp; cat /scratch/a'</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>docker<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>ut4-datos
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>alpine:3.20<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo hola &gt; /data/f.txt'</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>ut4-datos:/data<span class="w"> </span>-v<span class="w"> </span>/tmp:/backup<span class="w"> </span>alpine:3.20<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">    </span>tar<span class="w"> </span>-c<span class="w"> </span>-f<span class="w"> </span>/backup/ut4-datos.tar<span class="w"> </span>-C<span class="w"> </span>/data<span class="w"> </span>.
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/ut4-datos.tar
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>ut4-datos
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>rm<span class="w"> </span>-f<span class="w"> </span>/tmp/ut4-datos.tar
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Un archivo en tmpfs sobrevive a <code>docker rm</code>?</li>
+<li>¿Cómo copias un volumen a un archivo si no hay <code>volume export</code>?</li>
+<li>¿Un bind se copia igual que un volumen?</li>
+<li>¿<code>docker volume prune</code> borra tmpfs?</li>
+</ol>
+</div>
+<h2 id="glosario">Glosario<a class="headerlink" href="#glosario" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Término</th>
+<th>Definición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Alias de red</strong></td>
+<td>Nombre extra de un contenedor en una red concreta (<code>--alias</code> / <code>--network-alias</code>)</td>
+</tr>
+<tr>
+<td><strong>Bind mount</strong></td>
+<td>Carpeta o archivo de la VM montado en el contenedor; la ruta la eliges tú</td>
+</tr>
+<tr>
+<td><strong>bridge (por defecto)</strong></td>
+<td>Red de serie <code>172.17.0.0/16</code>. Sin DNS de nombres entre contenedores</td>
+</tr>
+<tr>
+<td><strong>CIDR</strong></td>
+<td>Forma de escribir una subred (<code>10.89.0.0/24</code>)</td>
+</tr>
+<tr>
+<td><strong>DNS interno</strong></td>
+<td>En una red tuya, el nombre del contenedor resuelve a su IP</td>
+</tr>
+<tr>
+<td><strong>Red definida por el usuario</strong></td>
+<td>Red creada con <code>docker network create</code>. Por defecto, bridge con DNS</td>
+</tr>
+<tr>
+<td><strong>tmpfs</strong></td>
+<td>Montaje en RAM; al parar el contenedor se pierde</td>
+</tr>
+<tr>
+<td><strong>Volumen</strong></td>
+<td>Almacén con nombre que gestiona Docker, bajo <code>/var/lib/docker/volumes</code></td>
+</tr>
+<tr>
+<td><strong>Volumen anónimo</strong></td>
+<td>Volumen sin nombre, creado con <code>-v /ruta</code> a secas</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mapa-resumen">Mapa resumen<a class="headerlink" href="#mapa-resumen" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>REDES
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>   docker network ls                     bridge, host, none (+ las de Compose)
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>   sin --network  →  bridge por defecto  ping por IP sí; por nombre no
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>   --network host                        pila de la VM; sin -p
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>   --network none                        sin red
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>   docker network create [ --subnet CIDR ] NOMBRE
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>   --network NOMBRE al crear el contenedor
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>   docker network connect [--alias X] [--ip A.B.C.D] RED CONT
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>   docker network disconnect RED CONT
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>   DNS: el nombre del contenedor (y el alias) resuelven en esa red
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>   -p sigue siendo publicar en el anfitrión; la red interna es entre contenedores
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>DATOS
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>   Bind     -v /ruta/vm:/ruta/cont[:ro]     absoluta; al crear; no se borra con rm
+<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>   Volumen  docker volume create NOMBRE
+<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>            -v NOMBRE:/ruta                 vive en /var/lib/docker/volumes/NOMBRE/_data
+<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a>            rm del contenedor NO lo borra; volume rm sí
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>   tmpfs    --tmpfs /ruta                   RAM; al parar, se pierde
+<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>   Copia    contenedor que monta volumen + /backup y tar
+<a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a>   prune    volume prune borra los que no usa ningún contenedor: ojo con las bases de datos
+</code></pre></div>
+<h2 id="autoevaluacion">Autoevaluación<a class="headerlink" href="#autoevaluacion" title="Permanent link">&para;</a></h2>
+<h3 id="preguntas-cortas">Preguntas cortas<a class="headerlink" href="#preguntas-cortas" title="Permanent link">&para;</a></h3>
+<ol>
+<li>¿A qué red va un <code>docker run</code> sin <code>--network</code>?</li>
+<li>¿Por qué <code>ping nombre</code> falla en <code>bridge</code> y funciona en una red tuya?</li>
+<li>¿<code>--link</code> es el camino actual?</li>
+<li>¿Un contenedor puede estar en dos redes?</li>
+<li>¿El bind se indica al crear o se puede añadir después?</li>
+<li><code>-v datos:/data</code>, ¿bind o volumen?</li>
+<li>¿<code>docker rm</code> borra el volumen?</li>
+<li>¿Dónde vive en disco el volumen <code>ut4-datos</code>?</li>
+<li>¿Qué le pasa a un archivo en tmpfs al parar el contenedor?</li>
+<li>¿Cómo haces una copia de un volumen a un <code>.tar</code>?</li>
+</ol>
+<h3 id="tipo-test">Tipo test<a class="headerlink" href="#tipo-test" title="Permanent link">&para;</a></h3>
+<ol>
+<li>En la red <code>bridge</code> por defecto, dos contenedores…
+   a) Se encuentran por el nombre  b) Se encuentran por IP, no por el nombre  c) No se ven ni por IP  d) Usan la IP de la VM</li>
+<li><code>docker network create ut4-net</code> crea, por defecto…
+   a) Una red host  b) Una red none  c) Una bridge con DNS interno  d) Un volumen</li>
+<li><code>--alias web</code> en <code>connect</code>…
+   a) Renombra el contenedor en <code>docker ps</code>  b) Hace que, en esa red, <code>web</code> resuelva a ese contenedor  c) Publica el puerto 80  d) Crea un bind</li>
+<li>Un bind <code>-v ~/sitio:/usr/share/nginx/html:ro</code>…
+   a) Borra <code>~/sitio</code> al hacer <code>docker rm</code>  b) Deja <code>~/sitio</code> en la VM; dentro, Nginx no puede escribir  c) Crea un volumen llamado <code>sitio</code>  d) Solo funciona con <code>:rw</code></li>
+<li>Un volumen anónimo es…
+   a) Un bind sin ruta absoluta  b) Un volumen sin nombre, creado con <code>-v /ruta</code>  c) tmpfs  d) La red none</li>
+<li>tmpfs…
+   a) Se guarda en <code>/var/lib/docker/volumes</code>  b) Vive en RAM y se pierde al parar  c) Es un bind de <code>/tmp</code>  d) Sustituye a <code>-p</code></li>
+</ol>
+<h3 id="razona">Razona<a class="headerlink" href="#razona" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Tienes un Postgres en un contenedor y los datos en un volumen. Haces <code>docker rm -f postgres</code> y luego <code>docker volume prune</code>. ¿Qué les ha pasado a los datos? ¿Qué tendrías que haber hecho para no perderlos?</li>
+<li>Dos contenedores, <code>web</code> y <code>api</code>, tienen que hablar por el nombre <code>api</code>. ¿Los dejas en <code>bridge</code>? Escribe los comandos mínimos.</li>
+<li>Quieres editar <code>index.html</code> en tu editor de la VM y ver el cambio en Nginx sin reconstruir la imagen. ¿Bind o volumen? ¿Por qué?</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../UT3-dosier/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: UT3. Gestión de imágenes">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                UT3. Gestión de imágenes
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Dustin Randel de Lara García, Sant Josep Obrer. Material docente del módulo IB1107.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3527 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes del módulo IB1107, 2.º ASIX">
+      
+      
+        <meta name="author" content="Dustin Randel de Lara García">
+      
+      
+        <link rel="canonical" href="https://dustinrandel.github.io/despliegue-contenedores/UT1-dosier/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../UT2-dosier/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Introducción a los contenedores y a Docker - Despliegue y administración de contenedores</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Carlito:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Carlito";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicon-48.png">
+  <link rel="icon" sizes="any" href="../assets/favicon.ico">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ut1-introduccion-a-los-contenedores-y-a-docker" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Despliegue y administración de contenedores" class="md-header__button md-logo" aria-label="Despliegue y administración de contenedores" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Despliegue y administración de contenedores
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introducción a los contenedores y a Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Cambiar a modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Cambiar a modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/DustinRandel/despliegue-contenedores" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Despliegue y administración de contenedores" class="md-nav__button md-logo" aria-label="Despliegue y administración de contenedores" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    Despliegue y administración de contenedores
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/DustinRandel/despliegue-contenedores" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT1. Introducción a los contenedores y a Docker
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT1. Introducción a los contenedores y a Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#como-usar-este-dosier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo usar este dosier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo usar este dosier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-vas-a-aprender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué vas a aprender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-1-conceptos-previos-la-virtualizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 1. Conceptos previos: la virtualización
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 1. Conceptos previos: la virtualización">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-que-son-los-contenedores-y-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 ¿Qué son los contenedores y Docker?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-virtualizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Virtualización
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-que-es-una-maquina-virtual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 ¿Qué es una máquina virtual?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-que-es-una-maquina-virtual-de-proceso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 ¿Qué es una máquina virtual de proceso?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-que-es-un-hipervisor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 ¿Qué es un hipervisor?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 ¿Qué es un hipervisor?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hipervisores-de-tipo-1-y-de-tipo-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hipervisores de tipo 1 y de tipo 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-2-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 2. Contenedores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 2. Contenedores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-que-son-los-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 ¿Qué son los contenedores?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-contenedores-frente-a-maquinas-virtuales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Contenedores frente a máquinas virtuales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-analogia-con-los-contenedores-de-transporte-maritimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Analogía con los contenedores de transporte marítimo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-desarrollo-y-despliegue-consistentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Desarrollo y despliegue consistentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-contenedores-para-el-despliegue-de-servicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Contenedores para el despliegue de servicios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-ventajas-e-inconvenientes-de-los-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Ventajas e inconvenientes de los contenedores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-cuando-es-adecuado-usar-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 ¿Cuándo es adecuado usar contenedores?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-3-contenedores-en-sistemas-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 3. Contenedores en sistemas Linux
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 3. Contenedores en sistemas Linux">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-los-origenes-es-nuevo-el-concepto-de-entornos-privados-en-unix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Los orígenes: ¿es nuevo el concepto de entornos privados en Unix?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-contenedores-modernos-en-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Contenedores modernos en Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-como-funcionan-los-contenedores-modernos-en-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 ¿Cómo funcionan los contenedores modernos en Linux?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 ¿Cómo funcionan los contenedores modernos en Linux?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-pueden-funcionar-los-contenedores-linux-en-windows-o-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 ¿Pueden funcionar los contenedores Linux en Windows o macOS?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-4-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 4. Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 4. Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-que-es-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 ¿Qué es Docker?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-la-arquitectura-de-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 La arquitectura de Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 La arquitectura de Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-5-arrancar-contenedores-el-comando-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 5. Arrancar contenedores: el comando base
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 5. Arrancar contenedores: el comando base">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-el-comando-base-de-ejecucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 El comando base de ejecución
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-ver-los-contenedores-activos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Ver los contenedores activos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Ver los contenedores activos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#el-ciclo-de-vida-de-un-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El ciclo de vida de un contenedor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-opciones-comunes-al-arrancar-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Opciones comunes al arrancar contenedores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-ejemplo-practico-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Ejemplo práctico completo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-6-modo-detached-registros-y-reinicio-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 6. Modo detached, registros y reinicio automático
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 6. Modo detached, registros y reinicio automático">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-el-problema-del-primer-plano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 El problema del primer plano
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-la-solucion-el-modo-detached" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 La solución: el modo detached
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-ver-los-registros-y-adjuntarse-al-proceso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Ver los registros y adjuntarse al proceso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-politicas-de-reinicio-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Políticas de reinicio automático
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-7-mapeo-de-puertos-conectar-los-contenedores-con-el-exterior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 7. Mapeo de puertos: conectar los contenedores con el exterior
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 7. Mapeo de puertos: conectar los contenedores con el exterior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-por-que-mapear-puertos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 ¿Por qué mapear puertos?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-mapeo-basico-de-un-solo-puerto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Mapeo básico de un solo puerto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-mapeo-de-varios-puertos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Mapeo de varios puertos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-mapeo-de-rangos-de-puertos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Mapeo de rangos de puertos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-acceder-desde-el-navegador-de-tu-ordenador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Acceder desde el navegador de tu ordenador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Acceder desde el navegador de tu ordenador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapa-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapa resumen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autoevaluación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT2-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT2. Principales acciones con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT3-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT3. Gestión de imágenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT4-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT4. Redes y volúmenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#como-usar-este-dosier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo usar este dosier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo usar este dosier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-vas-a-aprender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué vas a aprender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-1-conceptos-previos-la-virtualizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 1. Conceptos previos: la virtualización
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 1. Conceptos previos: la virtualización">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-que-son-los-contenedores-y-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 ¿Qué son los contenedores y Docker?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-virtualizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Virtualización
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-que-es-una-maquina-virtual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 ¿Qué es una máquina virtual?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-que-es-una-maquina-virtual-de-proceso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 ¿Qué es una máquina virtual de proceso?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-que-es-un-hipervisor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 ¿Qué es un hipervisor?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 ¿Qué es un hipervisor?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hipervisores-de-tipo-1-y-de-tipo-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hipervisores de tipo 1 y de tipo 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-2-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 2. Contenedores
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 2. Contenedores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-que-son-los-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 ¿Qué son los contenedores?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-contenedores-frente-a-maquinas-virtuales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Contenedores frente a máquinas virtuales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-analogia-con-los-contenedores-de-transporte-maritimo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Analogía con los contenedores de transporte marítimo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-desarrollo-y-despliegue-consistentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Desarrollo y despliegue consistentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-contenedores-para-el-despliegue-de-servicios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Contenedores para el despliegue de servicios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-ventajas-e-inconvenientes-de-los-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Ventajas e inconvenientes de los contenedores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-cuando-es-adecuado-usar-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 ¿Cuándo es adecuado usar contenedores?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-3-contenedores-en-sistemas-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 3. Contenedores en sistemas Linux
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 3. Contenedores en sistemas Linux">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-los-origenes-es-nuevo-el-concepto-de-entornos-privados-en-unix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Los orígenes: ¿es nuevo el concepto de entornos privados en Unix?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-contenedores-modernos-en-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Contenedores modernos en Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-como-funcionan-los-contenedores-modernos-en-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 ¿Cómo funcionan los contenedores modernos en Linux?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 ¿Cómo funcionan los contenedores modernos en Linux?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-pueden-funcionar-los-contenedores-linux-en-windows-o-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 ¿Pueden funcionar los contenedores Linux en Windows o macOS?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-4-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 4. Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 4. Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-que-es-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 ¿Qué es Docker?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-la-arquitectura-de-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 La arquitectura de Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 La arquitectura de Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-5-arrancar-contenedores-el-comando-base" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 5. Arrancar contenedores: el comando base
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 5. Arrancar contenedores: el comando base">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-el-comando-base-de-ejecucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 El comando base de ejecución
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-ver-los-contenedores-activos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Ver los contenedores activos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Ver los contenedores activos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#el-ciclo-de-vida-de-un-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El ciclo de vida de un contenedor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-opciones-comunes-al-arrancar-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Opciones comunes al arrancar contenedores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-ejemplo-practico-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Ejemplo práctico completo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-6-modo-detached-registros-y-reinicio-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 6. Modo detached, registros y reinicio automático
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 6. Modo detached, registros y reinicio automático">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-el-problema-del-primer-plano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 El problema del primer plano
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-la-solucion-el-modo-detached" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 La solución: el modo detached
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-ver-los-registros-y-adjuntarse-al-proceso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Ver los registros y adjuntarse al proceso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-politicas-de-reinicio-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Políticas de reinicio automático
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-7-mapeo-de-puertos-conectar-los-contenedores-con-el-exterior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 7. Mapeo de puertos: conectar los contenedores con el exterior
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 7. Mapeo de puertos: conectar los contenedores con el exterior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-por-que-mapear-puertos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 ¿Por qué mapear puertos?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-mapeo-basico-de-un-solo-puerto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Mapeo básico de un solo puerto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-mapeo-de-varios-puertos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Mapeo de varios puertos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-mapeo-de-rangos-de-puertos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Mapeo de rangos de puertos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-acceder-desde-el-navegador-de-tu-ordenador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Acceder desde el navegador de tu ordenador
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Acceder desde el navegador de tu ordenador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapa-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapa resumen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autoevaluación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ut1-introduccion-a-los-contenedores-y-a-docker">UT1. Introducción a los contenedores y a Docker<a class="headerlink" href="#ut1-introduccion-a-los-contenedores-y-a-docker" title="Permanent link">&para;</a></h1>
+<h2 class="nobreak" id="como-usar-este-dosier">Cómo usar este dosier<a class="headerlink" href="#como-usar-este-dosier" title="Permanent link">&para;</a></h2>
+<p>Esta UT te lleva desde la pregunta «¿qué es un contenedor?» hasta tu primer servidor web funcionando dentro de uno. Primero se explica la <strong>virtualización</strong> y qué aporta cada tecnología, después qué es un contenedor y cómo se apoya en el núcleo de Linux, luego cómo está montado Docker y, por último, cómo <strong>arrancar contenedores</strong>: <code>docker run</code>, las opciones más comunes, los registros, el reinicio automático y la publicación de puertos.</p>
+<p>Es un dosier para leer con la máquina virtual de clase, <code>cont-vm</code>, encendida. Conéctate por SSH y escribe cada comando a medida que lo leas: muchas cosas se entienden mejor cuando las ves pasar en tu propia pantalla. Cuando un apartado te pida <strong>dos terminales</strong>, abre una segunda sesión SSH a la misma VM.</p>
+<p>A lo largo del texto encontrarás cuatro tipos de caja:</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p>Un término que tienes que saber explicar con tus propias palabras. Si te preguntan «¿qué es…?», la respuesta está aquí.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Un caso concreto, casi siempre con el comando y lo que verás en pantalla. Si una idea no te queda clara, empieza por el ejemplo.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Un error típico, una confusión frecuente entre conceptos parecidos o un detalle que conviene tener muy claro.</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<p>Preguntas cortas al final de cada bloque. Si no sabes contestarlas sin mirar, vuelve a leer el bloque.</p>
+</div>
+<p>Los bloques están numerados del 1 al 7 y la UT2 continúa en el bloque 8. Al final tienes un <strong>glosario</strong>, un <strong>mapa resumen</strong> y una <strong>autoevaluación</strong> para repasar.</p>
+<h3 id="que-vas-a-aprender">Qué vas a aprender<a class="headerlink" href="#que-vas-a-aprender" title="Permanent link">&para;</a></h3>
+<p>Al terminar esta UT deberías ser capaz de:</p>
+<ul>
+<li><strong>Definir</strong> qué es la virtualización y enumerar sus ventajas y aplicaciones.</li>
+<li><strong>Distinguir</strong> entre máquina virtual de proceso, hipervisor y contenedor, y explicar qué aísla o abstrae cada uno.</li>
+<li><strong>Comparar</strong> contenedores y máquinas virtuales en consumo, arranque, rendimiento y sistemas que pueden ejecutar.</li>
+<li><strong>Explicar</strong> por qué los contenedores resuelven el problema de «en mi máquina funcionaba».</li>
+<li><strong>Valorar</strong> las ventajas e inconvenientes de los contenedores y decidir cuándo conviene usarlos.</li>
+<li><strong>Situar</strong> en el tiempo los precursores de los contenedores (chroot, Jail, LXC) y la aparición de Docker.</li>
+<li><strong>Explicar</strong> el papel de los <em>namespaces</em> y los <em>cgroups</em> del núcleo Linux.</li>
+<li><strong>Describir</strong> cómo funcionan los contenedores Linux en Windows y macOS.</li>
+<li><strong>Identificar</strong> las tres piezas de la arquitectura de Docker: cliente, servidor (<em>Docker host</em>) y registro.</li>
+<li><strong>Explicar</strong> qué hace Docker, paso a paso, cuando ejecutas <code>docker run</code>.</li>
+<li><strong>Listar</strong> los contenedores en ejecución y los detenidos con <code>docker ps</code> y <code>docker ps -a</code>.</li>
+<li><strong>Usar</strong> las opciones más comunes de <code>docker run</code>: <code>-d</code>, <code>-p</code>, <code>-v</code>, <code>--name</code>, <code>--rm</code>, <code>-e</code> y <code>--env-file</code>.</li>
+<li><strong>Distinguir</strong> entre ejecutar un contenedor en primer plano y en segundo plano (<em>detached</em>).</li>
+<li><strong>Consultar</strong> los registros de un contenedor con <code>docker logs</code> y conectarte a él con <code>docker attach</code>.</li>
+<li><strong>Elegir</strong> la política de reinicio adecuada (<code>no</code>, <code>always</code>, <code>unless-stopped</code>, <code>on-failure</code>) para cada caso.</li>
+<li><strong>Publicar</strong> puertos de un contenedor con <code>-p</code>, uno, varios o por rangos, y acceder al servicio desde el navegador.</li>
+</ul>
+<h3 id="indice">Índice<a class="headerlink" href="#indice" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Bloque</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#bloque-1-conceptos-previos-la-virtualizacion">1</a></td>
+<td>Conceptos previos: virtualización, máquinas virtuales e hipervisores</td>
+</tr>
+<tr>
+<td><a href="#bloque-2-contenedores">2</a></td>
+<td>Contenedores: qué son, en qué se diferencian de una VM y cuándo usarlos</td>
+</tr>
+<tr>
+<td><a href="#bloque-3-contenedores-en-sistemas-linux">3</a></td>
+<td>Contenedores en sistemas Linux: orígenes, <em>namespaces</em> y <em>cgroups</em></td>
+</tr>
+<tr>
+<td><a href="#bloque-4-docker">4</a></td>
+<td>Docker: qué es y cómo es su arquitectura</td>
+</tr>
+<tr>
+<td><a href="#bloque-5-arrancar-contenedores-el-comando-base">5</a></td>
+<td>Arrancar contenedores: el comando base, <code>docker ps</code> y las opciones comunes</td>
+</tr>
+<tr>
+<td><a href="#bloque-6-modo-detached-registros-y-reinicio-automatico">6</a></td>
+<td>Modo <em>detached</em>, registros y reinicio automático</td>
+</tr>
+<tr>
+<td><a href="#bloque-7-mapeo-de-puertos-conectar-los-contenedores-con-el-exterior">7</a></td>
+<td>Mapeo de puertos: conectar los contenedores con el exterior</td>
+</tr>
+<tr>
+<td>Anexos</td>
+<td>Glosario, mapa resumen y autoevaluación</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bloque-1-conceptos-previos-la-virtualizacion">Bloque 1. Conceptos previos: la virtualización<a class="headerlink" href="#bloque-1-conceptos-previos-la-virtualizacion" title="Permanent link">&para;</a></h2>
+<h3 id="11-que-son-los-contenedores-y-docker">1.1 ¿Qué son los contenedores y Docker?<a class="headerlink" href="#11-que-son-los-contenedores-y-docker" title="Permanent link">&para;</a></h3>
+<p>En esta UT empiezas a trabajar con <strong>contenedores</strong>, y en concreto con la tecnología <strong>Docker</strong>.</p>
+<p>Docker nació para Linux, pero ha crecido hasta convertirse en una solución multiplataforma: hoy funciona de manera eficiente en <strong>Linux</strong>, <strong>Windows</strong> y <strong>macOS</strong>.</p>
+<figure class="small"><img src="imagenes/UT1-docker-sistemas.png" alt="Docker funciona en los principales sistemas operativos"></figure>
+
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>«Docker funciona en Windows y macOS» no significa que los contenedores Linux se ejecuten directamente sobre esos sistemas. Por debajo siempre hay un núcleo Linux, normalmente dentro de una máquina virtual ligera que Docker Desktop crea por ti. Lo verás con detalle en el apartado 3.4. En clase trabajamos directamente sobre Linux (Ubuntu Server en VirtualBox), que es donde Docker es nativo.</p>
+</div>
+<p>Para entender qué es un contenedor hay que empezar un paso antes, por la <strong>virtualización</strong>, porque un contenedor es, en el fondo, una forma de virtualizar.</p>
+<h3 id="12-virtualizacion">1.2 Virtualización<a class="headerlink" href="#12-virtualizacion" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Virtualización</strong>: tecnología que <strong>abstrae el hardware</strong>, de modo que podemos administrar recursos virtuales (CPU, memoria, disco, red) como si fueran reales.</p>
+</div>
+<p>La virtualización es fundamental para el despliegue de sistemas, el desarrollo de software y las pruebas, y ofrece ahorros importantes en costes: menos máquinas físicas significa menos energía y menos mantenimiento. Además, es la clave para entender cómo funcionan los contenedores en cualquier sistema operativo.</p>
+<table>
+<thead>
+<tr>
+<th>Ventajas</th>
+<th>Aplicaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Optimización de recursos</td>
+<td>Desarrollo de software</td>
+</tr>
+<tr>
+<td>Aislamiento de aplicaciones</td>
+<td>Operaciones e infraestructura</td>
+</tr>
+<tr>
+<td>Portabilidad</td>
+<td>Entornos de pruebas</td>
+</tr>
+<tr>
+<td>Fácil gestión y despliegue</td>
+<td>Producción distribuida</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Un servidor físico con 64 GB de RAM y 16 núcleos pasa la mayor parte del día al 10 % de uso ejecutando un único servicio. Si lo virtualizamos, en ese mismo equipo pueden convivir el servidor web, la base de datos, el correo y un entorno de pruebas, cada uno aislado de los demás. Se aprovecha mejor el hardware (<strong>optimización de recursos</strong>), un fallo en uno no tumba a los otros (<strong>aislamiento</strong>) y cualquiera de ellos se puede mover a otro servidor copiando unos archivos (<strong>portabilidad</strong>).</p>
+</div>
+<h3 id="13-que-es-una-maquina-virtual">1.3 ¿Qué es una máquina virtual?<a class="headerlink" href="#13-que-es-una-maquina-virtual" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Máquina virtual (VM)</strong>: entorno que simula un sistema operativo completo y permite ejecutar software o configuraciones de forma aislada, <strong>sin afectar al sistema principal</strong>.</p>
+</div>
+<p>Es una solución para probar, desarrollar y ejecutar programas de forma independiente. Existen tres tecnologías de virtualización clave:</p>
+<ul>
+<li><strong>Máquina virtual de proceso</strong></li>
+<li><strong>Hipervisor</strong></li>
+<li><strong>Contenedores</strong> (aquí es donde se enmarca Docker)</li>
+</ul>
+<p>Las tres son formas de <strong>virtualización</strong>, y cada una se caracteriza por <strong>lo que aísla o abstrae</strong>:</p>
+<figure class="small"><img src="imagenes/UT1-tipos-virtualizacion.png" alt="Relación entre los diferentes tipos de virtualización"></figure>
+
+<table>
+<thead>
+<tr>
+<th>Tecnología</th>
+<th>Qué aísla o abstrae</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Máquina virtual de proceso</td>
+<td>El lenguaje o <em>runtime</em></td>
+<td>JVM, .NET</td>
+</tr>
+<tr>
+<td>Contenedor</td>
+<td>Los procesos y los recursos</td>
+<td>Docker</td>
+</tr>
+<tr>
+<td>Hipervisor</td>
+<td>El hardware</td>
+<td>VirtualBox, Hyper-V</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>En el diagrama, las etiquetas «aislamiento de lenguaje/runtime», «aislamiento de procesos y recursos» y «abstracción de hardware» aparecen en las <strong>zonas de intersección</strong> entre círculos, lo que puede hacer pensar que son rasgos compartidos. No es así: cada etiqueta describe <strong>a una de las tres tecnologías</strong>, como en la tabla de arriba. Lo que de verdad comparten las tres es lo del centro: todas son <strong>virtualización</strong>.</p>
+</div>
+<h3 id="14-que-es-una-maquina-virtual-de-proceso">1.4 ¿Qué es una máquina virtual de proceso?<a class="headerlink" href="#14-que-es-una-maquina-virtual-de-proceso" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Máquina virtual de proceso (MVP)</strong>: software que ejecuta programas diseñados para un sistema operativo o una arquitectura concretos <strong>como si fueran nativos</strong>, emulando el entorno que necesitan.</p>
+</div>
+<p>La diferencia con una VM «de sistema» es el alcance: la MVP no arranca un sistema operativo entero. Solo crea el entorno para <strong>un programa</strong> y desaparece cuando el programa termina.</p>
+<table>
+<thead>
+<tr>
+<th>MVP</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Máquina Virtual de Java (JVM)</strong></td>
+<td>Ejecuta <em>bytecodes</em> de Java en cualquier sistema con JVM, de modo que el mismo código funciona en Windows, Linux y macOS sin modificaciones</td>
+</tr>
+<tr>
+<td><strong>Wine</strong></td>
+<td>Permite ejecutar aplicaciones de Windows en Linux o macOS sin instalar Windows</td>
+</tr>
+<tr>
+<td><strong>.NET Runtime</strong></td>
+<td>Parecido a la JVM: ejecuta aplicaciones .NET en varias plataformas (Windows, Linux, macOS) gracias a .NET Core</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Compilas <code>Hola.java</code> en tu portátil con Windows y obtienes <code>Hola.class</code> (<em>bytecode</em>). Copias ese mismo archivo a la VM Ubuntu de clase y ejecutas <code>java Hola</code>: funciona igual, sin recompilar. Quien hace la «traducción» a cada sistema es la JVM instalada en cada uno.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Wine es un caso especial: su nombre significa <em>Wine Is Not an Emulator</em>. No emula un procesador ni arranca Windows, sino que <strong>traduce las llamadas al sistema</strong> de Windows a llamadas equivalentes de Linux o macOS. Por eso se agrupa con las MVP: crea el entorno que el programa espera para que se ejecute como si fuera nativo.</p>
+</div>
+<h3 id="15-que-es-un-hipervisor">1.5 ¿Qué es un hipervisor?<a class="headerlink" href="#15-que-es-un-hipervisor" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Hipervisor</strong>: software que <strong>simula hardware</strong> y permite instalar y ejecutar varios sistemas operativos (máquinas virtuales) sobre un sistema operativo anfitrión.</p>
+</div>
+<p>Es esencial en entornos multiplataforma y en soluciones como Docker Desktop, que lo usa para ofrecer buen rendimiento en Windows y macOS. Para saber más: <a href="https://es.wikipedia.org/wiki/Hipervisor">https://es.wikipedia.org/wiki/Hipervisor</a></p>
+<table>
+<thead>
+<tr>
+<th>Hipervisor</th>
+<th>Característica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VirtualBox</strong></td>
+<td>Multiplataforma y gratuito</td>
+</tr>
+<tr>
+<td><strong>VMware</strong></td>
+<td>Solución empresarial</td>
+</tr>
+<tr>
+<td><strong>Hyper-V</strong></td>
+<td>Nativo de Windows</td>
+</tr>
+<tr>
+<td><strong>Parallels</strong></td>
+<td>Popular en macOS</td>
+</tr>
+</tbody>
+</table>
+<h4 id="hipervisores-de-tipo-1-y-de-tipo-2">Hipervisores de tipo 1 y de tipo 2<a class="headerlink" href="#hipervisores-de-tipo-1-y-de-tipo-2" title="Permanent link">&para;</a></h4>
+<p>La definición de arriba habla de un hipervisor que funciona «sobre un sistema operativo anfitrión». Eso describe los hipervisores <strong>de tipo 2</strong>, pero existe otro tipo que conviene conocer:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Tipo 1 (<em>bare metal</em>, nativo)</th>
+<th>Tipo 2 (alojado, <em>hosted</em>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dónde se ejecuta</td>
+<td>Directamente sobre el hardware</td>
+<td>Como un programa más dentro de un SO anfitrión</td>
+</tr>
+<tr>
+<td>Rendimiento</td>
+<td>Mayor</td>
+<td>Algo menor (hay una capa más)</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td>Servidores y centros de datos</td>
+<td>Portátiles y equipos de escritorio</td>
+</tr>
+<tr>
+<td>Ejemplos</td>
+<td>Hyper-V, VMware ESXi, Proxmox (KVM)</td>
+<td>VirtualBox, VMware Workstation, Parallels</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Hyper-V aparece en la tabla anterior como «nativo de Windows», y es cierto que viene con Windows, pero técnicamente es de <strong>tipo 1</strong>: al activarlo, Hyper-V pasa a ejecutarse debajo de Windows y el propio Windows queda como una máquina virtual privilegiada. Por eso, cuando Hyper-V (o WSL2) está activo, VirtualBox tiene que funcionar «encima» de él y va más lento o da problemas. Es lo que pasa con el icono de la tortuga verde que viste al instalar la VM de clase.</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>Con tus palabras: ¿qué significa que la virtualización «abstrae el hardware»?</li>
+<li>Cita dos ventajas de la virtualización y pon un ejemplo de cada una.</li>
+<li>¿Qué diferencia hay entre una máquina virtual de proceso y una máquina virtual gestionada por un hipervisor?</li>
+<li>¿Qué aísla o abstrae cada una de las tres tecnologías de virtualización del diagrama?</li>
+<li>VirtualBox, ¿es un hipervisor de tipo 1 o de tipo 2? ¿Por qué?</li>
+</ol>
+</div>
+<h2 id="bloque-2-contenedores">Bloque 2. Contenedores<a class="headerlink" href="#bloque-2-contenedores" title="Permanent link">&para;</a></h2>
+<h3 id="21-que-son-los-contenedores">2.1 ¿Qué son los contenedores?<a class="headerlink" href="#21-que-son-los-contenedores" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Contenedor</strong>: entorno de virtualización <strong>ligero</strong> que <strong>comparte el sistema operativo del anfitrión</strong>. No emula un sistema completo, sino que aísla una aplicación y sus dependencias a nivel de <strong>procesos</strong>, <strong>memoria</strong>, <strong>sistema de ficheros</strong> y <strong>red</strong>.</p>
+</div>
+<p>A diferencia de los hipervisores, un contenedor no simula hardware ni arranca un sistema operativo propio. Se limita a «encerrar» unos procesos para que crean que están solos en la máquina. Esto se conoce como <strong>virtualización a nivel de sistema operativo</strong> (<a href="https://en.wikipedia.org/wiki/OS-level_virtualization">más información</a>) y tiene una consecuencia importante: el contenedor <strong>depende del núcleo del SO anfitrión</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Un contenedor aísla…</th>
+<th>Qué significa en la práctica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Procesos</td>
+<td>Desde dentro solo se ven los procesos del propio contenedor</td>
+</tr>
+<tr>
+<td>Memoria</td>
+<td>Se le puede asignar y limitar la memoria que usa</td>
+</tr>
+<tr>
+<td>Sistema de ficheros</td>
+<td>Tiene su propio árbol de directorios (<code>/</code>, <code>/etc</code>, <code>/usr</code>…)</td>
+</tr>
+<tr>
+<td>Red</td>
+<td>Tiene sus propias interfaces, IP y puertos</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>En tu VM de clase puedes tener a la vez un contenedor con Nginx y otro con Apache, los dos escuchando en su puerto 80. No chocan porque cada uno tiene <strong>su propia red</strong>. Y si dentro de cada contenedor escribes <code>ps</code>, cada uno solo verá sus propios procesos, aunque todos se estén ejecutando en el mismo núcleo Linux de la VM.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>«Dependencia del núcleo del anfitrión» quiere decir que un contenedor Linux necesita un <strong>núcleo Linux</strong>. Un contenedor no trae su propio núcleo: trae los programas y bibliotecas de una distribución (Ubuntu, Alpine, Debian…), pero todos los contenedores de una máquina comparten el mismo núcleo, el del anfitrión.</p>
+</div>
+<h3 id="22-contenedores-frente-a-maquinas-virtuales">2.2 Contenedores frente a máquinas virtuales<a class="headerlink" href="#22-contenedores-frente-a-maquinas-virtuales" title="Permanent link">&para;</a></h3>
+<figure><img src="imagenes/UT1-vm-vs-contenedores.png" alt="Máquinas virtuales (izquierda) frente a contenedores (derecha)"><figcaption>Máquinas virtuales (izquierda) frente a contenedores (derecha)</figcaption></figure>
+
+<p>Fíjate en las capas del diagrama. A la izquierda, cada aplicación arrastra un <strong>Guest OS</strong> completo encima del hipervisor. A la derecha, las aplicaciones solo llevan sus binarios y bibliotecas (<em>bins/libs</em>) y se apoyan todas en el <strong>Docker Engine</strong>, que a su vez usa el <strong>mismo SO anfitrión</strong>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Máquinas virtuales (VM)</th>
+<th>Contenedores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qué se virtualiza</td>
+<td>El hardware</td>
+<td>Se comparte el SO anfitrión</td>
+</tr>
+<tr>
+<td>Sistema operativo</td>
+<td>Uno propio por cada VM</td>
+<td>Comparten el del anfitrión</td>
+</tr>
+<tr>
+<td>Consumo de recursos</td>
+<td>Alto</td>
+<td>Bajo</td>
+</tr>
+<tr>
+<td>Arranque y ejecución</td>
+<td>Lentos</td>
+<td>Ligeros y rápidos</td>
+</tr>
+<tr>
+<td>Rendimiento</td>
+<td>Inferior</td>
+<td>Cercano al nativo</td>
+</tr>
+<tr>
+<td>Sistemas que ejecuta</td>
+<td>Cualquier SO</td>
+<td>Ejecutables en cualquier SO (por ejemplo, con Docker Desktop)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Cifras orientativas. Una VM con Ubuntu Server ocupa varios GB de disco, reserva 1 o 2 GB de RAM aunque no haga nada y tarda decenas de segundos en arrancar. Un contenedor de Nginx basado en Alpine ocupa unas decenas de MB, consume unos pocos MB de RAM y arranca en menos de un segundo, porque no hay ningún sistema operativo que arrancar: solo se lanza un proceso.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>«Ejecuta cualquier SO» y «ejecutables en cualquier SO» <strong>no son lo mismo</strong>. Una VM puede ejecutar <strong>cualquier sistema operativo invitado</strong> (Windows dentro de Linux, Linux dentro de Windows…). Un contenedor Linux solo se puede ejecutar sobre un <strong>núcleo Linux</strong>: que se pueda usar desde Windows o macOS es porque Docker Desktop monta por debajo una pequeña VM Linux. Por eso se dice que los contenedores y las VM no compiten, sino que se combinan, como en clase: contenedores dentro de una VM de VirtualBox.</p>
+</div>
+<h3 id="23-analogia-con-los-contenedores-de-transporte-maritimo">2.3 Analogía con los contenedores de transporte marítimo<a class="headerlink" href="#23-analogia-con-los-contenedores-de-transporte-maritimo" title="Permanent link">&para;</a></h3>
+<p>El nombre «contenedor» no es casual. Se compara con los contenedores de los barcos de mercancías:</p>
+<figure class="small"><img src="imagenes/UT1-contenedores-maritimos.png" alt="Contenedores de transporte marítimo"></figure>
+
+<table>
+<thead>
+<tr>
+<th>Idea</th>
+<th>En el transporte marítimo</th>
+<th>En Docker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Estandarización</strong></td>
+<td>Todos los contenedores tienen medidas estándar: cualquier barco, grúa o camión los puede mover</td>
+<td>Los contenedores siguen estándares y se ejecutan en cualquier sistema (Windows, Linux, macOS)</td>
+</tr>
+<tr>
+<td><strong>Contenido independiente</strong></td>
+<td>Da igual lo que haya dentro (muebles, fruta, coches): el contenedor se maneja igual</td>
+<td>Docker encapsula la aplicación <strong>y sus dependencias</strong> y funciona en cualquier entorno compatible</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Antes de los contenedores estándar, cargar un barco implicaba manipular miles de sacos y cajas de formas distintas, uno a uno. Con el contenedor, al puerto le da igual qué transporta: solo mueve cajas de metal iguales. En informática pasa lo mismo: al servidor le da igual si dentro del contenedor hay una aplicación en PHP, Java o Python, solo sabe <strong>arrancar contenedores</strong>.</p>
+</div>
+<h3 id="24-desarrollo-y-despliegue-consistentes">2.4 Desarrollo y despliegue consistentes<a class="headerlink" href="#24-desarrollo-y-despliegue-consistentes" title="Permanent link">&para;</a></h3>
+<p>Los contenedores simplifican el <strong>ciclo de vida</strong> de las aplicaciones, porque ofrecen entornos estandarizados para desarrollo, pruebas y producción que funcionan de forma idéntica en cualquier sistema con Docker.</p>
+<table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Qué aporta el contenedor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Desarrollo estandarizado</strong></td>
+<td>Elimina el «funciona en mi máquina» al dar el mismo entorno a todo el equipo (Windows, Linux, macOS)</td>
+</tr>
+<tr>
+<td><strong>Pruebas fiables</strong></td>
+<td>Permite crear muchos entornos de prueba con distintas configuraciones, para probar a fondo y simular producción</td>
+</tr>
+<tr>
+<td><strong>Producción predecible</strong></td>
+<td>La aplicación se comporta igual que en desarrollo y pruebas, sea cual sea la infraestructura</td>
+</tr>
+</tbody>
+</table>
+<h3 id="25-contenedores-para-el-despliegue-de-servicios">2.5 Contenedores para el despliegue de servicios<a class="headerlink" href="#25-contenedores-para-el-despliegue-de-servicios" title="Permanent link">&para;</a></h3>
+<p>Los contenedores son clave para desplegar <strong>todo tipo de servidores</strong>: web, correo, bases de datos, DNS, etc. Aportan dos cosas:</p>
+<ul>
+<li><strong>Unificación y consistencia</strong>: las aplicaciones funcionan igual en cualquier entorno (local o en la nube) y las configuraciones quedan estandarizadas.</li>
+<li><strong>Escalado horizontal</strong>: facilitan ejecutar más copias de un servicio cuando hace falta, sobre todo combinados con herramientas de <strong>orquestación</strong>. Para saber más: <a href="https://es.wikipedia.org/wiki/Escalabilidad#Escalabilidad_horizontal">Escalabilidad horizontal en Wikipedia</a>.</li>
+</ul>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Escalado horizontal</strong>: aumentar la capacidad de un servicio <strong>añadiendo más copias</strong> (más contenedores o más servidores) en lugar de hacer más potente una sola máquina, que sería el escalado <strong>vertical</strong>.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Una tienda online atiende sin problemas 200 visitas por minuto con un contenedor web. En el <em>Black Friday</em> llegan 2000. Con escalado vertical habría que comprar un servidor diez veces más potente: caro, lento y con una parada. Con escalado horizontal se lanzan nueve contenedores más, idénticos al primero, y se reparten las visitas entre los diez. Al acabar la campaña se paran los nueve sobrantes.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>El uso de contenedores elimina el problema de «en mi máquina funcionaba, pero falla en el servidor», porque garantiza la consistencia sea cual sea el sistema operativo en el que se desarrolló. Si lo que se despliega es el mismo contenedor que se probó, no hay sorpresas por versiones distintas de PHP, de bibliotecas o de configuración.</p>
+</div>
+<h3 id="26-ventajas-e-inconvenientes-de-los-contenedores">2.6 Ventajas e inconvenientes de los contenedores<a class="headerlink" href="#26-ventajas-e-inconvenientes-de-los-contenedores" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Ventajas</th>
+<th>Inconvenientes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Eficiencia de espacio</strong>: comparten el SO del anfitrión, lo que reduce el tamaño</td>
+<td><strong>Rendimiento</strong>: inferior al <em>bare metal</em>, aunque superior al de las VM tradicionales</td>
+</tr>
+<tr>
+<td><strong>Alto rendimiento</strong>: ejecución cercana a la nativa, al evitar la virtualización de hardware</td>
+<td><strong>Persistencia de datos</strong>: su gestión entre contenedores es más compleja</td>
+</tr>
+<tr>
+<td><strong>Compatibilidad</strong>: consistencia en Windows, Linux y macOS (con Docker Desktop)</td>
+<td><strong>Interfaz</strong>: principalmente línea de comandos (CLI)</td>
+</tr>
+<tr>
+<td><strong>Soporte amplio</strong>: empresas como Microsoft, Apache o MySQL ofrecen imágenes oficiales</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><em>Bare metal</em></strong> («metal desnudo»): ejecutar un programa directamente sobre el sistema operativo instalado en la máquina física, sin ninguna capa de virtualización. Es la referencia de máximo rendimiento.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>La persistencia de datos es el inconveniente que más te va a afectar en el día a día: si borras un contenedor, <strong>se borra todo lo que se escribió dentro de él</strong>. Una base de datos en un contenedor sin volumen pierde sus datos al eliminar el contenedor. La solución, los <strong>volúmenes</strong>, la verás en la unidad de redes y volúmenes.</p>
+</div>
+<h3 id="27-cuando-es-adecuado-usar-contenedores">2.7 ¿Cuándo es adecuado usar contenedores?<a class="headerlink" href="#27-cuando-es-adecuado-usar-contenedores" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Perfil</th>
+<th>Para qué</th>
+<th>Referencia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Como usuario</strong></td>
+<td>Probar servicios en local o aprender, sin configuraciones complejas</td>
+<td>Imágenes públicas en Docker Hub: <a href="https://hub.docker.com/">hub.docker.com</a></td>
+</tr>
+<tr>
+<td><strong>Como desarrollador</strong></td>
+<td>Crear y distribuir aplicaciones fácilmente (en local o en la nube), con entornos consistentes e independientes del SO</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Para testear</strong></td>
+<td>Probar aplicaciones con distintas configuraciones, límites y juegos de prueba</td>
+<td>Facilita entornos de prueba y despliegue CI/CD: <a href="https://es.wikipedia.org/wiki/CI/CD">CI/CD</a></td>
+</tr>
+<tr>
+<td><strong>Para escalar</strong></td>
+<td>Escalado horizontal: ejecutar varias copias de una aplicación como un clúster</td>
+<td><a href="https://es.wikipedia.org/wiki/Escalabilidad#Escalabilidad_horizontal">Escalabilidad horizontal</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>CI/CD</strong> (<em>integración continua y entrega o despliegue continuo</em>): práctica en la que cada cambio en el código se compila, se prueba y se despliega de forma automática. Los contenedores encajan muy bien porque cada prueba puede ejecutarse en un entorno limpio e idéntico.</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Por qué se dice que un contenedor es «virtualización a nivel de SO»?</li>
+<li>Nombra las cuatro cosas que aísla un contenedor.</li>
+<li>Explica, con el diagrama de capas, por qué un contenedor consume menos que una VM.</li>
+<li>¿Puede un contenedor Linux ejecutarse directamente sobre un núcleo de Windows? Razónalo.</li>
+<li>¿Qué es el escalado horizontal y en qué se diferencia del vertical?</li>
+</ol>
+</div>
+<h2 id="bloque-3-contenedores-en-sistemas-linux">Bloque 3. Contenedores en sistemas Linux<a class="headerlink" href="#bloque-3-contenedores-en-sistemas-linux" title="Permanent link">&para;</a></h2>
+<h3 id="31-los-origenes-es-nuevo-el-concepto-de-entornos-privados-en-unix">3.1 Los orígenes: ¿es nuevo el concepto de entornos privados en Unix?<a class="headerlink" href="#31-los-origenes-es-nuevo-el-concepto-de-entornos-privados-en-unix" title="Permanent link">&para;</a></h3>
+<p>No. La idea de «encerrar» un proceso en un entorno privado es muy anterior a Docker:</p>
+<table>
+<thead>
+<tr>
+<th>Año</th>
+<th>Tecnología</th>
+<th>Qué aportó</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1982</strong></td>
+<td><strong>chroot</strong> (sistemas Unix)</td>
+<td>Aísla un proceso <strong>cambiando su directorio raíz aparente</strong>. <a href="https://es.wikipedia.org/wiki/Chroot">Más información</a></td>
+</tr>
+<tr>
+<td><strong>1999</strong></td>
+<td><strong>Jail</strong> (FreeBSD)</td>
+<td>Extensión de chroot con <strong>más aislamiento</strong>: procesos, red, usuarios. <a href="https://es.wikipedia.org/wiki/FreeBSD_jail">Más información</a></td>
+</tr>
+</tbody>
+</table>
+<p>Estos sistemas fueron los <strong>precursores</strong> de los contenedores modernos en Unix.</p>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Si ejecutas un programa con <code>chroot /srv/jaula programa</code>, para ese programa la carpeta <code>/srv/jaula</code> pasa a ser <code>/</code>. Si intenta leer <code>/etc/passwd</code>, en realidad leerá <code>/srv/jaula/etc/passwd</code>: no puede ver el resto del disco. Pero <strong>sí</strong> puede ver todos los procesos de la máquina y usar su red, porque chroot solo aísla el sistema de ficheros. Jail dio el paso siguiente y aisló también procesos, red y usuarios.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Las fechas corresponden a hitos concretos: la llamada <code>chroot</code> ya existía en Unix Version 7 (1979) y se incorporó a BSD en 1982. Jail se desarrolló en 1999 y se publicó con FreeBSD 4.0 en el año 2000. Lo importante es el orden: <strong>chroot, Jail, LXC, Docker</strong>.</p>
+</div>
+<h3 id="32-contenedores-modernos-en-linux">3.2 Contenedores modernos en Linux<a class="headerlink" href="#32-contenedores-modernos-en-linux" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Año</th>
+<th>Tecnología</th>
+<th>Qué supuso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2008</strong></td>
+<td><strong>Linux Containers (LXC)</strong></td>
+<td>Inició los contenedores modernos en Linux, aprovechando nuevas capacidades del núcleo</td>
+</tr>
+<tr>
+<td><strong>2013</strong></td>
+<td><strong>Docker</strong></td>
+<td>Simplificó drásticamente la creación, distribución y ejecución de contenedores. Docker Desktop extendió el soporte a Windows y macOS</td>
+</tr>
+</tbody>
+</table>
+<p>Aunque nos centraremos en Docker, existen otras opciones como LXD y LXCFS. Puedes explorar más en <a href="https://linuxcontainers.org/">linuxcontainers.org</a>.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>LXD y LXCFS no son del mismo tipo. <strong>LXD</strong> (y su derivado comunitario, Incus) es un gestor de contenedores, comparable en ese sentido a Docker. <strong>LXCFS</strong> es otra cosa: un pequeño sistema de ficheros que hace que, dentro de un contenedor, archivos como <code>/proc/meminfo</code> muestren los límites del contenedor y no los de la máquina entera. Otra alternativa muy usada hoy es <strong>Podman</strong>, que acepta casi los mismos comandos que Docker.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Docker no inventó los contenedores: los <strong>hizo fáciles</strong>. Antes de 2013, montar un contenedor con LXC exigía bastantes conocimientos del núcleo. Docker añadió las <strong>imágenes</strong> (plantillas listas para usar), un <strong>registro</strong> público para compartirlas y una línea de comandos sencilla.</p>
+</div>
+<h3 id="33-como-funcionan-los-contenedores-modernos-en-linux">3.3 ¿Cómo funcionan los contenedores modernos en Linux?<a class="headerlink" href="#33-como-funcionan-los-contenedores-modernos-en-linux" title="Permanent link">&para;</a></h3>
+<p>Los contenedores se apoyan en dos funciones del núcleo Linux: los <strong>namespaces</strong>, que deciden <strong>qué ve</strong> un proceso, y los <strong>cgroups</strong>, que deciden <strong>cuánto puede usar</strong>.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Linux namespaces</strong> (espacios de nombres): proporcionan <strong>aislamiento a nivel de proceso</strong>, de modo que cada contenedor tiene su propia vista del sistema.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Namespace</th>
+<th>Qué ve el contenedor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Procesos (PID)</strong></td>
+<td>Su propio árbol de procesos</td>
+</tr>
+<tr>
+<td><strong>Red (NET)</strong></td>
+<td>Su propia interfaz de red y su tabla de rutas</td>
+</tr>
+<tr>
+<td><strong>Montajes (MNT)</strong></td>
+<td>Su propio sistema de archivos aislado</td>
+</tr>
+<tr>
+<td><strong>Usuarios (USER)</strong></td>
+<td>Sus propios ID de usuario y de grupo (mapeables)</td>
+</tr>
+</tbody>
+</table>
+<p>Esto asegura que los procesos del contenedor son independientes. Más información: <a href="https://en.wikipedia.org/wiki/Linux_namespaces">Linux namespaces en Wikipedia</a>.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Cgroups</strong> (<em>control groups</em>): gestionan y <strong>limitan el uso de recursos</strong> del sistema por parte de los procesos del contenedor.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>Qué controla el cgroup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CPU</strong></td>
+<td>Asigna tiempo de procesador</td>
+</tr>
+<tr>
+<td><strong>Memoria</strong></td>
+<td>Establece límites de RAM</td>
+</tr>
+<tr>
+<td><strong>E/S de disco</strong></td>
+<td>Controla el acceso al almacenamiento</td>
+</tr>
+<tr>
+<td><strong>Red</strong></td>
+<td>Restringe el ancho de banda</td>
+</tr>
+</tbody>
+</table>
+<p>Así se evita que un contenedor acapare todos los recursos y se pueden establecer prioridades entre ellos. Más información: <a href="https://en.wikipedia.org/wiki/Cgroups">Cgroups en Wikipedia</a>.</p>
+<p>En resumen, los <em>namespaces</em> <strong>aíslan</strong> el sistema y los <em>cgroups</em> <strong>gestionan y limitan</strong> los recursos de cada contenedor. Estas tecnologías, nativas de Linux, son la base que permite a Docker y a otras soluciones ofrecer contenedores en cualquier sistema operativo mediante capas de compatibilidad, como Docker Desktop.</p>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Piensa en un edificio de oficinas. Los <strong><em>namespaces</em></strong> son las <strong>paredes</strong>: cada empresa tiene su despacho y no ve lo que hacen las demás. Los <strong><em>cgroups</em></strong> son los <strong>contadores</strong>: cada empresa tiene un límite de luz y de agua, y si una se pasa no deja sin suministro a las otras. Sin paredes no hay intimidad, y sin contadores una empresa podría gastarse toda la electricidad del edificio.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Se suele decir que un <code>root</code> dentro del contenedor no tiene privilegios de <code>root</code> en el anfitrión, pero eso <strong>solo es del todo cierto si se usa el namespace de usuarios</strong> (modo <em>rootless</em> o <code>userns-remap</code>). En una instalación estándar de Docker, como la de clase, ese namespace <strong>no está activado por defecto</strong>: el <code>root</code> del contenedor es el UID 0 también en el anfitrión, aunque con permisos recortados por otras protecciones del núcleo. Por eso <strong>no</strong> hay que tratar un contenedor como una caja fuerte: no ejecutes imágenes de origen desconocido ni montes carpetas sensibles del anfitrión dentro de un contenedor.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>No confundas <strong>aislar</strong> con <strong>limitar</strong>. Un contenedor sin límites de cgroup está aislado (no ve a los demás), pero puede comerse toda la RAM de la máquina. Y al revés: los límites no le impiden ver nada. Son dos mecanismos distintos que se usan juntos.</p>
+</div>
+<h4 id="miralo-en-tu-maquina">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina" title="Permanent link">&para;</a></h4>
+<p>Con Docker ya instalado en <code>cont-vm</code>, puedes ver los dos mecanismos en acción:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Namespace PID: dentro del contenedor, el primer proceso es el PID 1</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>alpine<span class="w"> </span>ps
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Cgroup de memoria: limitamos el contenedor a 128 MB y lo comprobamos desde dentro</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-m<span class="w"> </span>128m<span class="w"> </span>alpine<span class="w"> </span>cat<span class="w"> </span>/sys/fs/cgroup/memory.max
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># 134217728   (128 × 1024 × 1024 bytes)</span>
+</code></pre></div>
+<p>En el primer comando verás solo uno o dos procesos, aunque en la VM haya decenas: eso es el namespace PID. En el segundo, el número que aparece es exactamente el límite que has puesto: eso es el cgroup. No te preocupes aún por las opciones de <code>docker run</code>, las verás en el bloque 5.</p>
+<h3 id="34-pueden-funcionar-los-contenedores-linux-en-windows-o-macos">3.4 ¿Pueden funcionar los contenedores Linux en Windows o macOS?<a class="headerlink" href="#34-pueden-funcionar-los-contenedores-linux-en-windows-o-macos" title="Permanent link">&para;</a></h3>
+<p>Sí, pero siempre hay un núcleo Linux por debajo. La forma de conseguirlo ha cambiado con el tiempo:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Estrategia tradicional</th>
+<th>Estrategia moderna</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cómo</td>
+<td>Se virtualizaba un sistema Linux (por ejemplo, con VirtualBox) para ejecutar contenedores. Docker Toolbox (hoy discontinuado) facilitaba este proceso</td>
+<td><strong>Docker Desktop</strong> (Windows y macOS). En Windows usa <strong>WSL2 o Hyper-V</strong>; en macOS usa el <em>framework</em> de virtualización del propio sistema</td>
+</tr>
+<tr>
+<td>Experiencia</td>
+<td>Manual y más lenta</td>
+<td>Casi nativa y de alto rendimiento, con integración fluida en el escritorio</td>
+</tr>
+</tbody>
+</table>
+<p>Actualmente, los contenedores Linux funcionan con alto rendimiento en cualquier SO moderno, gracias a optimizaciones específicas de cada plataforma.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>En las versiones antiguas de Docker Desktop para Mac se usaba HyperKit, que ya está obsoleto. La idea de fondo no cambia: <strong>hay una VM Linux ligera escondida</strong> que ejecuta los contenedores.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>En clase usamos, a propósito, la <strong>estrategia tradicional</strong>: una VM de Ubuntu Server en VirtualBox con Docker Engine instalado dentro. Así el demonio de Docker queda a la vista y se puede administrar, que es justo lo que se trabaja en este módulo. Docker Desktop lo esconde, y además su licencia gratuita no cubre a todas las organizaciones: las grandes empresas y las administraciones públicas necesitan una suscripción de pago.</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>Ordena cronológicamente: Docker, chroot, LXC, Jail.</li>
+<li>¿Qué aislaba chroot y qué añadió Jail?</li>
+<li>¿Qué diferencia hay entre un <em>namespace</em> y un <em>cgroup</em>? Pon un ejemplo de cada uno.</li>
+<li>¿Qué pasaría si un contenedor no tuviera límite de memoria y tuviera un fallo que consumiera RAM sin parar?</li>
+<li>¿Cómo consigue Docker Desktop ejecutar contenedores Linux en Windows?</li>
+</ol>
+</div>
+<h2 id="bloque-4-docker">Bloque 4. Docker<a class="headerlink" href="#bloque-4-docker" title="Permanent link">&para;</a></h2>
+<h3 id="41-que-es-docker">4.1 ¿Qué es Docker?<a class="headerlink" href="#41-que-es-docker" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Docker</strong>: plataforma de contenedores <strong>de código abierto</strong> que usa características del núcleo Linux para <strong>empaquetar y ejecutar aplicaciones de forma aislada</strong>, y que funciona en cualquier sistema operativo moderno. Web oficial: <a href="https://www.docker.com/">https://www.docker.com/</a></p>
+</div>
+<p>Se integra con servicios en la nube como Google Cloud, AWS, Azure, DigitalOcean y OVH.</p>
+<figure class="small"><img src="imagenes/UT1-docker-ballena.png" alt="Docker, la ballena que transporta contenedores"></figure>
+
+<table>
+<thead>
+<tr>
+<th>Instala Docker</th>
+<th>Docker Hub</th>
+<th>Desarrolla y despliega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Disponible para Windows, macOS y Linux, con una experiencia unificada</td>
+<td>Repositorio de imágenes oficiales y de la comunidad</td>
+<td>Crea aplicaciones que funcionarán igual en cualquier entorno</td>
+</tr>
+</tbody>
+</table>
+<p>El motor de código abierto se llama <strong>Docker Engine</strong> (o Docker CE, <em>Community Edition</em>). Es exactamente lo que has instalado en la VM: los paquetes se llaman <code>docker-ce</code> y <code>docker-ce-cli</code>. Docker vendió en 2019 su producto empresarial (Docker EE) a la empresa Mirantis, que hoy lo comercializa con otro nombre. Las ediciones de pago actuales de Docker (<em>Pro</em>, <em>Team</em>, <em>Business</em>) son suscripciones a Docker Desktop y a sus servicios, no un motor distinto.</p>
+<h3 id="42-la-arquitectura-de-docker">4.2 La arquitectura de Docker<a class="headerlink" href="#42-la-arquitectura-de-docker" title="Permanent link">&para;</a></h3>
+<p>Docker sigue un modelo <strong>cliente-servidor</strong>, con una tercera pieza donde se guardan las imágenes:</p>
+<figure><img src="imagenes/UT1-arquitectura-docker.png" alt="Arquitectura de Docker: cliente, Docker host y registro"><figcaption>Arquitectura de Docker: cliente, Docker host y registro</figcaption></figure>
+
+<table>
+<thead>
+<tr>
+<th>Pieza</th>
+<th>Qué es y qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cliente</strong></td>
+<td>Software (la CLI <code>docker</code> o Docker Desktop) que se comunica con el servidor para enviarle órdenes</td>
+</tr>
+<tr>
+<td><strong>Servidor (Docker host)</strong></td>
+<td>El <strong>demonio de Docker</strong> (<code>dockerd</code>) atiende las peticiones del cliente y gestiona los contenedores y las imágenes. Nativo en Linux, optimizado en Windows y macOS</td>
+</tr>
+<tr>
+<td><strong>Registro (<em>registry</em>)</strong></td>
+<td>Almacén centralizado, público o privado, de imágenes Docker. <strong>Docker Hub</strong> (<a href="https://hub.docker.com/">https://hub.docker.com/</a>) es el registro por defecto</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Sigue las flechas del diagrama con la orden <code>docker run</code>:</p>
+<ol>
+<li>Escribes <code>docker run nginx</code> en el <strong>cliente</strong>. El cliente no hace nada por sí mismo: solo se lo pide al demonio.</li>
+<li>El <strong>demonio</strong> (<code>dockerd</code>) busca la imagen <code>nginx</code> entre sus imágenes locales.</li>
+<li>Si no la tiene, la descarga del <strong>registro</strong> (Docker Hub), que es la flecha discontinua de la derecha.</li>
+<li>Con la imagen ya en local, crea y arranca un <strong>contenedor</strong>, que es la flecha hacia la columna <em>Containers</em>.</li>
+</ol>
+<p><code>docker pull</code> solo hace el paso 3, y <code>docker build</code> fabrica una imagen nueva en lugar de descargarla.</p>
+</div>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Imagen</strong>: plantilla de solo lectura con todo lo que necesita una aplicación (programas, bibliotecas, configuración). <strong>Contenedor</strong>: una imagen <strong>en ejecución</strong>, con una capa propia donde puede escribir. De una misma imagen se pueden arrancar muchos contenedores, igual que de un mismo instalador se pueden hacer muchas instalaciones.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Cliente y servidor <strong>no tienen por qué estar en la misma máquina</strong>. En tu VM están juntos, y por eso a veces parecen lo mismo. Compruébalo con <code>docker version</code>: la salida tiene dos apartados, <strong>Client</strong> y <strong>Server</strong>. Si paras el demonio (<code>sudo systemctl stop docker</code>) y vuelves a ejecutar <code>docker version</code>, el cliente seguirá respondiendo, pero dirá que no puede conectarse al demonio.</p>
+</div>
+<h4 id="miralo-en-tu-maquina_1">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>version
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>docker
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>docker<span class="w"> </span>version
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>docker
+</code></pre></div>
+<p>La primera vez ves los dos apartados, <strong>Client</strong> y <strong>Server</strong>. Con el demonio parado, solo responde el cliente y aparece un error de conexión. Acuérdate de volver a arrancar el servicio.</p>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Qué es Docker y en qué funciones del núcleo se apoya?</li>
+<li>Nombra las tres piezas de la arquitectura de Docker y di qué hace cada una.</li>
+<li>¿Qué diferencia hay entre una imagen y un contenedor?</li>
+<li>Describe el recorrido de <code>docker run nginx</code> cuando la imagen no está en local.</li>
+<li>¿Por qué <code>docker version</code> muestra dos bloques de información?</li>
+</ol>
+</div>
+<h2 id="bloque-5-arrancar-contenedores-el-comando-base">Bloque 5. Arrancar contenedores: el comando base<a class="headerlink" href="#bloque-5-arrancar-contenedores-el-comando-base" title="Permanent link">&para;</a></h2>
+<p>Dominar el arranque de contenedores es fundamental para trabajar con Docker de manera efectiva. En este bloque y en los dos siguientes verás cómo lanzar contenedores, gestionar su ciclo de vida y aprovechar las opciones más importantes para el trabajo diario.</p>
+<figure class="small"><img src="imagenes/UT1-arrancar-contenedores.png" alt="Arrancar contenedores con Docker"></figure>
+
+<h3 id="51-el-comando-base-de-ejecucion">5.1 El comando base de ejecución<a class="headerlink" href="#51-el-comando-base-de-ejecucion" title="Permanent link">&para;</a></h3>
+<p>El comando fundamental para lanzar un contenedor es simple pero potente:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>run<span class="w"> </span>nginx
+</code></pre></div>
+<p>Cuando lo ejecutas, Docker realiza automáticamente varias acciones <strong>en secuencia</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Paso</th>
+<th>Qué hace Docker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Busca la imagen</strong> <code>nginx</code> en local</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Si no la encuentra, <strong>la descarga de Docker Hub</strong> mediante un <em>pull</em> implícito</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Con la imagen disponible, <strong>crea un contenedor nuevo</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Ejecuta el proceso principal</strong> definido en la imagen (en este caso, el servidor Nginx)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>La primera vez que lo ejecutas en tu VM verás algo así:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Unable to find image 'nginx:latest' locally
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>latest: Pulling from library/nginx
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>...
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Status: Downloaded newer image for nginx:latest
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>/docker-entrypoint.sh: Configuration complete; ready for start up
+</code></pre></div>
+Las primeras líneas son los pasos 1 y 2 (no está en local, así que la descarga). Las últimas ya son <strong>Nginx hablando</strong>: el contenedor está en marcha. Si lo ejecutas una segunda vez, las líneas de descarga no aparecen, porque la imagen ya está en local.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Fíjate en que Docker ha escrito <code>nginx:latest</code> aunque tú solo pusiste <code>nginx</code>. Si no indicas una <strong>etiqueta</strong> (<em>tag</em>), Docker usa <code>latest</code>. <code>latest</code> no significa «la más nueva comprobada», sino «la que el autor de la imagen ha marcado con esa etiqueta». En un servidor real conviene fijar la versión: <code>nginx:1.27</code>. Lo verás a fondo en la unidad de imágenes.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Recuerda la arquitectura del bloque 4: quien hace los cuatro pasos es el <strong>demonio</strong> (<code>dockerd</code>), no el comando <code>docker</code>. El cliente solo le pasa la orden.</p>
+</div>
+<h3 id="52-ver-los-contenedores-activos">5.2 Ver los contenedores activos<a class="headerlink" href="#52-ver-los-contenedores-activos" title="Permanent link">&para;</a></h3>
+<p>Para comprobar qué contenedores se están ejecutando en este momento:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>ps
+</code></pre></div>
+<p>Muestra la información esencial de cada contenedor: <strong>ID</strong>, <strong>nombre</strong> asignado, <strong>puertos</strong> mapeados y <strong>comando</strong> en ejecución, además de la imagen, cuándo se creó y su estado.</p>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Con el Nginx del apartado anterior en marcha, abre <strong>otra</strong> terminal (otra sesión SSH a la VM) y ejecuta <code>docker ps</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>CONTAINER ID   IMAGE   COMMAND                  STATUS         PORTS    NAMES
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>3f2a9c1b7d4e   nginx   "/docker-entrypoint.…"   Up 2 minutes   80/tcp   sharp_einstein
+</code></pre></div>
+Se ha quitado la columna <code>CREATED</code> para que quepa. <code>3f2a9c1b7d4e</code> es el ID abreviado. <code>sharp_einstein</code> es un nombre que Docker ha inventado porque no le diste ninguno. <code>80/tcp</code> indica que Nginx escucha en el puerto 80 <strong>dentro</strong> del contenedor, pero sin la flecha <code>-&gt;</code>: todavía no está publicado hacia fuera (bloque 7).</p>
+</div>
+<p>Si en la terminal donde se está ejecutando Nginx pulsas <strong>Ctrl + C</strong>, detendrás el proceso, pero <strong>el contenedor seguirá existiendo</strong>, en estado detenido.</p>
+<p>Usa <code>docker ps -a</code> para ver <strong>todos</strong> los contenedores, incluidos los detenidos. Es útil para gestionar recursos y limpiar contenedores antiguos.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Parar no es borrar. Cada vez que haces <code>docker run</code> se crea un contenedor <strong>nuevo</strong>. Si has lanzado <code>docker run nginx</code> y lo has parado con Ctrl + C diez veces, <code>docker ps</code> no muestra nada, pero <code>docker ps -a</code> muestra <strong>diez</strong> contenedores en estado <code>Exited</code>, ocupando disco. Es el error más común de las primeras semanas.</p>
+</div>
+<h4 id="el-ciclo-de-vida-de-un-contenedor">El ciclo de vida de un contenedor<a class="headerlink" href="#el-ciclo-de-vida-de-un-contenedor" title="Permanent link">&para;</a></h4>
+<p>Para entender lo anterior, y para poder limpiar lo que vayas creando, ten a mano estos estados y los comandos que pasan de uno a otro:</p>
+<table>
+<thead>
+<tr>
+<th>Estado</th>
+<th>Qué significa</th>
+<th>Cómo se llega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Created</code></td>
+<td>Creado, pero nunca arrancado</td>
+<td><code>docker create</code> (o un <code>docker run</code> que falla al arrancar)</td>
+</tr>
+<tr>
+<td><code>Up</code> (<em>running</em>)</td>
+<td>En ejecución</td>
+<td><code>docker run</code>, <code>docker start &lt;contenedor&gt;</code></td>
+</tr>
+<tr>
+<td><code>Exited</code></td>
+<td>Detenido; conserva sus datos y configuración</td>
+<td>Ctrl + C, <code>docker stop &lt;contenedor&gt;</code>, o el proceso termina solo</td>
+</tr>
+<tr>
+<td>(no existe)</td>
+<td>Borrado</td>
+<td><code>docker rm &lt;contenedor&gt;</code> (si está parado)</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>stop<span class="w"> </span>sharp_einstein<span class="w">     </span><span class="c1"># detener</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker<span class="w"> </span>start<span class="w"> </span>sharp_einstein<span class="w">    </span><span class="c1"># volver a arrancar el MISMO contenedor</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>docker<span class="w"> </span>rm<span class="w"> </span>sharp_einstein<span class="w">       </span><span class="c1"># borrarlo (tiene que estar detenido)</span>
+</code></pre></div>
+<h3 id="53-opciones-comunes-al-arrancar-contenedores">5.3 Opciones comunes al arrancar contenedores<a class="headerlink" href="#53-opciones-comunes-al-arrancar-contenedores" title="Permanent link">&para;</a></h3>
+<p>Docker ofrece muchas opciones para personalizar el comportamiento de los contenedores. Estas son las que más vas a usar:</p>
+<table>
+<thead>
+<tr>
+<th>Opción</th>
+<th>Nombre</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-d</code></td>
+<td><em>Detached</em></td>
+<td>Arranca el contenedor <strong>en segundo plano</strong> y te devuelve la terminal para otros comandos</td>
+</tr>
+<tr>
+<td><code>-p</code></td>
+<td><em>Port</em></td>
+<td><strong>Mapea un puerto</strong> del contenedor a un puerto del <em>host</em> para acceder desde fuera</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td><em>Volume</em></td>
+<td><strong>Monta un volumen</strong> del <em>host</em> en el contenedor para que los datos persistan</td>
+</tr>
+<tr>
+<td><code>--name</code></td>
+<td>Nombre</td>
+<td>Asigna un <strong>nombre personalizado</strong> al contenedor para identificarlo fácilmente</td>
+</tr>
+<tr>
+<td><code>--rm</code></td>
+<td><em>Remove</em></td>
+<td><strong>Elimina automáticamente</strong> el contenedor cuando se detiene, para mantener limpio el sistema</td>
+</tr>
+<tr>
+<td><code>-e</code> / <code>--env-file</code></td>
+<td><em>Environment</em></td>
+<td>Define <strong>variables de entorno</strong>, directamente o mediante un archivo de configuración</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p><code>docker run --rm alpine echo hola</code> escribe «hola», termina y el contenedor desaparece solo: no quedará en <code>docker ps -a</code>.</p>
+<p><code>docker run -d -e MARIADB_ROOT_PASSWORD=secreta mariadb</code>: las imágenes de bases de datos leen su configuración de variables de entorno. Sin esa variable, el contenedor de MariaDB se niega a arrancar.</p>
+<p><code>docker run -d --env-file bd.env mariadb</code> hace lo mismo, pero leyendo las variables (una <code>CLAVE=valor</code> por línea) del archivo <code>bd.env</code>.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>El orden importa: <strong>las opciones van entre <code>run</code> y el nombre de la imagen</strong>. Todo lo que escribas <strong>después</strong> de la imagen se interpreta como el comando que se ejecutará <strong>dentro</strong> del contenedor. <code>docker run nginx -d</code> no arranca Nginx en segundo plano: le pasa <code>-d</code> al propio Nginx.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Aunque se hable de «montar un volumen del host», <code>-v</code> sirve para dos cosas distintas que verás en la unidad de volúmenes: montar una <strong>carpeta concreta del anfitrión</strong> (<code>-v /home/alumno/web:/usr/share/nginx/html</code>, un <em>bind mount</em>) o un <strong>volumen gestionado por Docker</strong> (<code>-v datos:/var/lib/mysql</code>).</p>
+</div>
+<h3 id="54-ejemplo-practico-completo">5.4 Ejemplo práctico completo<a class="headerlink" href="#54-ejemplo-practico-completo" title="Permanent link">&para;</a></h3>
+<p>Combinando varias opciones, se crea un servidor web listo para usar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>miweb<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>nginx
+</code></pre></div>
+<p>Este comando crea un servidor Nginx <strong>en segundo plano</strong>, con el nombre personalizado <strong>«miweb»</strong>, accesible desde el <strong>puerto 8080</strong> del <em>host</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Trozo</th>
+<th>Qué significa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker run</code></td>
+<td>Crea y arranca un contenedor</td>
+</tr>
+<tr>
+<td><code>-d</code></td>
+<td>En segundo plano</td>
+</tr>
+<tr>
+<td><code>--name miweb</code></td>
+<td>Se llamará <code>miweb</code> (y no <code>sharp_einstein</code>)</td>
+</tr>
+<tr>
+<td><code>-p 8080:80</code></td>
+<td>El puerto 8080 del <em>host</em> lleva al puerto 80 del contenedor</td>
+</tr>
+<tr>
+<td><code>nginx</code></td>
+<td>A partir de la imagen <code>nginx</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Los nombres son <strong>únicos</strong>. Si vuelves a ejecutar el mismo comando, Docker dará un error del tipo <code>Conflict. The container name "/miweb" is already in use</code>. Antes tienes que borrar el anterior: <code>docker rm -f miweb</code> (<code>-f</code> lo para y lo borra de una vez).</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>Enumera, en orden, los cuatro pasos que da Docker al ejecutar <code>docker run nginx</code>.</li>
+<li>¿Qué diferencia hay entre <code>docker ps</code> y <code>docker ps -a</code>?</li>
+<li>Si pulsas Ctrl + C en un <code>docker run nginx</code>, ¿el contenedor desaparece? ¿Cómo lo compruebas?</li>
+<li>¿Qué opción usarías para que un contenedor de pruebas se borre solo al terminar?</li>
+<li>¿Qué pasa si escribes <code>docker run nginx --name web</code>? ¿Por qué?</li>
+</ol>
+</div>
+<h2 id="bloque-6-modo-detached-registros-y-reinicio-automatico">Bloque 6. Modo <em>detached</em>, registros y reinicio automático<a class="headerlink" href="#bloque-6-modo-detached-registros-y-reinicio-automatico" title="Permanent link">&para;</a></h2>
+<h3 id="61-el-problema-del-primer-plano">6.1 El problema del primer plano<a class="headerlink" href="#61-el-problema-del-primer-plano" title="Permanent link">&para;</a></h3>
+<p>Al ejecutar <code>docker run nginx</code> sin opciones, tu terminal queda <strong>«atada»</strong> al proceso principal del contenedor. No puedes escribir otros comandos y el contenedor depende de esa sesión: si la cierras o pulsas Ctrl + C, el servicio se para.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>A esto se le suele llamar «modo interactivo», pero es más exacto llamarlo <strong>primer plano</strong> (<em>foreground</em>) o modo <strong>adjunto</strong> (<em>attached</em>), porque en Docker «interactivo» es otra cosa: las opciones <code>-it</code>, que te dan una terminal <strong>dentro</strong> del contenedor (<code>docker run -it ubuntu bash</code>). Resumen:</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Forma</th>
+<th>Qué pasa con tu terminal</th>
+<th>Para qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker run nginx</code></td>
+<td>Muestra la salida del contenedor y queda bloqueada</td>
+<td>Probar algo rápido y ver qué dice</td>
+</tr>
+<tr>
+<td><code>docker run -d nginx</code></td>
+<td>Se libera al momento</td>
+<td>Servicios que tienen que seguir funcionando</td>
+</tr>
+<tr>
+<td><code>docker run -it ubuntu bash</code></td>
+<td>Te mete dentro del contenedor</td>
+<td>Explorar o depurar por dentro</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-la-solucion-el-modo-detached">6.2 La solución: el modo <em>detached</em><a class="headerlink" href="#62-la-solucion-el-modo-detached" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>nginx
+</code></pre></div>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Modo <em>detached</em></strong> (desacoplado, en segundo plano): con <code>-d</code>, Docker arranca el contenedor, <strong>libera la terminal de inmediato</strong> y el contenedor sigue funcionando de forma independiente. Es la forma recomendada para servicios y aplicaciones de larga duración.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Con <code>-d</code>, lo único que ves es una línea larga como <code>a1b2c3d4e5f6...</code>: es el <strong>ID completo</strong> del contenedor que se acaba de crear. Nada más. Nginx está funcionando, pero ya no ves lo que escribe. Para eso están los registros (<em>logs</em>).</p>
+</div>
+<h3 id="63-ver-los-registros-y-adjuntarse-al-proceso">6.3 Ver los registros y adjuntarse al proceso<a class="headerlink" href="#63-ver-los-registros-y-adjuntarse-al-proceso" title="Permanent link">&para;</a></h3>
+<p>Cuando un contenedor está en segundo plano, hay tres comandos para saber qué está pasando dentro:</p>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Para qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker logs &lt;container_id&gt;</code></td>
+<td><strong>Ver los registros</strong>: muestra todos los generados hasta el momento</td>
+</tr>
+<tr>
+<td><code>docker logs -f &lt;container_id&gt;</code></td>
+<td><strong>Seguir los registros en tiempo real</strong>: los va mostrando a medida que se generan</td>
+</tr>
+<tr>
+<td><code>docker attach &lt;container_id&gt;</code></td>
+<td><strong>Adjuntarse al proceso</strong>: conecta tu terminal al proceso principal del contenedor en ejecución</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Con <code>miweb</code> en marcha (apartado 5.4):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>miweb
+</code></pre></div>
+Deja esa terminal abierta y, desde otra, ejecuta <code>curl http://localhost:8080</code>. En la primera aparecerá al instante una línea nueva con la petición: <code>172.17.0.1 - - [29/Sep/2026:10:15:02 +0000] "GET / HTTP/1.1" 200 615 ...</code>. Para dejar de seguir los registros pulsa Ctrl + C: <strong>eso solo cierra el <code>logs -f</code></strong>, el contenedor sigue funcionando.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Donde pone <code>&lt;container_id&gt;</code> puedes escribir el <strong>nombre</strong> del contenedor (<code>miweb</code>) o <strong>solo los primeros caracteres del ID</strong> (<code>3f2a</code>), siempre que no coincidan con los de otro.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker logs -f</code> y <code>docker attach</code> se parecen, pero no son iguales. Con <code>logs -f</code>, Ctrl + C solo deja de mirar. Con <code>attach</code> estás <strong>conectado al proceso principal</strong>, así que Ctrl + C le llega a ese proceso y <strong>para el contenedor</strong>. Si quieres mirar, usa <code>logs -f</code>, y usa <code>attach</code> solo cuando necesites interactuar con el proceso. Para soltarte de un <code>attach</code> sin pararlo existe la combinación Ctrl + P, Ctrl + Q, pero solo funciona si el contenedor se arrancó con <code>-it</code>.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker logs</code> muestra lo que el proceso principal escribe en su <strong>salida estándar y de errores</strong>. Si una aplicación escribe sus registros en un archivo dentro del contenedor, <code>docker logs</code> no los verá. Las imágenes oficiales, como la de Nginx, están preparadas para escribir en la salida estándar precisamente por eso.</p>
+</div>
+<h3 id="64-politicas-de-reinicio-automatico">6.4 Políticas de reinicio automático<a class="headerlink" href="#64-politicas-de-reinicio-automatico" title="Permanent link">&para;</a></h3>
+<p>Las <strong>políticas de reinicio</strong> deciden cómo debe comportarse Docker cuando un contenedor se detiene o falla. Elegir la adecuada es clave para la estabilidad y la disponibilidad de los servicios en producción.</p>
+<table>
+<thead>
+<tr>
+<th>Política</th>
+<th>Comportamiento</th>
+<th>Uso recomendado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>no</code></strong></td>
+<td>No reinicia el contenedor bajo ninguna circunstancia. <strong>Es la política por defecto</strong></td>
+<td>Contenedores de tarea única o <em>scripts</em> que deben ejecutarse una sola vez</td>
+</tr>
+<tr>
+<td><strong><code>always</code></strong></td>
+<td>Reinicia siempre el contenedor, incluso si lo detienes manualmente. Se reiniciará tras un reinicio del demonio de Docker</td>
+<td>Servicios críticos que deben estar siempre disponibles, como bases de datos o servidores web</td>
+</tr>
+<tr>
+<td><strong><code>unless-stopped</code></strong></td>
+<td>Como <code>always</code>, pero <strong>respeta las detenciones manuales</strong>: no se reinicia si lo detienes explícitamente con <code>docker stop</code></td>
+<td>Servicios que necesitan alta disponibilidad, pero con control manual cuando haga falta</td>
+</tr>
+<tr>
+<td><strong><code>on-failure</code></strong></td>
+<td>Reinicia <strong>solo</strong> cuando el contenedor termina con un <strong>código de salida distinto de cero</strong> (error). Acepta un límite opcional de reintentos</td>
+<td>Aplicaciones que pueden fallar temporalmente pero no necesitan disponibilidad continua</td>
+</tr>
+</tbody>
+</table>
+<p>Un ejemplo práctico:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--restart<span class="o">=</span>always<span class="w"> </span>--name<span class="w"> </span>servidor-web<span class="w"> </span>nginx
+</code></pre></div>
+<p>Este comando asegura que el servidor Nginx se reinicie automáticamente ante cualquier fallo o reinicio del sistema.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Código de salida</strong>: número que devuelve un proceso al terminar. <code>0</code> significa «todo bien», y cualquier otro valor significa «ha habido un error». Lo ves en <code>docker ps -a</code>: <code>Exited (0)</code> o <code>Exited (1)</code>.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>La frase «reinicia siempre el contenedor, <strong>incluso si lo detienes manualmente</strong>» hay que leerla con cuidado. Si haces <code>docker stop servidor-web</code>, el contenedor <strong>sí se para</strong> y se queda parado: Docker no lo vuelve a arrancar al momento. Lo que hace <code>always</code> es volver a arrancarlo <strong>cuando se reinicia el demonio de Docker</strong> (por ejemplo, al reiniciar la VM), aunque lo hubieras parado a mano. Esa es justo la diferencia con <code>unless-stopped</code>: tras un reinicio, <code>unless-stopped</code> <strong>deja parado</strong> lo que tú paraste.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Qué pasa en cada caso tras hacer <code>docker stop</code> y luego <code>sudo reboot</code> de la VM:</p>
+<table>
+<thead>
+<tr>
+<th>Política</th>
+<th>Tras el reinicio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--restart=no</code></td>
+<td>El contenedor sigue parado</td>
+</tr>
+<tr>
+<td><code>--restart=always</code></td>
+<td>El contenedor <strong>vuelve a estar arrancado</strong></td>
+</tr>
+<tr>
+<td><code>--restart=unless-stopped</code></td>
+<td>Sigue parado, porque lo paraste tú</td>
+</tr>
+<tr>
+<td><code>--restart=on-failure</code></td>
+<td>Sigue parado: lo paraste tú, no fue un error</td>
+</tr>
+</tbody>
+</table>
+<p>El límite de reintentos de <code>on-failure</code> se escribe así: <code>--restart=on-failure:5</code> (como mucho, cinco intentos).</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>La política se fija <strong>al crear</strong> el contenedor. Si ya tienes uno creado sin ella, no hace falta borrarlo: <code>docker update --restart=unless-stopped miweb</code> la cambia.</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Qué hace exactamente la opción <code>-d</code>? ¿Qué ves en pantalla al usarla?</li>
+<li>¿Qué diferencia hay entre <code>docker logs</code> y <code>docker logs -f</code>?</li>
+<li>¿Por qué es peligroso pulsar Ctrl + C después de un <code>docker attach</code>?</li>
+<li>Tienes un <em>script</em> que hace una copia de seguridad y termina. ¿Qué política de reinicio le pondrías? ¿Y a una base de datos que quieres poder parar a mano para hacer mantenimiento?</li>
+<li>Un contenedor con <code>on-failure</code> termina con <code>Exited (0)</code>. ¿Se reiniciará? ¿Por qué?</li>
+</ol>
+</div>
+<h2 id="bloque-7-mapeo-de-puertos-conectar-los-contenedores-con-el-exterior">Bloque 7. Mapeo de puertos: conectar los contenedores con el exterior<a class="headerlink" href="#bloque-7-mapeo-de-puertos-conectar-los-contenedores-con-el-exterior" title="Permanent link">&para;</a></h2>
+<h3 id="71-por-que-mapear-puertos">7.1 ¿Por qué mapear puertos?<a class="headerlink" href="#71-por-que-mapear-puertos" title="Permanent link">&para;</a></h3>
+<p>Los servicios que se ejecutan dentro de un contenedor están <strong>aislados por defecto</strong> (recuerda el <em>namespace</em> de red del bloque 3). El <strong>mapeo de puertos</strong> crea un puente entre el contenedor y el <em>host</em> que permite acceder a las aplicaciones desde fuera.</p>
+<p>Los servicios web suelen usar:</p>
+<table>
+<thead>
+<tr>
+<th>Puerto</th>
+<th>Tráfico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>80</strong></td>
+<td>HTTP estándar</td>
+</tr>
+<tr>
+<td><strong>443</strong></td>
+<td>HTTPS seguro</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Mapeo de puertos</strong> (publicar un puerto): regla que hace que lo que llegue a un puerto del <strong>host</strong> se reenvíe a un puerto del <strong>contenedor</strong>. Se indica con <code>-p puerto_host:puerto_contenedor</code>.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>En Docker Desktop (Windows y macOS) un contenedor sin puertos publicados no es accesible ni desde el propio <em>host</em>, pero en Linux hay que matizarlo. En tu VM, cada contenedor tiene una IP interna (normalmente <code>172.17.0.x</code>) y <strong>desde la propia VM</strong> puedes llegar a ella sin mapear nada: <code>curl http://172.17.0.2</code>. Lo que no funciona sin <code>-p</code> es entrar <strong>desde otra máquina</strong>, que es lo que de verdad importa en un servidor.</p>
+</div>
+<h3 id="72-mapeo-basico-de-un-solo-puerto">7.2 Mapeo básico de un solo puerto<a class="headerlink" href="#72-mapeo-basico-de-un-solo-puerto" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>nginx
+</code></pre></div>
+<p>El formato es <strong><code>puerto_host:puerto_contenedor</code></strong>. Este ejemplo mapea el puerto <strong>80 del contenedor</strong> al <strong>8080 del <em>host</em></strong>. La aplicación será accesible en <a href="http://localhost:8080">http://localhost:8080</a>.</p>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Imagina un edificio (el <em>host</em>) con una puerta a la calle por cada número. El contenedor es una oficina interior que atiende en su ventanilla 80. <code>-p 8080:80</code> significa: «quien llame a la puerta 8080 del edificio, que lo pasen a la ventanilla 80 de esa oficina». Por eso puedes tener <strong>varios</strong> Nginx a la vez, todos en su 80 interno, publicados en 8080, 8081, 8082… del <em>host</em>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>--name<span class="w"> </span>web1<span class="w"> </span>nginx
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">8081</span>:80<span class="w"> </span>--name<span class="w"> </span>web2<span class="w"> </span>nginx
+</code></pre></div></p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>El orden es <strong>host primero, contenedor después</strong>. Es la confusión más frecuente. Truco: se lee de fuera hacia dentro, igual que viaja la petición. Y un mismo puerto del <em>host</em> solo lo puede usar <strong>un</strong> contenedor: si repites <code>-p 8080:…</code> con otro contenedor, Docker dará un error de <code>port is already allocated</code>.</p>
+</div>
+<h3 id="73-mapeo-de-varios-puertos">7.3 Mapeo de varios puertos<a class="headerlink" href="#73-mapeo-de-varios-puertos" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>-p<span class="w"> </span><span class="m">443</span>:443<span class="w"> </span>nginx
+</code></pre></div>
+<p>Se pueden poner <strong>varias opciones <code>-p</code></strong> para mapear varios puertos a la vez, lo que resulta ideal para servicios que necesitan HTTP y HTTPS.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Mapear el 443 abre el camino, pero no configura HTTPS. La imagen oficial de Nginx, tal como viene, <strong>solo sirve HTTP en el 80</strong>: para que responda en el 443 hay que darle un certificado y una configuración, cosa que verás más adelante en el módulo.</p>
+</div>
+<h3 id="74-mapeo-de-rangos-de-puertos">7.4 Mapeo de rangos de puertos<a class="headerlink" href="#74-mapeo-de-rangos-de-puertos" title="Permanent link">&para;</a></h3>
+<p>Los rangos permiten mapear varios puertos consecutivos de una sola vez. Es útil para aplicaciones que usan muchos puertos o para microservicios.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>-8100:80-100<span class="w"> </span>nginx
+</code></pre></div>
+<p>Aquí <code>8080</code> va al <code>80</code>, <code>8081</code> al <code>81</code> y así hasta <code>8100</code> al <code>100</code>: 21 puertos a cada lado.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Cuando se mapea un rango a otro rango, <strong>los dos tienen que tener el mismo número de puertos</strong>, porque se emparejan uno a uno (el primero con el primero, el segundo con el segundo…). Si escribes <code>-p 8080-9000:80-100</code>, hay 921 puertos a un lado y 21 al otro, y Docker responde con un error de rangos no válidos.</p>
+</div>
+<h3 id="75-acceder-desde-el-navegador-de-tu-ordenador">7.5 Acceder desde el navegador de tu ordenador<a class="headerlink" href="#75-acceder-desde-el-navegador-de-tu-ordenador" title="Permanent link">&para;</a></h3>
+<p>En clase hay <strong>dos</strong> anfitriones encadenados: tu Windows aloja la VM, y la VM aloja los contenedores. Por eso, después de <code>docker run -d -p 8080:80 nginx</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Desde dónde</th>
+<th>Dirección</th>
+<th>¿Funciona?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dentro de la VM</td>
+<td><code>curl http://localhost:8080</code></td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>Navegador de Windows</td>
+<td><code>http://localhost:8080</code></td>
+<td><strong>Solo si</strong> VirtualBox también reenvía el 8080</td>
+</tr>
+</tbody>
+</table>
+<p>La red NAT de VirtualBox hace con la VM lo mismo que <code>-p</code> hace con el contenedor. Igual que ya tienes la regla <code>2222</code> a <code>22</code> para entrar por SSH, añade otra en <strong>Configuración, Red, Avanzadas, Reenvío de puertos</strong>: anfitrión <code>8080</code> e invitado <code>8080</code>. La petición recorre entonces: navegador, Windows:8080, VM:8080 y contenedor:80.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Por defecto, <code>-p 8080:80</code> publica el puerto <strong>en todas las interfaces de red del <em>host</em></strong>, no solo en <code>localhost</code>. En un servidor con IP pública eso significa que el servicio queda abierto a Internet (y Docker crea sus propias reglas de cortafuegos, que pueden saltarse las de <code>ufw</code>). Si un servicio solo debe verse desde la propia máquina, indica la IP: <code>-p 127.0.0.1:8080:80</code>.</p>
+</div>
+<h4 id="miralo-en-tu-maquina_2">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>web1<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>nginx
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>curl<span class="w"> </span>-I<span class="w"> </span>http://localhost:8080
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>docker<span class="w"> </span>ps
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>docker<span class="w"> </span>logs<span class="w"> </span>web1
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>web1
+</code></pre></div>
+<p>Con <code>curl -I</code> deberías ver una respuesta <code>HTTP/1.1 200 OK</code>. En <code>docker ps</code>, la columna <code>PORTS</code> muestra <code>0.0.0.0:8080-&gt;80/tcp</code>, que es el mapeo que has pedido. En los registros aparece la petición del <code>curl</code>.</p>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>En <code>-p 3000:80</code>, ¿cuál es el puerto del <em>host</em> y cuál el del contenedor?</li>
+<li>¿Pueden dos contenedores Nginx escuchar los dos en su puerto 80? ¿Y publicarse los dos en el 8080 del <em>host</em>?</li>
+<li>¿Por qué falla <code>-p 8080-9000:80-100</code>? Escribe una versión que funcione.</li>
+<li>Has lanzado <code>docker run -d -p 8080:80 nginx</code> en la VM, <code>curl localhost:8080</code> funciona dentro de la VM, pero el navegador de Windows no carga la página. ¿Qué falta?</li>
+<li>¿Cómo publicarías un puerto para que solo sea accesible desde la propia máquina?</li>
+</ol>
+</div>
+<h2 id="glosario">Glosario<a class="headerlink" href="#glosario" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Término</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><em>Bare metal</em></strong></td>
+<td>Ejecución directa sobre la máquina física, sin capa de virtualización</td>
+</tr>
+<tr>
+<td><strong>Cgroups</strong></td>
+<td>Función del núcleo Linux que limita y reparte los recursos (CPU, RAM, disco, red) entre procesos</td>
+</tr>
+<tr>
+<td><strong>chroot</strong></td>
+<td>Mecanismo de Unix (1982 en BSD) que cambia el directorio raíz aparente de un proceso</td>
+</tr>
+<tr>
+<td><strong>CI/CD</strong></td>
+<td>Integración y entrega o despliegue continuos: compilar, probar y desplegar automáticamente cada cambio</td>
+</tr>
+<tr>
+<td><strong>Cliente Docker</strong></td>
+<td>Programa (<code>docker</code> o Docker Desktop) que envía órdenes al demonio</td>
+</tr>
+<tr>
+<td><strong>Código de salida</strong></td>
+<td>Número que devuelve un proceso al terminar: <code>0</code> es correcto y otro valor es un error</td>
+</tr>
+<tr>
+<td><strong>Contenedor</strong></td>
+<td>Entorno de virtualización ligero que comparte el núcleo del anfitrión y aísla procesos, memoria, ficheros y red</td>
+</tr>
+<tr>
+<td><strong><code>dockerd</code></strong></td>
+<td>El demonio (servidor) de Docker</td>
+</tr>
+<tr>
+<td><strong><code>docker attach</code></strong></td>
+<td>Conecta tu terminal al proceso principal de un contenedor en ejecución</td>
+</tr>
+<tr>
+<td><strong><code>docker logs</code></strong></td>
+<td>Muestra los registros (salida estándar y de errores) de un contenedor; con <code>-f</code>, en tiempo real</td>
+</tr>
+<tr>
+<td><strong><code>docker ps</code></strong></td>
+<td>Lista los contenedores en ejecución; con <code>-a</code>, también los detenidos</td>
+</tr>
+<tr>
+<td><strong><code>docker run</code></strong></td>
+<td>Busca (o descarga) una imagen, crea un contenedor y ejecuta su proceso principal</td>
+</tr>
+<tr>
+<td><strong>Docker</strong></td>
+<td>Plataforma de contenedores de código abierto (2013)</td>
+</tr>
+<tr>
+<td><strong>Docker Desktop</strong></td>
+<td>Aplicación para Windows y macOS que ejecuta Docker dentro de una VM Linux ligera</td>
+</tr>
+<tr>
+<td><strong>Docker Engine</strong></td>
+<td>El motor de código abierto de Docker (antes, Docker CE)</td>
+</tr>
+<tr>
+<td><strong>Docker Hub</strong></td>
+<td>Registro público por defecto de imágenes Docker</td>
+</tr>
+<tr>
+<td><strong>Escalado horizontal</strong></td>
+<td>Aumentar capacidad añadiendo más copias de un servicio</td>
+</tr>
+<tr>
+<td><strong>Escalado vertical</strong></td>
+<td>Aumentar capacidad haciendo más potente una sola máquina</td>
+</tr>
+<tr>
+<td><strong>Etiqueta (<em>tag</em>)</strong></td>
+<td>Versión de una imagen (<code>nginx:1.27</code>). Si no se indica, se usa <code>latest</code></td>
+</tr>
+<tr>
+<td><strong>Host o anfitrión</strong></td>
+<td>La máquina donde se ejecuta Docker (en clase, la VM <code>cont-vm</code>)</td>
+</tr>
+<tr>
+<td><strong>Hipervisor</strong></td>
+<td>Software que simula hardware para ejecutar varias máquinas virtuales</td>
+</tr>
+<tr>
+<td><strong>Hipervisor de tipo 1</strong></td>
+<td>Se ejecuta directamente sobre el hardware (Hyper-V, ESXi)</td>
+</tr>
+<tr>
+<td><strong>Hipervisor de tipo 2</strong></td>
+<td>Se ejecuta como programa dentro de un SO anfitrión (VirtualBox)</td>
+</tr>
+<tr>
+<td><strong>Imagen</strong></td>
+<td>Plantilla de solo lectura a partir de la cual se crean contenedores</td>
+</tr>
+<tr>
+<td><strong>Jail</strong></td>
+<td>Evolución de chroot en FreeBSD (1999) que aísla también procesos, red y usuarios</td>
+</tr>
+<tr>
+<td><strong>LXC</strong></td>
+<td><em>Linux Containers</em> (2008), primeros contenedores modernos en Linux</td>
+</tr>
+<tr>
+<td><strong>Mapeo de puertos</strong></td>
+<td>Regla que reenvía un puerto del <em>host</em> a un puerto del contenedor (<code>-p host:contenedor</code>)</td>
+</tr>
+<tr>
+<td><strong>Máquina virtual (VM)</strong></td>
+<td>Entorno que simula un sistema operativo completo de forma aislada</td>
+</tr>
+<tr>
+<td><strong>Máquina virtual de proceso (MVP)</strong></td>
+<td>Entorno que ejecuta un programa concreto como si fuera nativo (JVM, .NET, Wine)</td>
+</tr>
+<tr>
+<td><strong>Modo <em>detached</em></strong></td>
+<td>Ejecución en segundo plano (<code>-d</code>): la terminal queda libre</td>
+</tr>
+<tr>
+<td><strong>Modo interactivo</strong></td>
+<td>Ejecución con <code>-it</code>: terminal dentro del contenedor</td>
+</tr>
+<tr>
+<td><strong>Namespaces</strong></td>
+<td>Función del núcleo Linux que da a cada contenedor su propia vista de procesos, red, montajes y usuarios</td>
+</tr>
+<tr>
+<td><strong>Orquestación</strong></td>
+<td>Gestión automática de muchos contenedores en varias máquinas</td>
+</tr>
+<tr>
+<td><strong>Política de reinicio</strong></td>
+<td>Regla que decide si Docker vuelve a arrancar un contenedor: <code>no</code>, <code>always</code>, <code>unless-stopped</code>, <code>on-failure</code></td>
+</tr>
+<tr>
+<td><strong>Primer plano</strong></td>
+<td>Ejecución por defecto: la terminal queda atada al proceso del contenedor</td>
+</tr>
+<tr>
+<td><strong><em>Pull</em> implícito</strong></td>
+<td>Descarga automática de una imagen que hace <code>docker run</code> cuando no la encuentra en local</td>
+</tr>
+<tr>
+<td><strong>Registro (<em>registry</em>)</strong></td>
+<td>Almacén de imágenes Docker, público o privado</td>
+</tr>
+<tr>
+<td><strong>Variable de entorno</strong></td>
+<td>Par <code>CLAVE=valor</code> que se pasa al contenedor (<code>-e</code>, <code>--env-file</code>) para configurarlo</td>
+</tr>
+<tr>
+<td><strong>Virtualización</strong></td>
+<td>Tecnología que abstrae el hardware para gestionar recursos virtuales como si fueran reales</td>
+</tr>
+<tr>
+<td><strong>Virtualización a nivel de SO</strong></td>
+<td>Virtualización en la que los entornos comparten el núcleo del anfitrión: los contenedores</td>
+</tr>
+<tr>
+<td><strong>Volumen</strong></td>
+<td>Almacenamiento que sobrevive al contenedor (<code>-v</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mapa-resumen">Mapa resumen<a class="headerlink" href="#mapa-resumen" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>VIRTUALIZACIÓN  (abstraer el hardware)
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>│
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>├── Máquina virtual de proceso: aísla lenguaje o runtime (JVM, .NET, Wine)
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>├── Hipervisor: abstrae el hardware (VirtualBox, VMware, Hyper-V, Parallels)
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>│      ├── Tipo 1: sobre el hardware (Hyper-V, ESXi)
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>│      └── Tipo 2: sobre un SO anfitrión (VirtualBox)
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>└── Contenedores: aíslan procesos y recursos (Docker)
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>       │
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>       ├── Comparten el NÚCLEO del anfitrión: ligeros, rápidos, casi nativos
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>       ├── VM: SO propio, pesada, lenta, cualquier SO invitado
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>       ├── Historia: chroot (1982), Jail (1999), LXC (2008), Docker (2013)
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>       ├── Base en Linux
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>       │     ├── Namespaces: QUÉ VE    (PID, NET, MNT, USER)
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>       │     └── Cgroups:    CUÁNTO USA (CPU, RAM, E/S, red)
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>       ├── En Windows y macOS: VM Linux ligera (Docker Desktop)
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>       │
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>       └── DOCKER
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>             ├── Cliente (docker) envía órdenes al servidor (dockerd)
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>             │      dockerd descarga imágenes del Registro (Docker Hub)
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>             └── Imagen = plantilla      Contenedor = imagen en ejecución
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>docker run [OPCIONES] IMAGEN [COMANDO]
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>│
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>├── Qué hace: buscar imagen, pull implícito de Docker Hub si no está,
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>│             crear contenedor, ejecutar el proceso principal
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>│
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>├── Opciones comunes
+<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>│     -d                segundo plano
+<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>│     -p H:C            puerto del host H al puerto del contenedor C
+<a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>│     -v                volumen (persistencia)
+<a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a>│     --name            nombre propio (único)
+<a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a>│     --rm              borrar al detenerse
+<a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a>│     -e / --env-file   variables de entorno
+<a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a>│     --restart         política de reinicio
+<a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a>│
+<a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a>├── Ver y seguir
+<a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a>│     docker ps / docker ps -a      en marcha / todos (también Exited)
+<a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a>│     docker logs [-f] &lt;id|nombre&gt;  registros (-f: en tiempo real; Ctrl+C solo deja de mirar)
+<a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a>│     docker attach &lt;id|nombre&gt;     conectarse al proceso (Ctrl+C lo PARA)
+<a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a>│
+<a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a>├── Primer plano   |   -d (detached)   |   -it (interactivo)
+<a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a>│
+<a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a>├── Reinicio (--restart=)
+<a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a>│     no              nunca (por defecto): tareas únicas
+<a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a>│     always          siempre, también tras reiniciar el demonio: servicios críticos
+<a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a>│     unless-stopped  como always, pero respeta docker stop: servicios con mantenimiento
+<a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a>│     on-failure[:N]  solo si sale con código distinto de 0: fallos temporales
+<a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a>│
+<a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a>└── Puertos (-p host:contenedor)
+<a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a>      -p 8080:80                un puerto
+<a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a>      -p 8080:80 -p 443:443     varios
+<a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a>      -p 8080-8100:80-100       rango (mismo número de puertos a cada lado)
+<a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a>      -p 127.0.0.1:8080:80      solo accesible desde la propia máquina
+<a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a>      En clase: Windows, reenvío de VirtualBox, VM, -p, contenedor
+</code></pre></div>
+<h2 id="autoevaluacion">Autoevaluación<a class="headerlink" href="#autoevaluacion" title="Permanent link">&para;</a></h2>
+<h3 id="preguntas-cortas">Preguntas cortas<a class="headerlink" href="#preguntas-cortas" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Define virtualización con tus propias palabras.</li>
+<li>¿Cuáles son las tres tecnologías de virtualización que presenta la unidad?</li>
+<li>¿Qué hace la JVM y por qué se considera una máquina virtual de proceso?</li>
+<li>¿Qué es un hipervisor? Nombra dos.</li>
+<li>¿Qué cuatro cosas aísla un contenedor?</li>
+<li>¿Qué significa que un contenedor «comparte el SO del anfitrión»?</li>
+<li>Explica la analogía de los contenedores marítimos con sus dos ideas clave.</li>
+<li>¿Qué problema resume la frase «en mi máquina funcionaba»? ¿Cómo lo resuelven los contenedores?</li>
+<li>Cita dos ventajas y dos inconvenientes de los contenedores.</li>
+<li>¿Qué hacen los <em>namespaces</em>? ¿Y los <em>cgroups</em>?</li>
+<li>¿Qué es <code>dockerd</code>?</li>
+<li>¿Cuál es el registro por defecto de Docker?</li>
+<li>¿Qué es el <em>pull</em> implícito?</li>
+<li>¿Qué información muestra <code>docker ps</code>?</li>
+<li>¿Qué hace la opción <code>--rm</code>?</li>
+<li>¿Qué diferencia hay entre primer plano, modo <em>detached</em> y modo interactivo?</li>
+<li>¿Cómo sigues en tiempo real los registros de un contenedor llamado <code>api</code>?</li>
+<li>¿Cuál es la política de reinicio por defecto?</li>
+<li>¿Qué política elegirías para un servidor web que debe estar siempre disponible, pero que a veces paras a mano para mantenimiento?</li>
+<li>¿Qué formato tiene la opción <code>-p</code>?</li>
+<li>¿Para qué sirven las opciones <code>-e</code> y <code>--env-file</code>?</li>
+<li>¿Qué significa <code>Exited (137)</code> en <code>docker ps -a</code>: que el contenedor terminó bien o mal?</li>
+</ol>
+<h3 id="tipo-test">Tipo test<a class="headerlink" href="#tipo-test" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Un contenedor, frente a una máquina virtual…
+   a) tiene su propio núcleo del sistema operativo.
+   b) comparte el núcleo del anfitrión.
+   c) necesita siempre un hipervisor de tipo 1.
+   d) puede ejecutar cualquier SO invitado.</li>
+<li>¿Qué mecanismo del núcleo <strong>limita</strong> la memoria que puede usar un contenedor?
+   a) Namespace PID  b) chroot  c) Cgroups  d) Namespace NET</li>
+<li>¿Cuál de estas tecnologías es la más antigua?
+   a) LXC  b) Jail  c) Docker  d) chroot</li>
+<li>En la arquitectura de Docker, ¿quién crea y gestiona realmente los contenedores?
+   a) El cliente <code>docker</code>  b) Docker Hub  c) El demonio <code>dockerd</code>  d) El registro</li>
+<li>VirtualBox es…
+   a) un hipervisor de tipo 1  b) un hipervisor de tipo 2  c) una máquina virtual de proceso  d) un motor de contenedores</li>
+<li>¿Qué inconveniente de los contenedores está relacionado con que los datos desaparezcan al borrar el contenedor?
+   a) Interfaz CLI  b) Rendimiento  c) Persistencia de datos  d) Compatibilidad</li>
+<li>¿Qué comando muestra también los contenedores detenidos?
+   a) <code>docker ps</code>  b) <code>docker ps -a</code>  c) <code>docker logs</code>  d) <code>docker run -a</code></li>
+<li>En <code>docker run -d -p 9090:80 nginx</code>, el navegador de la propia máquina debe abrir…
+   a) <code>http://localhost:80</code>  b) <code>http://localhost:9090</code>  c) <code>http://nginx:9090</code>  d) <code>http://localhost:9090:80</code></li>
+<li>¿Qué política reinicia un contenedor solo si termina con error?
+   a) <code>always</code>  b) <code>unless-stopped</code>  c) <code>on-failure</code>  d) <code>no</code></li>
+<li>¿Cuál de estos mapeos de rango es válido?
+    a) <code>-p 8000-8010:80-90</code>  b) <code>-p 8000-9000:80-100</code>  c) <code>-p 80-100:8000-9000</code>  d) Ninguno</li>
+<li>Estás viendo <code>docker logs -f web</code> y pulsas Ctrl + C. ¿Qué ocurre?
+    a) Se para el contenedor  b) Se borra el contenedor  c) Dejas de ver los registros y el contenedor sigue  d) Se reinicia el contenedor</li>
+<li>¿Dónde se colocan las opciones de <code>docker run</code>?
+    a) Después del nombre de la imagen  b) Entre <code>run</code> y el nombre de la imagen  c) Al final del comando  d) Es indiferente</li>
+</ol>
+<h3 id="razona">Razona<a class="headerlink" href="#razona" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Una empresa quiere ejecutar en el mismo servidor Linux una aplicación que solo funciona en Windows Server y otras veinte aplicaciones web pequeñas en Linux. ¿Qué usarías para cada cosa, máquinas virtuales o contenedores? Justifícalo.</li>
+<li>Un compañero dice: «Como Docker funciona en Windows, los contenedores no necesitan Linux». ¿Tiene razón? Explícalo.</li>
+<li>Un contenedor está aislado con todos los <em>namespaces</em>, pero sin ningún límite de cgroups. Describe qué podría pasar en el servidor y cómo lo evitarías.</li>
+<li>Un compañero ha ejecutado cinco veces <code>docker run nginx</code> y ha parado cada uno con Ctrl + C. Dice que «no ha dejado nada» porque <code>docker ps</code> sale vacío. ¿Tiene razón? ¿Cómo lo comprobarías y cómo lo limpiarías?</li>
+<li>Tienes que dejar funcionando en la VM un Nginx llamado <code>portal</code>, en segundo plano, accesible en el puerto 8088 del <em>host</em>, que vuelva a arrancar solo si se reinicia la VM, salvo que lo hayas parado tú. Escribe el comando y explica cada parte.</li>
+<li>Has creado un contenedor con <code>--restart=always</code>, lo has parado con <code>docker stop</code> y, al reiniciar la VM, vuelve a estar en marcha. Tu compañero dice que Docker «no ha respetado» el <code>stop</code>. Explica qué ha pasado y qué política deberías haber usado.</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Anterior: Inicio">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Inicio
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../UT2-dosier/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: UT2. Principales acciones con Docker">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                UT2. Principales acciones con Docker
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Dustin Randel de Lara García, Sant Josep Obrer. Material docente del módulo IB1107.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

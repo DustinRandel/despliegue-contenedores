@@ -1,0 +1,2747 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes del módulo IB1107, 2.º ASIX">
+      
+      
+        <meta name="author" content="Dustin Randel de Lara García">
+      
+      
+        <link rel="canonical" href="https://dustinrandel.github.io/despliegue-contenedores/UT3-dosier/">
+      
+      
+        <link rel="prev" href="../UT2-dosier/">
+      
+      
+        <link rel="next" href="../UT4-dosier/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Gestión de imágenes - Despliegue y administración de contenedores</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Carlito:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Carlito";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicon-48.png">
+  <link rel="icon" sizes="any" href="../assets/favicon.ico">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ut3-gestion-de-imagenes" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Despliegue y administración de contenedores" class="md-header__button md-logo" aria-label="Despliegue y administración de contenedores" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Despliegue y administración de contenedores
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Gestión de imágenes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Cambiar a modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Cambiar a modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/DustinRandel/despliegue-contenedores" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Despliegue y administración de contenedores" class="md-nav__button md-logo" aria-label="Despliegue y administración de contenedores" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    Despliegue y administración de contenedores
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/DustinRandel/despliegue-contenedores" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT1-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT1. Introducción a los contenedores y a Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT2-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT2. Principales acciones con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT3. Gestión de imágenes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT3. Gestión de imágenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#como-usar-este-dosier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo usar este dosier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo usar este dosier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-vas-a-aprender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué vas a aprender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-12-inventario-listar-buscar-y-descargar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 12. Inventario: listar, buscar y descargar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 12. Inventario: listar, buscar y descargar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-listar-las-imagenes-locales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 Listar las imágenes locales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-filtrar-el-listado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Filtrar el listado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-buscar-en-docker-hub-docker-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 Buscar en Docker Hub: docker search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-descargar-sin-arrancar-docker-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.4 Descargar sin arrancar: docker pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#125-de-que-esta-hecha-history-e-inspect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.5 De qué está hecha: history e inspect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-13-borrar-imagenes-y-limpiar-disco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 13. Borrar imágenes y limpiar disco
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 13. Borrar imágenes y limpiar disco">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-borrar-una-imagen-docker-rmi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Borrar una imagen: docker rmi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-recuerdo-borrar-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Recuerdo: borrar contenedores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-imagenes-huerfanas-dangling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Imágenes huérfanas (dangling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-limpiar-con-prune-y-ver-el-disco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Limpiar con prune y ver el disco
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#135-lo-que-no-lanzas-a-ciegas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.5 Lo que no lanzas a ciegas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-14-de-un-contenedor-a-una-imagen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 14. De un contenedor a una imagen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 14. De un contenedor a una imagen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-docker-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 docker commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-varios-nombres-mismo-id-docker-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Varios nombres, mismo ID: docker tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-copiar-una-imagen-a-un-archivo-save-y-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Copiar una imagen a un archivo: save y load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#144-el-otro-par-export-e-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 El otro par: export e import
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-15-dockerfile-y-docker-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 15. Dockerfile y docker build
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 15. Dockerfile y docker build">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-que-es-y-como-se-llama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Qué es y cómo se llama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-el-primero-ubuntu-con-nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 El primero: Ubuntu con nano
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-la-cache-lo-que-no-cambia-no-se-repite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 La caché: lo que no cambia no se repite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-lo-que-no-quieres-dentro-dockerignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 Lo que no quieres dentro: .dockerignore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-16-instrucciones-del-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 16. Instrucciones del Dockerfile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 16. Instrucciones del Dockerfile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-copy-y-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.1 COPY y ADD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-expose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2 EXPOSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#163-cmd-y-entrypoint-forma-shell-y-forma-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.3 CMD y ENTRYPOINT, forma shell y forma exec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#164-user-workdir-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.4 USER, WORKDIR, ENV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#165-arg-y-label" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.5 ARG y LABEL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-17-imagenes-ligeras-y-registros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 17. Imágenes ligeras y registros
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 17. Imágenes ligeras y registros">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#171-el-tamano-se-decide-al-escribir-el-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.1 El tamaño se decide al escribir el Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#172-subir-a-docker-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.2 Subir a Docker Hub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#173-un-registro-en-local" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.3 Un registro en local
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#174-una-web-empaquetada-de-principio-a-fin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.4 Una web empaquetada, de principio a fin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapa-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapa resumen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autoevaluación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT4-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT4. Redes y volúmenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#como-usar-este-dosier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo usar este dosier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo usar este dosier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-vas-a-aprender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué vas a aprender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-12-inventario-listar-buscar-y-descargar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 12. Inventario: listar, buscar y descargar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 12. Inventario: listar, buscar y descargar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-listar-las-imagenes-locales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 Listar las imágenes locales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-filtrar-el-listado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Filtrar el listado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-buscar-en-docker-hub-docker-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 Buscar en Docker Hub: docker search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-descargar-sin-arrancar-docker-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.4 Descargar sin arrancar: docker pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#125-de-que-esta-hecha-history-e-inspect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.5 De qué está hecha: history e inspect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-13-borrar-imagenes-y-limpiar-disco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 13. Borrar imágenes y limpiar disco
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 13. Borrar imágenes y limpiar disco">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-borrar-una-imagen-docker-rmi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Borrar una imagen: docker rmi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-recuerdo-borrar-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Recuerdo: borrar contenedores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-imagenes-huerfanas-dangling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Imágenes huérfanas (dangling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-limpiar-con-prune-y-ver-el-disco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Limpiar con prune y ver el disco
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#135-lo-que-no-lanzas-a-ciegas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.5 Lo que no lanzas a ciegas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-14-de-un-contenedor-a-una-imagen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 14. De un contenedor a una imagen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 14. De un contenedor a una imagen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-docker-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 docker commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-varios-nombres-mismo-id-docker-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Varios nombres, mismo ID: docker tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-copiar-una-imagen-a-un-archivo-save-y-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Copiar una imagen a un archivo: save y load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#144-el-otro-par-export-e-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 El otro par: export e import
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-15-dockerfile-y-docker-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 15. Dockerfile y docker build
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 15. Dockerfile y docker build">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-que-es-y-como-se-llama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Qué es y cómo se llama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-el-primero-ubuntu-con-nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 El primero: Ubuntu con nano
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-la-cache-lo-que-no-cambia-no-se-repite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 La caché: lo que no cambia no se repite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-lo-que-no-quieres-dentro-dockerignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 Lo que no quieres dentro: .dockerignore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-16-instrucciones-del-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 16. Instrucciones del Dockerfile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 16. Instrucciones del Dockerfile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-copy-y-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.1 COPY y ADD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-expose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2 EXPOSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#163-cmd-y-entrypoint-forma-shell-y-forma-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.3 CMD y ENTRYPOINT, forma shell y forma exec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#164-user-workdir-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.4 USER, WORKDIR, ENV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#165-arg-y-label" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.5 ARG y LABEL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-17-imagenes-ligeras-y-registros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 17. Imágenes ligeras y registros
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 17. Imágenes ligeras y registros">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#171-el-tamano-se-decide-al-escribir-el-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.1 El tamaño se decide al escribir el Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#172-subir-a-docker-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.2 Subir a Docker Hub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#173-un-registro-en-local" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.3 Un registro en local
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#174-una-web-empaquetada-de-principio-a-fin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.4 Una web empaquetada, de principio a fin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapa-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapa resumen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autoevaluación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ut3-gestion-de-imagenes">UT3. Gestión de imágenes<a class="headerlink" href="#ut3-gestion-de-imagenes" title="Permanent link">&para;</a></h1>
+<h2 class="nobreak" id="como-usar-este-dosier">Cómo usar este dosier<a class="headerlink" href="#como-usar-este-dosier" title="Permanent link">&para;</a></h2>
+<p>En la UT1 arrancaste contenedores. En la UT2 los manejaste: ciclo de vida, <code>inspect</code>, <code>exec</code>, <code>attach</code>, <code>cp</code> y un Nginx en marcha. Hasta ahora las imágenes las bajabas hechas (<code>nginx</code>, <code>ubuntu</code>, <code>alpine</code>). En esta UT las <strong>gestionas</strong>: listarlas, filtrarlas, borrarlas, copiarlas a un archivo, crearlas a partir de un contenedor y, sobre todo, construirlas con un <strong>Dockerfile</strong>.</p>
+<p>Es un dosier para leer con la terminal abierta. Conéctate por SSH a <code>cont-vm</code> y escribe cada comando a medida que lo leas. Cuando un apartado te pida <strong>dos terminales</strong>, abre una segunda sesión SSH a la misma VM.</p>
+<p>A lo largo del texto encontrarás cuatro tipos de caja:</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p>Un término que tienes que saber explicar con tus propias palabras.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Un caso concreto, casi siempre con el comando y lo que verás en pantalla.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Un error típico, una confusión frecuente o un detalle que conviene tener muy claro.</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<p>Preguntas cortas al final de cada bloque. Si no sabes contestarlas sin mirar, vuelve a leer el bloque.</p>
+</div>
+<p>Cada bloque termina con un apartado <strong>«Míralo en tu máquina»</strong>. Los bloques continúan la numeración de la UT2, que terminó en el bloque 11.</p>
+<h3 id="que-vas-a-aprender">Qué vas a aprender<a class="headerlink" href="#que-vas-a-aprender" title="Permanent link">&para;</a></h3>
+<p>Al terminar esta UT deberías ser capaz de:</p>
+<ul>
+<li><strong>Listar</strong> las imágenes locales y <strong>filtrarlas</strong> por nombre, etiqueta o patrón.</li>
+<li><strong>Explicar</strong> las columnas de <code>docker images</code> en Docker Engine 29 (<code>DISK USAGE</code>, <code>CONTENT SIZE</code>, <code>EXTRA</code>).</li>
+<li><strong>Buscar</strong> imágenes en Docker Hub con <code>docker search</code> y <strong>descargarlas</strong> con <code>docker pull</code>.</li>
+<li><strong>Leer</strong> el historial de capas con <code>docker history</code> y datos concretos con <code>docker image inspect</code>.</li>
+<li><strong>Borrar</strong> una imagen con <code>docker rmi</code> y <strong>distinguir</strong> borrar una etiqueta de borrar la imagen.</li>
+<li><strong>Limpiar</strong> imágenes huérfanas con <code>docker image prune</code> sin cargarte el disco a ciegas.</li>
+<li><strong>Crear</strong> una imagen a partir de un contenedor con <code>docker commit</code> y <strong>ponerle</strong> más nombres con <code>docker tag</code>.</li>
+<li><strong>Guardar y cargar</strong> una imagen con <code>docker save</code> / <code>docker load</code> y <strong>distinguirlo</strong> de <code>export</code> / <code>import</code>.</li>
+<li><strong>Escribir</strong> un Dockerfile y <strong>construirlo</strong> con <code>docker build</code>.</li>
+<li><strong>Usar</strong> las instrucciones <code>FROM</code>, <code>RUN</code>, <code>CMD</code>, <code>COPY</code>, <code>EXPOSE</code>, <code>ENTRYPOINT</code>, <code>USER</code>, <code>WORKDIR</code>, <code>ENV</code>, <code>ARG</code> y <code>LABEL</code>.</li>
+<li><strong>Aprovechar</strong> la caché del build colocando al final lo que más cambia.</li>
+<li><strong>Reducir</strong> el tamaño de una imagen (base ligera, un solo <code>RUN</code>, limpieza de <code>apt</code>).</li>
+<li><strong>Subir</strong> una imagen a un registro (Docker Hub o uno local).</li>
+</ul>
+<h3 id="indice">Índice<a class="headerlink" href="#indice" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Bloque</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#bloque-12-inventario-listar-buscar-y-descargar">12</a></td>
+<td>Inventario: listar, buscar y descargar</td>
+</tr>
+<tr>
+<td><a href="#bloque-13-borrar-imagenes-y-limpiar-disco">13</a></td>
+<td>Borrar imágenes y limpiar disco</td>
+</tr>
+<tr>
+<td><a href="#bloque-14-de-un-contenedor-a-una-imagen">14</a></td>
+<td>De un contenedor a una imagen</td>
+</tr>
+<tr>
+<td><a href="#bloque-15-dockerfile-y-docker-build">15</a></td>
+<td>Dockerfile y <code>docker build</code></td>
+</tr>
+<tr>
+<td><a href="#bloque-16-instrucciones-del-dockerfile">16</a></td>
+<td>Instrucciones del Dockerfile</td>
+</tr>
+<tr>
+<td><a href="#bloque-17-imagenes-ligeras-y-registros">17</a></td>
+<td>Imágenes ligeras y registros</td>
+</tr>
+<tr>
+<td>Anexos</td>
+<td>Glosario, mapa resumen y autoevaluación</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bloque-12-inventario-listar-buscar-y-descargar">Bloque 12. Inventario: listar, buscar y descargar<a class="headerlink" href="#bloque-12-inventario-listar-buscar-y-descargar" title="Permanent link">&para;</a></h2>
+<p>Antes de crear imágenes propias conviene saber <strong>qué hay ya en tu máquina</strong>, <strong>qué se puede bajar</strong> y <strong>de qué está hecha</strong> una imagen. En la UT2 viste que una imagen es una pila de capas de solo lectura. Aquí trabajas esa pila con comandos.</p>
+<h3 id="121-listar-las-imagenes-locales">12.1 Listar las imágenes locales<a class="headerlink" href="#121-listar-las-imagenes-locales" title="Permanent link">&para;</a></h3>
+<p>El comando es <code>docker images</code>. Es un alias de <code>docker image ls</code> (y de <code>docker image list</code>): las tres hacen lo mismo. En apuntes y en clase usaremos <code>docker images</code>, que es el que más se ve.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>images
+</code></pre></div>
+<p>En Docker Engine 29 la tabla por defecto ya no es la de «REPOSITORY / TAG / IMAGE ID / CREATED / SIZE». Sale así:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>IMAGE         ID             DISK USAGE   CONTENT SIZE   EXTRA
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>alpine:3.20   d9e853e87e55       13.2MB         3.71MB
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>nginx:1.29    7c2e3a1b9d04        240MB           72MB
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Qué es</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IMAGE</strong></td>
+<td>Nombre completo: repositorio y etiqueta juntos (<code>alpine:3.20</code>)</td>
+</tr>
+<tr>
+<td><strong>ID</strong></td>
+<td>Identificador de la imagen (12 caracteres; el completo es un SHA256)</td>
+</tr>
+<tr>
+<td><strong>DISK USAGE</strong></td>
+<td>Lo que ocupa en disco, descomprimida y lista para usarse</td>
+</tr>
+<tr>
+<td><strong>CONTENT SIZE</strong></td>
+<td>Tamaño de los blobs comprimidos (lo que viaja, más o menos, en un <code>pull</code>)</td>
+</tr>
+<tr>
+<td><strong>EXTRA</strong></td>
+<td><code>U</code> si algún contenedor la está usando (<em>in use</em>)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Imagen local</strong>: copia de una imagen que Docker ya tiene en tu máquina. Si no está, <code>docker run</code> o <code>docker pull</code> la buscan en el registro.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>DISK USAGE</code> no se suma a lo bruto entre imágenes que <strong>comparten capas</strong>. Dos imágenes basadas en la misma Alpine no ocupan dos veces la capa base. La columna te dice el tamaño de esa imagen, no el espacio único que añade.</p>
+</div>
+<p>Si te resulta más cómoda la tabla antigua (repositorio y etiqueta separados), Docker sigue dándotela con una plantilla:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>images<span class="w"> </span>--format<span class="w"> </span><span class="s1">'table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.Size}}'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>REPOSITORY   TAG       IMAGE ID       SIZE
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>alpine       3.20      d9e853e87e55   13.2MB
+</code></pre></div>
+<p><code>.Size</code> es el <code>DISK USAGE</code>. Para scripts, <code>docker images -q alpine:3.20</code> lista solo el ID.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker image</code> (sin la s) no lista nada: es el <strong>grupo</strong> de subcomandos (<code>ls</code>, <code>rm</code>, <code>prune</code>, <code>inspect</code>, <code>history</code>…). Si escribes solo <code>docker image</code>, Docker te muestra la ayuda. El listado es <code>docker images</code> o <code>docker image ls</code>.</p>
+</div>
+<h3 id="122-filtrar-el-listado">12.2 Filtrar el listado<a class="headerlink" href="#122-filtrar-el-listado" title="Permanent link">&para;</a></h3>
+<p>Sin argumentos, <code>docker images</code> enseña <strong>todas</strong> las imágenes con etiqueta. Para acotar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>images<span class="w"> </span>alpine:3.20<span class="w">          </span><span class="c1"># esa imagen, esa etiqueta</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>images<span class="w"> </span>alpine<span class="w">               </span><span class="c1"># todas las etiquetas de alpine</span>
+</code></pre></div>
+<p>El argumento es un nombre exacto, no un trozo: <code>docker images alp</code> no encuentra <code>alpine</code>.</p>
+<p>Para patrones se usa el filtro <code>reference</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>images<span class="w"> </span>--filter<span class="w"> </span><span class="s1">'reference=alp*:3.*'</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>IMAGE         ID             DISK USAGE   CONTENT SIZE   EXTRA
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>alpine:3.20   d9e853e87e55       13.2MB         3.71MB
+</code></pre></div>
+<p>Otros filtros útiles: <code>dangling=true</code> (imágenes sin etiqueta, bloque 13), <code>before=</code> y <code>since=</code> (creadas antes o después de otra).</p>
+<h3 id="123-buscar-en-docker-hub-docker-search">12.3 Buscar en Docker Hub: <code>docker search</code><a class="headerlink" href="#123-buscar-en-docker-hub-docker-search" title="Permanent link">&para;</a></h3>
+<p><code>docker images</code> mira <strong>tu disco</strong>. Para ver qué hay en el registro por defecto:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>search<span class="w"> </span>nginx
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>NAME                              DESCRIPTION                                     STARS     OFFICIAL
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>nginx                             Official build of Nginx.                        21434     [OK]
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>nginx/nginx-ingress               NGINX and NGINX Plus Ingress Controllers …      124
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Qué es</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NAME</strong></td>
+<td>Nombre en Docker Hub. Las oficiales van sin usuario (<code>nginx</code>); las de un usuario o organización, <code>usuario/nombre</code></td>
+</tr>
+<tr>
+<td><strong>DESCRIPTION</strong></td>
+<td>Texto corto de la página de la imagen</td>
+</tr>
+<tr>
+<td><strong>STARS</strong></td>
+<td>Favoritos en Hub. Sirve de pista, no de garantía</td>
+</tr>
+<tr>
+<td><strong>OFFICIAL</strong></td>
+<td><code>[OK]</code> si es imagen oficial de Docker</td>
+</tr>
+</tbody>
+</table>
+<p>Puedes acotar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>search<span class="w"> </span>--filter<span class="w"> </span>is-official<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--limit<span class="w"> </span><span class="m">5</span><span class="w"> </span>nginx
+</code></pre></div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker search</code> no descarga nada. Antes de usar una imagen nueva, abre su página en Hub (por ejemplo <a href="https://hub.docker.com/_/nginx">https://hub.docker.com/_/nginx</a>) y lee puertos, volúmenes y variables. Las estrellas no sustituyen esa lectura.</p>
+</div>
+<h3 id="124-descargar-sin-arrancar-docker-pull">12.4 Descargar sin arrancar: <code>docker pull</code><a class="headerlink" href="#124-descargar-sin-arrancar-docker-pull" title="Permanent link">&para;</a></h3>
+<p><code>docker run</code> ya hace <code>pull</code> si la imagen no está. A veces quieres <strong>dejarla lista</strong> sin crear un contenedor: un examen, un script, un corte de red.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>alpine:3.20
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>3.20: Pulling from library/alpine
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Digest: sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Status: Image is up to date for alpine:3.20
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>docker.io/library/alpine:3.20
+</code></pre></div>
+<p>Si ya la tienes, no vuelve a bajar las capas: lo dice con <code>Image is up to date</code>. El <strong>digest</strong> (<code>sha256:…</code>) identifica el contenido concreto; dos etiquetas distintas pueden apuntar al mismo digest, y la misma etiqueta puede cambiar de digest cuando el autor publica otra versión.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Digest</strong>: huella SHA256 del contenido de la imagen. A diferencia de la etiqueta (<code>3.20</code>, <code>latest</code>), no se reasigna: si el digest coincide, es exactamente la misma imagen.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Fija siempre la etiqueta (<code>alpine:3.20</code>, <code>ubuntu:24.04</code>). <code>latest</code> es una etiqueta más, no «la última estable para siempre»: mañana puede ser otra cosa.</p>
+</div>
+<h3 id="125-de-que-esta-hecha-history-e-inspect">12.5 De qué está hecha: <code>history</code> e <code>inspect</code><a class="headerlink" href="#125-de-que-esta-hecha-history-e-inspect" title="Permanent link">&para;</a></h3>
+<p><code>docker history</code> enseña las <strong>capas</strong> y cuánto añadió cada una:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>alpine:3.20
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>IMAGE          CREATED        CREATED BY                                      SIZE      COMMENT
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>d9e853e87e55   7 months ago   CMD ["/bin/sh"]                                 0B        buildkit.dockerfile.v0
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>&lt;missing&gt;      7 months ago   ADD alpine-minirootfs-3.20.10-x86_64.tar.gz …   9.44MB    buildkit.dockerfile.v0
+</code></pre></div>
+<p>La capa de <code>CMD</code> pesa 0 B: no copia archivos, solo deja un parámetro por defecto. <code>&lt;missing&gt;</code> en la columna IMAGE es normal: son capas intermedias que el almacén no lista como imagen aparte. <code>CREATED BY</code> es, casi siempre, la instrucción del Dockerfile que la generó.</p>
+<p>Para un dato concreto, <code>docker image inspect</code> (o <code>docker inspect</code>, que también vale con imágenes):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>image<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{.Architecture}} {{.Os}} {{len .RootFS.Layers}}'</span><span class="w"> </span>alpine:3.20
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>amd64 linux 1
+</code></pre></div>
+<p>Alpine 3.20, en <code>cont-vm</code>, es una sola capa, Linux, amd64.</p>
+<h3 id="miralo-en-tu-maquina">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>docker<span class="w"> </span>images
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>docker<span class="w"> </span>images<span class="w"> </span>alpine:3.20
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>docker<span class="w"> </span>images<span class="w"> </span>--filter<span class="w"> </span><span class="s1">'reference=*:24.04'</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>docker<span class="w"> </span>images<span class="w"> </span>--format<span class="w"> </span><span class="s1">'table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.Size}}'</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>docker<span class="w"> </span>search<span class="w"> </span>--filter<span class="w"> </span>is-official<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--limit<span class="w"> </span><span class="m">5</span><span class="w"> </span>python
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>docker<span class="w"> </span>pull<span class="w"> </span>alpine:3.20
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>alpine:3.20
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>docker<span class="w"> </span>image<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{.Id}}'</span><span class="w"> </span>alpine:3.20
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Qué diferencia hay entre <code>DISK USAGE</code> y <code>CONTENT SIZE</code>?</li>
+<li>¿Qué significa una <code>U</code> en la columna <code>EXTRA</code>?</li>
+<li>¿<code>docker images alp</code> lista <code>alpine</code>? ¿Por qué?</li>
+<li>¿<code>docker search</code> descarga la imagen?</li>
+<li>¿Para qué sirve el digest que muestra <code>docker pull</code>?</li>
+</ol>
+</div>
+<h2 id="bloque-13-borrar-imagenes-y-limpiar-disco">Bloque 13. Borrar imágenes y limpiar disco<a class="headerlink" href="#bloque-13-borrar-imagenes-y-limpiar-disco" title="Permanent link">&para;</a></h2>
+<p>Las imágenes se acumulan. Un <code>pull</code> de más, un build que salió mal, una etiqueta que ya no usas: el disco de la VM no es infinito. Borrar tiene reglas, porque una imagen <strong>en uso</strong> no se va.</p>
+<h3 id="131-borrar-una-imagen-docker-rmi">13.1 Borrar una imagen: <code>docker rmi</code><a class="headerlink" href="#131-borrar-una-imagen-docker-rmi" title="Permanent link">&para;</a></h3>
+<p><code>docker rmi</code> es el alias de <code>docker image rm</code>. Borra <strong>una etiqueta</strong>. Si era la última que apuntaba a ese ID, borra también la imagen.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>rmi<span class="w"> </span>ubuntu:22.04
+</code></pre></div>
+<p>Puedes usar el ID corto en lugar del nombre. Si varias etiquetas apuntan al mismo ID, borrar una no borra las demás: el ID sigue ahí.</p>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Tienes <code>ut3/alpine-curl:1.0</code> y <code>ut3/alpine-curl:latest</code> con el <strong>mismo</strong> ID. <code>docker rmi ut3/alpine-curl:1.0</code> quita esa etiqueta; <code>latest</code> sigue y la imagen no se ha ido. Solo cuando no queda ninguna etiqueta (o usas el ID y no hay contenedores usándola) desaparece del disco.</p>
+</div>
+<p>Si un contenedor (en marcha o parado) se creó con esa imagen, Docker se niega:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Error response from daemon: conflict: unable to delete ut3/dang:latest (must be forced)
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>- container df22f5fdd2e0 is using its referenced image
+</code></pre></div>
+<p>Primero el contenedor (<code>docker rm</code>), después la imagen. <code>-f</code> en <code>rmi</code> fuerza, pero no es el camino habitual en clase: te dejas contenedores huérfanos y no aprendes el orden.</p>
+<h3 id="132-recuerdo-borrar-contenedores">13.2 Recuerdo: borrar contenedores<a class="headerlink" href="#132-recuerdo-borrar-contenedores" title="Permanent link">&para;</a></h3>
+<p>Sin contenedor parado, muchas imágenes no se pueden borrar. Lo viste en la UT2:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>rm<span class="w"> </span>NOMBRE_O_ID<span class="w">          </span><span class="c1"># tiene que estar parado</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>NOMBRE_O_ID<span class="w">       </span><span class="c1"># lo para y lo borra</span>
+</code></pre></div>
+<p>Para listar solo los parados: <code>docker ps -a --filter status=exited</code>.</p>
+<h3 id="133-imagenes-huerfanas-dangling">13.3 Imágenes huérfanas (<em>dangling</em>)<a class="headerlink" href="#133-imagenes-huerfanas-dangling" title="Permanent link">&para;</a></h3>
+<p>Cuando reconstruyes una imagen con el <strong>mismo nombre</strong> (<code>docker build -t ut3/web .</code> otra vez), la etiqueta se mueve al ID nuevo. El ID viejo se queda <strong>sin nombre</strong>: <code>&lt;none&gt;</code>.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Imagen huérfana</strong> (<em>dangling</em>): imagen local que ya no tiene ninguna etiqueta. Suele ser el resultado de un build que ha movido el nombre a un ID nuevo. No la usa ningún nombre, pero sigue ocupando disco.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker<span class="w"> </span>images<span class="w"> </span>--filter<span class="w"> </span><span class="nv">dangling</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+<p>En Engine 29 el nombre sale vacío o como <code>&lt;none&gt;</code>; el ID sigue sirviendo para borrarla.</p>
+<h3 id="134-limpiar-con-prune-y-ver-el-disco">13.4 Limpiar con <code>prune</code> y ver el disco<a class="headerlink" href="#134-limpiar-con-prune-y-ver-el-disco" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker<span class="w"> </span>image<span class="w"> </span>prune
+</code></pre></div>
+<p>Pide confirmación y borra <strong>solo las huérfanas</strong>, no las que tienen etiqueta. <code>-f</code> se salta la pregunta. <code>-a</code> (<code>--all</code>) borra además las imágenes con etiqueta que <strong>no usa ningún contenedor</strong>: más agresivo.</p>
+<p>Para ver cuánto hay:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker<span class="w"> </span>system<span class="w"> </span>df
+</code></pre></div>
+<p>Ahí salen imágenes, contenedores, volúmenes y caché de build. Es el mapa antes de limpiar.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><code>docker image prune</code></strong>: borra imágenes huérfanas. Con <code>--all</code>, borra también las etiquetadas que no está usando ningún contenedor.</p>
+</div>
+<h3 id="135-lo-que-no-lanzas-a-ciegas">13.5 Lo que no lanzas a ciegas<a class="headerlink" href="#135-lo-que-no-lanzas-a-ciegas" title="Permanent link">&para;</a></h3>
+<p>En foros verás recetas que vacían la máquina. Funcionan. También te pueden dejar sin las imágenes de clase a cinco minutos de un ejercicio.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker<span class="w"> </span>rmi<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>images<span class="w"> </span>-q<span class="k">)</span><span class="w">          </span><span class="c1"># todas las imágenes (falla en las que están en uso)</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>docker<span class="w"> </span>stop<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>ps<span class="w"> </span>-aq<span class="k">)</span><span class="w">            </span><span class="c1"># para TODOS los contenedores</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>docker<span class="w"> </span>rm<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>ps<span class="w"> </span>-aq<span class="k">)</span><span class="w">              </span><span class="c1"># borra TODOS los contenedores parados</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a<span class="w">                  </span><span class="c1"># contenedores parados, redes, huérfanas y, con -a, imágenes sin contenedor</span>
+</code></pre></div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker system prune -a</code> no es «ordenar un poco». Es vaciar. En <code>cont-vm</code> no lo ejecutes salvo que Dustin lo pida. Para el día a día: <code>docker rm</code> del contenedor concreto y <code>docker rmi</code> de la imagen concreta, o <code>docker image prune</code> si solo quieres huérfanas.</p>
+</div>
+<h3 id="miralo-en-tu-maquina_1">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker<span class="w"> </span>images
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>--filter<span class="w"> </span><span class="nv">status</span><span class="o">=</span>exited
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>docker<span class="w"> </span>images<span class="w"> </span>--filter<span class="w"> </span><span class="nv">dangling</span><span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>docker<span class="w"> </span>system<span class="w"> </span>df
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="c1"># no hace falta borrar nada si no te sobra disco</span>
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>Tienes dos etiquetas sobre el mismo ID. ¿Qué pasa si haces <code>docker rmi</code> de una de ellas?</li>
+<li>¿Por qué <code>docker rmi nginx</code> puede fallar aunque no haya ningún contenedor <strong>en marcha</strong>?</li>
+<li>¿Qué es una imagen huérfana y qué comando la lista?</li>
+<li>¿Qué borra <code>docker image prune</code> sin <code>--all</code>? ¿Y con <code>--all</code>?</li>
+<li>¿Cuándo usarías <code>docker system prune -a</code>?</li>
+</ol>
+</div>
+<h2 id="bloque-14-de-un-contenedor-a-una-imagen">Bloque 14. De un contenedor a una imagen<a class="headerlink" href="#bloque-14-de-un-contenedor-a-una-imagen" title="Permanent link">&para;</a></h2>
+<p>A veces has dejado un contenedor a tu gusto (un paquete instalado, un archivo de configuración) y quieres <strong>reutilizarlo</strong>. Docker puede congelar esa capa de escritura y convertirla en una imagen nueva. Es el camino rápido. El camino bueno, el que usarás de verdad, es el Dockerfile del bloque 15. Conviene conocer los dos.</p>
+<h3 id="141-docker-commit">14.1 <code>docker commit</code><a class="headerlink" href="#141-docker-commit" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><code>docker commit</code></strong>: crea una imagen nueva a partir del estado actual de un contenedor. La capa de escritura pasa a ser una capa de solo lectura de la imagen nueva. El contenedor y la imagen original no se modifican.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>docker<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span><span class="s2">"Alumno"</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">"alpine con curl"</span><span class="w"> </span>ut3-base<span class="w"> </span>ut3/alpine-curl:1.0
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Pieza</th>
+<th>Qué es</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-a</code></td>
+<td>Autor (queda en los metadatos)</td>
+</tr>
+<tr>
+<td><code>-m</code></td>
+<td>Comentario, como el de un commit de Git</td>
+</tr>
+<tr>
+<td><code>ut3-base</code></td>
+<td>Contenedor de origen (nombre o ID)</td>
+</tr>
+<tr>
+<td><code>ut3/alpine-curl:1.0</code></td>
+<td>Nombre de la imagen nueva (<code>[registro/]repositorio:etiqueta</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>El contenedor puede estar en marcha o parado. Lo que hay en su capa de escritura (archivos nuevos, cambios, borrados) entra en la imagen. Los volúmenes <strong>no</strong>: un archivo que vive en un volumen no forma parte de la capa de escritura.</p>
+<figure><img src="imagenes/UT3-commit.png" alt="La capa de escritura del contenedor pasa a ser una capa de la imagen nueva"></figure>
+
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Partimos de Alpine, instalamos <code>curl</code> y congelamos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut3-base<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">600</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ut3-base<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'apk add --no-cache curl'</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>docker<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span><span class="s2">"Alumno"</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">"alpine con curl"</span><span class="w"> </span>ut3-base<span class="w"> </span>ut3/alpine-curl:1.0
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>docker<span class="w"> </span>images<span class="w"> </span>ut3/alpine-curl
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>ut3/alpine-curl:1.0
+</code></pre></div>
+<p><code>history</code> muestra la capa extra encima de Alpine. A partir de ahí:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/alpine-curl:1.0<span class="w"> </span>curl<span class="w"> </span>--version
+</code></pre></div>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>commit</code> no deja receta. Dentro de seis meses no sabrás si instalaste <code>curl</code> con <code>apk</code> o lo copiaste a mano. Un Dockerfile sí lo deja. Usa <code>commit</code> para un apaño o para entender las capas; para algo que vayas a repetir o a entregar, Dockerfile.</p>
+</div>
+<h3 id="142-varios-nombres-mismo-id-docker-tag">14.2 Varios nombres, mismo ID: <code>docker tag</code><a class="headerlink" href="#142-varios-nombres-mismo-id-docker-tag" title="Permanent link">&para;</a></h3>
+<p>Una imagen puede tener <strong>varias etiquetas</strong>. No se copia: se le pone otro nombre al mismo ID.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>docker<span class="w"> </span>tag<span class="w"> </span>ut3/alpine-curl:1.0<span class="w"> </span>ut3/alpine-curl:latest
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>docker<span class="w"> </span>images<span class="w"> </span>ut3/alpine-curl
+</code></pre></div>
+<p>Las dos filas muestran el mismo ID y el mismo tamaño. <code>latest</code> no es mágica: es una etiqueta que has puesto tú (o el autor en Hub).</p>
+<p>Para quitar una etiqueta, <code>docker rmi</code> de ese nombre. Mientras quede otra, la imagen sigue.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><code>docker tag</code></strong>: añade un nombre (repositorio y etiqueta) a una imagen que ya existe. No duplica las capas.</p>
+</div>
+<h3 id="143-copiar-una-imagen-a-un-archivo-save-y-load">14.3 Copiar una imagen a un archivo: <code>save</code> y <code>load</code><a class="headerlink" href="#143-copiar-una-imagen-a-un-archivo-save-y-load" title="Permanent link">&para;</a></h3>
+<p>Para llevarte una imagen a otra máquina <strong>sin registro</strong>, o para una copia de seguridad:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>copia.tar<span class="w"> </span>ut3/alpine-curl:1.0
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="c1"># equivalente: docker save ut3/alpine-curl:1.0 &gt; copia.tar</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>docker<span class="w"> </span>load<span class="w"> </span>-i<span class="w"> </span>copia.tar
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="c1"># equivalente: docker load &lt; copia.tar</span>
+</code></pre></div>
+<p><code>save</code> empaqueta las <strong>capas y el historial</strong>. <code>load</code> las restaura. Si en destino ya hay capas iguales, se reutilizan.</p>
+<h3 id="144-el-otro-par-export-e-import">14.4 El otro par: <code>export</code> e <code>import</code><a class="headerlink" href="#144-el-otro-par-export-e-import" title="Permanent link">&para;</a></h3>
+<p><code>docker export</code> no guarda una imagen: vuelca el <strong>sistema de archivos de un contenedor</strong> (lo que verías con <code>ls /</code> dentro) a un <code>.tar</code>. <code>docker import</code> crea una imagen a partir de ese <code>.tar</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>docker<span class="w"> </span><span class="nb">export</span><span class="w"> </span>ut3-base<span class="w"> </span>-o<span class="w"> </span>fs.tar
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>docker<span class="w"> </span>import<span class="w"> </span>fs.tar<span class="w"> </span>ut3/desde-export:1.0
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>ut3/desde-export:1.0<span class="w">     </span><span class="c1"># una sola capa</span>
+</code></pre></div>
+<figure><img src="imagenes/UT3-save-export.png" alt="save y load conservan las capas; export e import dejan una foto plana"></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>save</code> / <code>load</code></th>
+<th><code>export</code> / <code>import</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parte de</td>
+<td>Una <strong>imagen</strong></td>
+<td>Un <strong>contenedor</strong></td>
+</tr>
+<tr>
+<td>Qué guarda</td>
+<td>Capas e historial</td>
+<td>Archivos, una foto plana</td>
+</tr>
+<tr>
+<td>Resultado al cargar</td>
+<td>La misma pila de capas</td>
+<td>Una imagen de <strong>una sola capa</strong>, sin historial</td>
+</tr>
+<tr>
+<td>Metadatos (<code>CMD</code>, <code>ENV</code>…)</td>
+<td>Se conservan</td>
+<td>Se pierden (se pueden indicar en <code>import</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Si tu objetivo es mover una imagen, <code>save</code> / <code>load</code>. <code>export</code> sirve para extraer los archivos de un contenedor (un backup del sistema de archivos, no de la receta).</p>
+</div>
+<h3 id="miralo-en-tu-maquina_2">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut3-base<span class="w"> </span>alpine:3.20<span class="w"> </span>sleep<span class="w"> </span><span class="m">600</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ut3-base<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'apk add --no-cache curl'</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>docker<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span><span class="s2">"Alumno"</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">"alpine con curl"</span><span class="w"> </span>ut3-base<span class="w"> </span>ut3/alpine-curl:1.0
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>docker<span class="w"> </span>tag<span class="w"> </span>ut3/alpine-curl:1.0<span class="w"> </span>ut3/alpine-curl:latest
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>docker<span class="w"> </span>images<span class="w"> </span>ut3/alpine-curl
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>ut3/alpine-curl:1.0
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>/tmp/copia.tar<span class="w"> </span>ut3/alpine-curl:1.0
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>ls<span class="w"> </span>-lh<span class="w"> </span>/tmp/copia.tar
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>docker<span class="w"> </span>rmi<span class="w"> </span>ut3/alpine-curl:latest<span class="w"> </span>ut3/alpine-curl:1.0
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>docker<span class="w"> </span>load<span class="w"> </span>-i<span class="w"> </span>/tmp/copia.tar
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>docker<span class="w"> </span>images<span class="w"> </span>ut3/alpine-curl
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>ut3-base
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Qué pasa con el contenedor original después de un <code>docker commit</code>?</li>
+<li>¿<code>docker tag</code> duplica la imagen en disco?</li>
+<li>¿Qué conservas con <code>save</code>/<code>load</code> que pierdes con <code>export</code>/<code>import</code>?</li>
+<li>Un archivo que está en un volumen, ¿entra en la imagen de <code>commit</code>?</li>
+<li>¿Por qué un Dockerfile es mejor que un <code>commit</code> si vas a repetir la imagen?</li>
+</ol>
+</div>
+<h2 id="bloque-15-dockerfile-y-docker-build">Bloque 15. Dockerfile y <code>docker build</code><a class="headerlink" href="#bloque-15-dockerfile-y-docker-build" title="Permanent link">&para;</a></h2>
+<p>Un Dockerfile es un recetario. Lo escribes una vez, lo versionas en Git, lo compartes, y cualquiera (tú el martes, un compañero, un servidor de integración) obtiene <strong>la misma imagen</strong>. Por eso es el camino normal.</p>
+<h3 id="151-que-es-y-como-se-llama">15.1 Qué es y cómo se llama<a class="headerlink" href="#151-que-es-y-como-se-llama" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Dockerfile</strong>: archivo de texto con instrucciones para construir una imagen. Por convención se llama exactamente <code>Dockerfile</code> (con D mayúscula, sin extensión) y vive en el directorio del proyecto.</p>
+</div>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><code>docker build</code></strong>: lee un Dockerfile, ejecuta las instrucciones en orden y guarda el resultado como imagen local. Cada instrucción genera una <strong>capa</strong>.</p>
+</div>
+<p>El directorio que le pasas a <code>build</code> (casi siempre <code>.</code>) es el <strong>contexto</strong>: los archivos que Docker puede copiar a la imagen. No es «donde está el demonio»; es «qué carpeta le enseñas».</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/ubuntu-nano<span class="w"> </span>.
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Pieza</th>
+<th>Qué es</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-t ut3/ubuntu-nano</code></td>
+<td>Nombre y etiqueta de la imagen resultante (<code>latest</code> si no pones etiqueta)</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>Contexto: el directorio actual. Ahí busca <code>Dockerfile</code></td>
+</tr>
+</tbody>
+</table>
+<p>Si el archivo no se llama <code>Dockerfile</code>, <code>-f</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/ubuntu-nano<span class="w"> </span>-f<span class="w"> </span>Dockerfile.nano<span class="w"> </span>.
+</code></pre></div>
+<h3 id="152-el-primero-ubuntu-con-nano">15.2 El primero: Ubuntu con <code>nano</code><a class="headerlink" href="#152-el-primero-ubuntu-con-nano" title="Permanent link">&para;</a></h3>
+<p>Crea un directorio de trabajo (no ensucies <code>$HOME</code> a lo bruto) y, dentro, un archivo <code>Dockerfile</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:24.04</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nano
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"/bin/bash"</span><span class="p">]</span>
+</code></pre></div>
+<p>Tres instrucciones, tres ideas:</p>
+<ol>
+<li><strong><code>FROM</code></strong>: de qué imagen partes. Siempre la primera (salvo un <code>ARG</code> antes, que verás en el bloque 16).</li>
+<li><strong><code>RUN</code></strong>: comando que se ejecuta <strong>al construir</strong>, no al arrancar. El resultado queda grabado en una capa.</li>
+<li><strong><code>CMD</code></strong>: comando por defecto <strong>al arrancar</strong> un contenedor de esta imagen, si no indicas otro en <code>docker run</code>.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/ubuntu-nano<span class="w"> </span>.
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>ut3/ubuntu-nano
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>ut3/ubuntu-nano
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="c1"># dentro: nano --version   y  exit</span>
+</code></pre></div>
+<figure><img src="imagenes/UT3-capas-dockerfile.png" alt="Cada instrucción del Dockerfile añade una capa encima de la anterior"></figure>
+
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>FROM ubuntu:latest</code> es cómodo y es una trampa. Hoy es 24.04; dentro de un año puede ser 26.04 y tu build cambia sin que lo hayas pedido. En clase y en producción: etiqueta concreta (<code>ubuntu:24.04</code>, <code>alpine:3.20</code>).</p>
+</div>
+<h3 id="153-la-cache-lo-que-no-cambia-no-se-repite">15.3 La caché: lo que no cambia no se repite<a class="headerlink" href="#153-la-cache-lo-que-no-cambia-no-se-repite" title="Permanent link">&para;</a></h3>
+<p>Docker no ejecuta a ciegas cada instrucción cada vez. Si el Dockerfile, el contexto que usa esa instrucción y las capas de debajo <strong>no han cambiado</strong>, reutiliza la capa: en el log verás <code>CACHED</code>.</p>
+<p>Por eso el <strong>orden</strong> importa. Lo que cambia a menudo (tu código, tu <code>index.html</code>) va <strong>al final</strong>. Lo que cambia poco (instalar paquetes) va <strong>arriba</strong>, justo después de <code>FROM</code>.</p>
+<figure><img src="imagenes/UT3-cache.png" alt="FROM y RUN arriba, COPY del código al final, para no invalidar la caché"></figure>
+
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Este Dockerfile instala <code>curl</code> y luego copia un archivo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:3.20</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="k">RUN</span><span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>--no-cache<span class="w"> </span>curl
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="k">COPY</span><span class="w"> </span>hola.txt<span class="w"> </span>/hola.txt
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"cat"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/hola.txt"</span><span class="p">]</span>
+</code></pre></div>
+<p>Primera vez: descarga Alpine, instala <code>curl</code>, copia. Cambias <code>hola.txt</code> y vuelves a construir: <code>FROM</code> y <code>RUN</code> salen <code>CACHED</code>; solo se rehace el <code>COPY</code>. Si el <code>COPY</code> estuviera <strong>antes</strong> del <code>RUN</code>, un cambio del archivo obligaría a reinstalar <code>curl</code>.</p>
+</div>
+<h3 id="154-lo-que-no-quieres-dentro-dockerignore">15.4 Lo que no quieres dentro: <code>.dockerignore</code><a class="headerlink" href="#154-lo-que-no-quieres-dentro-dockerignore" title="Permanent link">&para;</a></h3>
+<p>El contexto se manda al demonio. Si en la carpeta hay un <code>.git</code>, un <code>node_modules</code> o un archivo de secretos, <strong>entra en el contexto</strong> aunque no hagas <code>COPY</code> de ellos. <code>.dockerignore</code> (misma idea que <code>.gitignore</code>) los deja fuera:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>.git
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>*.log
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>secretos/
+</code></pre></div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Con <code>COPY . /app</code>, un <code>secretos/clave.txt</code> acabaría en la imagen. Con <code>secretos/</code> en <code>.dockerignore</code>, <code>docker run --rm imagen ls /app</code> no lo lista.</p>
+</div>
+<h3 id="miralo-en-tu-maquina_3">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ut3-build<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/ut3-build
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>Dockerfile<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="s">FROM alpine:3.20</span>
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="s">RUN apk add --no-cache curl</span>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="s">COPY hola.txt /hola.txt</span>
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="s">CMD ["cat", "/hola.txt"]</span>
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="s">EOF</span>
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="nb">echo</span><span class="w"> </span>uno<span class="w"> </span>&gt;<span class="w"> </span>hola.txt
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/cache<span class="w"> </span>.
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/cache<span class="w"> </span>.<span class="w">          </span><span class="c1"># segunda vez: casi todo CACHED</span>
+<a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a><span class="nb">echo</span><span class="w"> </span>dos<span class="w"> </span>&gt;<span class="w"> </span>hola.txt
+<a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/cache<span class="w"> </span>.<span class="w">          </span><span class="c1"># el COPY se rehace; el RUN no</span>
+<a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/cache<span class="w">            </span><span class="c1"># dos</span>
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Cuál es la diferencia entre <code>RUN</code> y <code>CMD</code>?</li>
+<li>¿Qué es el contexto de <code>docker build</code>?</li>
+<li>¿Por qué el <code>COPY</code> del código se pone al final?</li>
+<li>¿Qué problema hay con <code>FROM ubuntu:latest</code>?</li>
+<li>¿Para qué sirve <code>.dockerignore</code> si no haces <code>COPY</code> de esos archivos?</li>
+</ol>
+</div>
+<h2 id="bloque-16-instrucciones-del-dockerfile">Bloque 16. Instrucciones del Dockerfile<a class="headerlink" href="#bloque-16-instrucciones-del-dockerfile" title="Permanent link">&para;</a></h2>
+<p>Hay más instrucciones. No hace falta memorizar el manual: sí hace falta saber qué hace cada una de las de este bloque y cuándo usarla.</p>
+<h3 id="161-copy-y-add">16.1 <code>COPY</code> y <code>ADD</code><a class="headerlink" href="#161-copy-y-add" title="Permanent link">&para;</a></h3>
+<p>Las dos copian archivos del contexto a la imagen. <strong>Usa <code>COPY</code></strong>, salvo un caso.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>COPY</code></th>
+<th><code>ADD</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Archivo o directorio del contexto</td>
+<td>Sí</td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>Descomprime un <code>.tar</code> / <code>.tar.gz</code> local en el destino</td>
+<td>No</td>
+<td><strong>Sí</strong></td>
+</tr>
+<tr>
+<td>Descarga una URL</td>
+<td>No</td>
+<td>Sí (mejor no: un <code>RUN curl</code> se entiende más)</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="k">COPY</span><span class="w"> </span>sitio/<span class="w"> </span>/usr/share/nginx/html/
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="k">COPY</span><span class="w"> </span>paquete.tar.gz<span class="w"> </span>/copia/
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="k">ADD</span><span class="w"> </span>paquete.tar.gz<span class="w"> </span>/srv/
+</code></pre></div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Con un <code>paquete.tar.gz</code> que dentro tiene <code>t/f.txt</code>:</p>
+<ul>
+<li><code>ADD paquete.tar.gz /srv/</code> deja <code>/srv/t/f.txt</code> (descomprimido).</li>
+<li><code>COPY paquete.tar.gz /copia/</code> deja <code>/copia/paquete.tar.gz</code> (el archivo tal cual).</li>
+</ul>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>ADD</code> <strong>no</strong> descomprime un <code>.zip</code>. Solo archivos tar. El truco de «ADD del zip y ya está la web» no funciona.</p>
+</div>
+<h3 id="162-expose">16.2 <code>EXPOSE</code><a class="headerlink" href="#162-expose" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">80</span>
+</code></pre></div>
+<p>Es un <strong>metadato</strong>: documenta que la imagen escucha en el 80. No publica el puerto en el anfitrión. Eso sigue siendo <code>-p</code> en <code>docker run</code>, como en la UT1 y la UT2. <code>docker image inspect</code> lo enseña en <code>Config.ExposedPorts</code>; <code>docker ps</code> no abre nada por un <code>EXPOSE</code> solo.</p>
+<h3 id="163-cmd-y-entrypoint-forma-shell-y-forma-exec">16.3 <code>CMD</code> y <code>ENTRYPOINT</code>, forma <em>shell</em> y forma <em>exec</em><a class="headerlink" href="#163-cmd-y-entrypoint-forma-shell-y-forma-exec" title="Permanent link">&para;</a></h3>
+<p>Hay dos escrituras:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">CMD</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>hola<span class="w">                 </span>#<span class="w"> </span>forma<span class="w"> </span>shell:<span class="w"> </span>Docker<span class="w"> </span>lo<span class="w"> </span>convierte<span class="w"> </span>en<span class="w"> </span>/bin/sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">"echo hola"</span>
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"echo"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hola"</span><span class="p">]</span><span class="w">          </span>#<span class="w"> </span>forma<span class="w"> </span>exec:<span class="w"> </span>ejecuta<span class="w"> </span>el<span class="w"> </span>binario,<span class="w"> </span>sin<span class="w"> </span>shell
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>docker<span class="w"> </span>image<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{.Config.Cmd}}'</span><span class="w"> </span>ut3/s<span class="w"> </span>ut3/e
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>[/bin/sh -c echo hola]
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>[echo hola]
+</code></pre></div>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Forma <em>exec</em></strong>: JSON, <code>["programa", "arg1"]</code>. Docker ejecuta ese programa como PID 1. <strong>Forma <em>shell</em></strong>: una cadena. Docker lanza <code>/bin/sh -c "…"</code>. Hace falta si usas redirecciones o variables; para el proceso principal de un servidor, la forma <em>exec</em> es la adecuada (señales como <code>SIGTERM</code> llegan al proceso de verdad).</p>
+</div>
+<p><code>ENTRYPOINT</code> fija el <strong>programa</strong>; <code>CMD</code>, los <strong>argumentos por defecto</strong>. Lo que escribas después de la imagen en <code>docker run</code> sustituye a <code>CMD</code>, no a <code>ENTRYPOINT</code> (salvo <code>--entrypoint</code>).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:3.20</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">"cat"</span><span class="p">]</span>
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"/etc/os-release"</span><span class="p">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/cat<span class="w">                 </span><span class="c1"># cat /etc/os-release</span>
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/cat<span class="w"> </span>/etc/hostname<span class="w">   </span><span class="c1"># cat /etc/hostname</span>
+</code></pre></div>
+<p>Lo viste en la UT2 con <code>Entrypoint</code> y <code>Cmd</code> de <code>inspect</code>. Aquí lo dejas escrito en la imagen.</p>
+<h3 id="164-user-workdir-env">16.4 <code>USER</code>, <code>WORKDIR</code>, <code>ENV</code><a class="headerlink" href="#164-user-workdir-env" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:3.20</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="k">RUN</span><span class="w"> </span>adduser<span class="w"> </span>-D<span class="w"> </span>dustin
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="k">USER</span><span class="w"> </span><span class="s">dustin</span>
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/home/dustin/app</span>
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">SALUDO</span><span class="o">=</span>hola
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"sh"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-c"</span><span class="p">,</span><span class="w"> </span><span class="s2">"id; pwd; echo $SALUDO"</span><span class="p">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Instrucción</th>
+<th>Efecto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>USER</code></strong></td>
+<td>Usuario (o UID) con el que corren las instrucciones <strong>siguientes</strong> y el contenedor. Por defecto, <code>root</code></td>
+</tr>
+<tr>
+<td><strong><code>WORKDIR</code></strong></td>
+<td>Directorio de trabajo. Si no existe, lo crea. Afecta a <code>RUN</code>, <code>CMD</code>, <code>ENTRYPOINT</code> y a las copias relativas</td>
+</tr>
+<tr>
+<td><strong><code>ENV</code></strong></td>
+<td>Variable de entorno grabada en la imagen. Disponible en el build y en el contenedor</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/user
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>uid=1000(dustin) gid=1000(dustin)
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>/home/dustin/app
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>hola
+</code></pre></div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Un contenedor de producción no debería ir como <code>root</code> si puede evitarse. Crear un usuario y poner <code>USER</code> es de las primeras cosas que se miran en una imagen seria.</p>
+</div>
+<h3 id="165-arg-y-label">16.5 <code>ARG</code> y <code>LABEL</code><a class="headerlink" href="#165-arg-y-label" title="Permanent link">&para;</a></h3>
+<p><code>ARG</code> es un parámetro del <strong>build</strong>, no del contenedor. Se pasa con <code>--build-arg</code>. Si no lo pasas, usa el valor por defecto.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:3.20</span>
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span><span class="m">1</span>.2
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="k">RUN</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Instalando versión </span><span class="nv">$VERSION</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="w"> </span>/version
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"cat"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/version"</span><span class="p">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/arg<span class="w"> </span>.
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/arg<span class="w">                      </span><span class="c1"># Instalando versión 1.2</span>
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>docker<span class="w"> </span>build<span class="w"> </span>--build-arg<span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span><span class="m">2</span>.0<span class="w"> </span>-t<span class="w"> </span>ut3/arg<span class="w"> </span>.
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/arg<span class="w">                      </span><span class="c1"># Instalando versión 2.0</span>
+</code></pre></div>
+<p><code>LABEL</code> pone metadatos (autor, versión del proyecto, licencia). No cambia el comportamiento.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="k">LABEL</span><span class="w"> </span><span class="nv">maintainer</span><span class="o">=</span><span class="s2">"alumno@example.com"</span>
+</code></pre></div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>ARG</code> no queda en el contenedor como variable de entorno. Si quieres que el programa la vea al arrancar, usa <code>ENV</code> (puedes hacer <code>ENV VERSION=$VERSION</code> después del <code>ARG</code>).</p>
+</div>
+<h3 id="miralo-en-tu-maquina_4">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="nb">cd</span><span class="w"> </span>~/ut3-build
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>Dockerfile<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="s">FROM alpine:3.20</span>
+<a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="s">ENTRYPOINT ["cat"]</span>
+<a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="s">CMD ["/etc/os-release"]</span>
+<a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a><span class="s">EOF</span>
+<a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/cat<span class="w"> </span>.
+<a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/cat<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-3
+<a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ut3/cat<span class="w"> </span>/etc/hostname
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Cuándo usarías <code>ADD</code> en lugar de <code>COPY</code>?</li>
+<li>¿<code>EXPOSE 80</code> hace que <code>curl localhost:80</code> funcione desde la VM?</li>
+<li>¿Qué sustituye <code>docker run imagen argumento</code>: el <code>CMD</code>, el <code>ENTRYPOINT</code>, o los dos?</li>
+<li>¿Qué diferencia hay entre <code>ARG</code> y <code>ENV</code>?</li>
+<li>¿Por qué la forma <em>exec</em> de <code>CMD</code> es mejor para un servidor?</li>
+</ol>
+</div>
+<h2 id="bloque-17-imagenes-ligeras-y-registros">Bloque 17. Imágenes ligeras y registros<a class="headerlink" href="#bloque-17-imagenes-ligeras-y-registros" title="Permanent link">&para;</a></h2>
+<p>Una imagen que pesa 200 MB donde bastaban 15 MB tarda más en bajar, ocupa disco y arrastra paquetes que no necesitas (más superficie de ataque, más actualizaciones). Y una imagen que solo vive en tu VM no le sirve a nadie. Este bloque cierra las dos puntas: <strong>tamaño</strong> y <strong>distribución</strong>.</p>
+<h3 id="171-el-tamano-se-decide-al-escribir-el-dockerfile">17.1 El tamaño se decide al escribir el Dockerfile<a class="headerlink" href="#171-el-tamano-se-decide-al-escribir-el-dockerfile" title="Permanent link">&para;</a></h3>
+<p>Números reales, medidos en una máquina con Engine 29:</p>
+<table>
+<thead>
+<tr>
+<th>Imagen</th>
+<th>DISK USAGE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alpine:3.20</code></td>
+<td>13,2 MB</td>
+</tr>
+<tr>
+<td><code>ubuntu:24.04</code></td>
+<td>117 MB</td>
+</tr>
+<tr>
+<td><code>debian:12-slim</code></td>
+<td>116 MB</td>
+</tr>
+<tr>
+<td><code>nginx:1.29</code></td>
+<td>240 MB</td>
+</tr>
+<tr>
+<td><code>nginx:1.29-alpine</code></td>
+<td>94,8 MB</td>
+</tr>
+</tbody>
+</table>
+<p>Y el mismo «Ubuntu con nano», tres recetas:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="c"># A: dos RUN, sin limpiar. 212 MB</span>
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:24.04</span>
+<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update
+<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nano
+<a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a>
+<a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="c"># B: un RUN, sin recomendados, listas de apt fuera. 117 MB</span>
+<a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:24.04</span>
+<a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends<span class="w"> </span>nano<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+<a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a>
+<a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a><span class="c"># C: Alpine. 14,3 MB</span>
+<a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:3.20</span>
+<a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a><span class="k">RUN</span><span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>--no-cache<span class="w"> </span>nano
+</code></pre></div>
+<p>De 212 MB a 14,3 MB sin cambiar lo que hace la imagen. Las reglas, en orden:</p>
+<ol>
+<li><strong>Base pequeña.</strong> Alpine (<code>apk</code>) o una variante <code>-slim</code> / <code>-alpine</code> de la imagen oficial. Si la aplicación es un binario estático, hay imágenes <code>scratch</code> o <code>distroless</code> (más adelante en el módulo, si toca).</li>
+<li><strong>Un <code>RUN</code> para instalar y limpiar.</strong> Cada <code>RUN</code> es una capa. Si en una capa descargas las listas de <code>apt</code> y en la siguiente las borras, la primera <strong>sigue en la imagen</strong>. Hay que borrar en el <strong>mismo</strong> <code>RUN</code>.</li>
+<li><strong><code>--no-install-recommends</code></strong> en <code>apt-get install</code>: no arrastra paquetes «recomendados» que no has pedido.</li>
+<li><strong>No instales un editor «por si acaso»</strong> en una imagen que va a producción. <code>nano</code> en el ejemplo es para ver el tamaño; un Nginx de verdad no lo necesita. Para depurar, <code>docker exec</code> y, si hace falta, una imagen aparte.</li>
+<li><strong>Orden de caché</strong>, como en el 15.3: dependencias arriba, tu código abajo.</li>
+</ol>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Alpine usa <code>musl</code> y <code>apk</code>, no <code>glibc</code> ni <code>apt</code>. La mayoría de imágenes oficiales tienen variante <code>-alpine</code>. Si un binario solo está compilado para <code>glibc</code>, Alpine no es un atajo: o usas Debian/Ubuntu slim, o lo recompilas.</p>
+</div>
+<h3 id="172-subir-a-docker-hub">17.2 Subir a Docker Hub<a class="headerlink" href="#172-subir-a-docker-hub" title="Permanent link">&para;</a></h3>
+<p>Docker Hub es el registro por defecto (UT2). Para <strong>subir</strong> necesitas cuenta en <a href="https://hub.docker.com">https://hub.docker.com</a>, un repositorio creado (público o privado) y sesión en la VM:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>docker<span class="w"> </span>login
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>docker<span class="w"> </span>tag<span class="w"> </span>ut3/web:1.0<span class="w"> </span>TU_USUARIO/web:1.0
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>docker<span class="w"> </span>push<span class="w"> </span>TU_USUARIO/web:1.0
+</code></pre></div>
+<p>El nombre local tiene que ir con <strong>tu usuario</strong> de Hub delante: <code>TU_USUARIO/web:1.0</code>. Si la imagen se llama solo <code>web</code>, Hub no sabe a qué cuenta empujarla.</p>
+<p>Cualquiera (si el repositorio es público) podrá hacer <code>docker pull TU_USUARIO/web:1.0</code>. En Dual, si te piden una imagen tuya, este es el camino. No subas secretos: todo lo que copiaste en el Dockerfile viaja con la imagen.</p>
+<h3 id="173-un-registro-en-local">17.3 Un registro en local<a class="headerlink" href="#173-un-registro-en-local" title="Permanent link">&para;</a></h3>
+<p>No siempre hay cuenta de Hub, ni conviene subir lo de clase a internet. La imagen oficial <code>registry</code> monta un registro <strong>en tu VM</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut3-registry<span class="w"> </span>-p<span class="w"> </span><span class="m">5000</span>:5000<span class="w"> </span>registry:2
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>docker<span class="w"> </span>tag<span class="w"> </span>ut3/alpine-curl:1.0<span class="w"> </span>localhost:5000/alpine-curl:1.0
+<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>docker<span class="w"> </span>push<span class="w"> </span>localhost:5000/alpine-curl:1.0
+<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a>docker<span class="w"> </span>rmi<span class="w"> </span>localhost:5000/alpine-curl:1.0
+<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>docker<span class="w"> </span>pull<span class="w"> </span>localhost:5000/alpine-curl:1.0
+</code></pre></div>
+<figure><img src="imagenes/UT3-registro.png" alt="push sube la imagen al registro; pull la baja en otra máquina"></figure>
+
+<p>Por defecto, Docker trata <code>localhost</code> como registro «inseguro» (HTTP). Si el <code>push</code> falla hablando de TLS o de <em>insecure registry</em>, en esta VM no hace falta tocar nada: avisa a Dustin antes de editar <code>/etc/docker/daemon.json</code>.</p>
+<p>Para ver lo que hay en el registro:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:5000/v2/_catalog
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:5000/v2/alpine-curl/tags/list
+</code></pre></div>
+<p>Cuando acabes: <code>docker rm -f ut3-registry</code>. Los datos del registro (si no le pusiste un volumen) se van con el contenedor.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Registro local</strong>: registro que corre en tu red (o en tu VM) con la imagen <code>registry</code>. Sirve para practicar <code>tag</code> / <code>push</code> / <code>pull</code> sin cuenta en Hub y, en una empresa, para no subir imágenes internas a un registro público.</p>
+</div>
+<h3 id="174-una-web-empaquetada-de-principio-a-fin">17.4 Una web empaquetada, de principio a fin<a class="headerlink" href="#174-una-web-empaquetada-de-principio-a-fin" title="Permanent link">&para;</a></h3>
+<p>Junta Dockerfile, <code>COPY</code>, <code>EXPOSE</code> y una etiqueta. En <code>~/ut3-build</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>site
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'&lt;h1&gt;Mi web en una imagen&lt;/h1&gt;'</span><span class="w"> </span>&gt;<span class="w"> </span>site/index.html
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">nginx:1.29-alpine</span>
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="k">LABEL</span><span class="w"> </span><span class="nv">maintainer</span><span class="o">=</span><span class="s2">"alumno@example.com"</span>
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="k">COPY</span><span class="w"> </span>site/<span class="w"> </span>/usr/share/nginx/html/
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">80</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ut3/web:1.0<span class="w"> </span>.
+<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut3-web<span class="w"> </span>-p<span class="w"> </span><span class="m">18080</span>:80<span class="w"> </span>ut3/web:1.0
+<a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:18080
+<a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>ut3-web
+</code></pre></div>
+<p>La página ya no es la de bienvenida de Nginx: es la tuya, <strong>dentro de la imagen</strong>. Cualquier contenedor de <code>ut3/web:1.0</code> la trae. Eso no se consigue con <code>docker cp</code> al contenedor (UT2): <code>cp</code> toca un contenedor; el Dockerfile toca la plantilla.</p>
+<h3 id="miralo-en-tu-maquina_5">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>docker<span class="w"> </span>images<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Repository}}:{{.Tag}} {{.Size}}'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="w">    </span>ubuntu:24.04<span class="w"> </span>alpine:3.20<span class="w"> </span>nginx:1.29<span class="w"> </span>nginx:1.29-alpine
+<a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="c1"># registro local (si el 5000 está libre)</span>
+<a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>ut3-registry<span class="w"> </span>-p<span class="w"> </span><span class="m">5000</span>:5000<span class="w"> </span>registry:2
+<a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>docker<span class="w"> </span>tag<span class="w"> </span>alpine:3.20<span class="w"> </span>localhost:5000/alpine:3.20
+<a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a>docker<span class="w"> </span>push<span class="w"> </span>localhost:5000/alpine:3.20
+<a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:5000/v2/_catalog
+<a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>ut3-registry
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Por qué <code>RUN apt-get update</code> y <code>RUN apt-get install</code> en dos líneas deja la imagen más gorda aunque borres las listas después?</li>
+<li>¿Qué cambia entre <code>nginx:1.29</code> y <code>nginx:1.29-alpine</code> además del tamaño?</li>
+<li>¿Por qué <code>docker push web:1.0</code> a Docker Hub suele fallar y <code>docker push usuario/web:1.0</code> no?</li>
+<li>¿<code>EXPOSE</code> y <code>-p</code> hacen lo mismo?</li>
+<li>Si cambias <code>site/index.html</code> y no reconstruyes, ¿un contenedor nuevo de <code>ut3/web:1.0</code> enseña la página nueva?</li>
+</ol>
+</div>
+<h2 id="glosario">Glosario<a class="headerlink" href="#glosario" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Término</th>
+<th>Definición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>.dockerignore</code></strong></td>
+<td>Archivo que deja fuera del contexto de <code>build</code> rutas que no quieres mandar al demonio</td>
+</tr>
+<tr>
+<td><strong>Caché de build</strong></td>
+<td>Reutilización de capas cuya instrucción y capas de debajo no han cambiado</td>
+</tr>
+<tr>
+<td><strong>Contexto</strong></td>
+<td>Directorio que le pasas a <code>docker build</code>; de ahí salen los archivos de <code>COPY</code> y <code>ADD</code></td>
+</tr>
+<tr>
+<td><strong><code>CONTENT SIZE</code></strong></td>
+<td>Tamaño comprimido del contenido de la imagen, en el listado de Engine 29</td>
+</tr>
+<tr>
+<td><strong>Digest</strong></td>
+<td>Huella SHA256 del contenido; identifica una imagen de forma única</td>
+</tr>
+<tr>
+<td><strong><code>DISK USAGE</code></strong></td>
+<td>Espacio que ocupa la imagen en disco, descomprimida</td>
+</tr>
+<tr>
+<td><strong>Dockerfile</strong></td>
+<td>Receta en texto para construir una imagen con <code>docker build</code></td>
+</tr>
+<tr>
+<td><strong>Forma <em>exec</em></strong></td>
+<td>Notación JSON (<code>["prog", "arg"]</code>) que ejecuta el binario sin <code>/bin/sh -c</code></td>
+</tr>
+<tr>
+<td><strong>Forma <em>shell</em></strong></td>
+<td>Instrucción en cadena; Docker la lanza con <code>/bin/sh -c</code></td>
+</tr>
+<tr>
+<td><strong>Imagen huérfana</strong></td>
+<td>Imagen local sin etiqueta, casi siempre por un build que movió el nombre a otro ID</td>
+</tr>
+<tr>
+<td><strong>Imagen local</strong></td>
+<td>Copia de una imagen ya almacenada en la máquina</td>
+</tr>
+<tr>
+<td><strong><code>LABEL</code></strong></td>
+<td>Metadato clave-valor grabado en la imagen</td>
+</tr>
+<tr>
+<td><strong>Registro local</strong></td>
+<td>Registro que corre en tu red, habitualmente con la imagen <code>registry</code></td>
+</tr>
+<tr>
+<td><strong><code>docker commit</code></strong></td>
+<td>Crea una imagen a partir de la capa de escritura de un contenedor</td>
+</tr>
+<tr>
+<td><strong><code>docker tag</code></strong></td>
+<td>Añade un nombre a una imagen existente sin copiar capas</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mapa-resumen">Mapa resumen<a class="headerlink" href="#mapa-resumen" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>INVENTARIO
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>   docker images                      Engine 29: IMAGE, ID, DISK USAGE, CONTENT SIZE, EXTRA (U = en uso)
+<a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>   docker images alpine:3.20          filtro exacto por nombre:etiqueta
+<a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>   docker images -f reference='n*:t'  patrón
+<a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>   docker search [--filter is-official=true] nginx
+<a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>   docker pull alpine:3.20            digest; up to date si ya está
+<a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a>   docker history IMAGEN              capas y tamaño de cada una
+<a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>   docker image inspect -f '…'        un campo concreto
+<a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a>
+<a id="__codelineno-61-10" name="__codelineno-61-10" href="#__codelineno-61-10"></a>BORRAR
+<a id="__codelineno-61-11" name="__codelineno-61-11" href="#__codelineno-61-11"></a>   docker rmi NOMBRE_O_ID             quita una etiqueta; la imagen, si era la última
+<a id="__codelineno-61-12" name="__codelineno-61-12" href="#__codelineno-61-12"></a>   no borra si un contenedor (parado o no) la usa → primero docker rm
+<a id="__codelineno-61-13" name="__codelineno-61-13" href="#__codelineno-61-13"></a>   docker images -f dangling=true     huérfanas
+<a id="__codelineno-61-14" name="__codelineno-61-14" href="#__codelineno-61-14"></a>   docker image prune                 huérfanas; --all también las etiquetadas sin contenedor
+<a id="__codelineno-61-15" name="__codelineno-61-15" href="#__codelineno-61-15"></a>   docker system df                   qué ocupa
+<a id="__codelineno-61-16" name="__codelineno-61-16" href="#__codelineno-61-16"></a>   no lances a ciegas: rmi $(images -q) ni system prune -a
+<a id="__codelineno-61-17" name="__codelineno-61-17" href="#__codelineno-61-17"></a>
+<a id="__codelineno-61-18" name="__codelineno-61-18" href="#__codelineno-61-18"></a>CONTENEDOR → IMAGEN
+<a id="__codelineno-61-19" name="__codelineno-61-19" href="#__codelineno-61-19"></a>   docker commit -a autor -m "…" CONT img:etiq
+<a id="__codelineno-61-20" name="__codelineno-61-20" href="#__codelineno-61-20"></a>   docker tag img:a img:b             mismo ID, otro nombre
+<a id="__codelineno-61-21" name="__codelineno-61-21" href="#__codelineno-61-21"></a>   save -o f.tar IMG  /  load -i f.tar     conserva capas
+<a id="__codelineno-61-22" name="__codelineno-61-22" href="#__codelineno-61-22"></a>   export CONT -o f.tar / import f.tar IMG  foto plana, una capa
+<a id="__codelineno-61-23" name="__codelineno-61-23" href="#__codelineno-61-23"></a>
+<a id="__codelineno-61-24" name="__codelineno-61-24" href="#__codelineno-61-24"></a>DOCKERFILE
+<a id="__codelineno-61-25" name="__codelineno-61-25" href="#__codelineno-61-25"></a>   FROM imagen:etiqueta
+<a id="__codelineno-61-26" name="__codelineno-61-26" href="#__codelineno-61-26"></a>   RUN comando                        al construir; un RUN para instalar y limpiar
+<a id="__codelineno-61-27" name="__codelineno-61-27" href="#__codelineno-61-27"></a>   CMD ["prog","arg"]                 por defecto al arrancar (forma exec)
+<a id="__codelineno-61-28" name="__codelineno-61-28" href="#__codelineno-61-28"></a>   ENTRYPOINT ["prog"]                programa fijo; CMD son los argumentos
+<a id="__codelineno-61-29" name="__codelineno-61-29" href="#__codelineno-61-29"></a>   COPY origen destino                lo normal
+<a id="__codelineno-61-30" name="__codelineno-61-30" href="#__codelineno-61-30"></a>   ADD tar.gz destino                 solo si quieres descomprimir un tar
+<a id="__codelineno-61-31" name="__codelineno-61-31" href="#__codelineno-61-31"></a>   EXPOSE 80                          metadato; publicar es -p
+<a id="__codelineno-61-32" name="__codelineno-61-32" href="#__codelineno-61-32"></a>   USER, WORKDIR, ENV, ARG, LABEL
+<a id="__codelineno-61-33" name="__codelineno-61-33" href="#__codelineno-61-33"></a>   docker build -t nombre:etiq [-f archivo] .
+<a id="__codelineno-61-34" name="__codelineno-61-34" href="#__codelineno-61-34"></a>   .dockerignore                      fuera del contexto
+<a id="__codelineno-61-35" name="__codelineno-61-35" href="#__codelineno-61-35"></a>   caché: lo que más cambia, al final
+<a id="__codelineno-61-36" name="__codelineno-61-36" href="#__codelineno-61-36"></a>
+<a id="__codelineno-61-37" name="__codelineno-61-37" href="#__codelineno-61-37"></a>TAMAÑO Y REGISTRO
+<a id="__codelineno-61-38" name="__codelineno-61-38" href="#__codelineno-61-38"></a>   base pequeña (alpine, -slim); un RUN; --no-install-recommends; rm lists
+<a id="__codelineno-61-39" name="__codelineno-61-39" href="#__codelineno-61-39"></a>   docker login + tag usuario/img:etiq + push
+<a id="__codelineno-61-40" name="__codelineno-61-40" href="#__codelineno-61-40"></a>   registry:2 en localhost:5000 para practicar sin Hub
+</code></pre></div>
+<h2 id="autoevaluacion">Autoevaluación<a class="headerlink" href="#autoevaluacion" title="Permanent link">&para;</a></h2>
+<h3 id="preguntas-cortas">Preguntas cortas<a class="headerlink" href="#preguntas-cortas" title="Permanent link">&para;</a></h3>
+<ol>
+<li>¿Qué comando lista las imágenes locales? ¿Y cuál busca en Docker Hub sin descargar?</li>
+<li>¿Qué indica una <code>U</code> en <code>EXTRA</code>?</li>
+<li>¿Qué diferencia hay entre borrar una etiqueta y borrar la imagen?</li>
+<li>¿Por qué <code>docker rmi nginx</code> puede fallar con el contenedor ya parado?</li>
+<li>¿Qué conservan <code>save</code>/<code>load</code> que <code>export</code>/<code>import</code> no conservan?</li>
+<li>¿En qué momento se ejecuta un <code>RUN</code> y en qué momento un <code>CMD</code>?</li>
+<li>¿<code>EXPOSE 80</code> publica el puerto 80 en el anfitrión?</li>
+<li>¿Por qué un <code>COPY</code> del código se pone después de instalar paquetes?</li>
+<li>¿Qué hay que poner delante del nombre de la imagen para poder hacer <code>push</code> a Docker Hub?</li>
+<li>¿Por qué <code>RUN apt-get update</code> y <code>RUN apt-get install</code> en dos instrucciones dejan rastros aunque luego borres <code>/var/lib/apt/lists</code>?</li>
+</ol>
+<h3 id="tipo-test">Tipo test<a class="headerlink" href="#tipo-test" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>docker images alp</code>
+   a) Lista <code>alpine</code> y todo lo que empiece por <code>alp</code>  b) No lista <code>alpine</code>: el nombre tiene que coincidir entero  c) Hace un <code>pull</code> de <code>alpine</code>  d) Es un error de sintaxis</li>
+<li><code>docker commit</code> sobre un contenedor en marcha…
+   a) Borra el contenedor  b) Modifica la imagen original  c) Crea una imagen nueva; el contenedor sigue  d) Solo funciona si el contenedor está parado</li>
+<li>La forma <em>exec</em> de <code>CMD</code> es…
+   a) <code>CMD echo hola</code>  b) <code>CMD ["echo", "hola"]</code>  c) <code>CMD echo, hola</code>  d) <code>RUN echo hola</code></li>
+<li><code>ADD app.zip /src/</code> …
+   a) Descomprime el zip en <code>/src</code>  b) Copia el zip tal cual (ADD no descomprime zip)  c) Descarga el zip de Hub  d) Falla siempre</li>
+<li><code>docker image prune</code> sin <code>--all</code> borra…
+   a) Todas las imágenes  b) Solo las huérfanas  c) Las que no están en marcha  d) Los contenedores parados</li>
+<li>Un registro local con <code>registry:2</code> sirve para…
+   a) Sustituir a Docker Hub en internet  b) Practicar <code>push</code>/<code>pull</code> en tu red sin cuenta en Hub  c) Compilar Dockerfiles más rápido  d) Publicar puertos automáticamente</li>
+</ol>
+<h3 id="razona">Razona<a class="headerlink" href="#razona" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Un compañero hace <code>docker run -it ubuntu bash</code>, instala <code>nginx</code> con <code>apt</code>, sale con <code>exit</code> y dice: «ya tengo una imagen de Ubuntu con Nginx». Explica qué tiene realmente y qué tendría que haber hecho para tener una imagen reutilizable.</li>
+<li>Este Dockerfile tarda un minuto cada vez que cambia <code>index.html</code>. Propón el cambio mínimo para que instalar <code>curl</code> quede en caché:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine:3.20</span>
+<a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a><span class="k">COPY</span><span class="w"> </span>index.html<span class="w"> </span>/web/index.html
+<a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="k">RUN</span><span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>--no-cache<span class="w"> </span>curl
+</code></pre></div></li>
+<li><code>docker rmi $(docker images -q)</code> le ha fallado a media lista y ahora no sabe qué le queda. ¿Qué ha pasado y qué tendría que haber usado para limpiar solo lo que no sirve?</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../UT2-dosier/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: UT2. Principales acciones con Docker">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                UT2. Principales acciones con Docker
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../UT4-dosier/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: UT4. Redes y volúmenes">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                UT4. Redes y volúmenes
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Dustin Randel de Lara García, Sant Josep Obrer. Material docente del módulo IB1107.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

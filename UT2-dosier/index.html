@@ -1,0 +1,3247 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes del módulo IB1107, 2.º ASIX">
+      
+      
+        <meta name="author" content="Dustin Randel de Lara García">
+      
+      
+        <link rel="canonical" href="https://dustinrandel.github.io/despliegue-contenedores/UT2-dosier/">
+      
+      
+        <link rel="prev" href="../UT1-dosier/">
+      
+      
+        <link rel="next" href="../UT3-dosier/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Principales acciones con Docker - Despliegue y administración de contenedores</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Carlito:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Carlito";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/favicon-48.png">
+  <link rel="icon" sizes="any" href="../assets/favicon.ico">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ut2-principales-acciones-con-docker" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Despliegue y administración de contenedores" class="md-header__button md-logo" aria-label="Despliegue y administración de contenedores" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Despliegue y administración de contenedores
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Principales acciones con Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Cambiar a modo oscuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Cambiar a modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/DustinRandel/despliegue-contenedores" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Despliegue y administración de contenedores" class="md-nav__button md-logo" aria-label="Despliegue y administración de contenedores" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    Despliegue y administración de contenedores
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/DustinRandel/despliegue-contenedores" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT1-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT1. Introducción a los contenedores y a Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT2. Principales acciones con Docker
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT2. Principales acciones con Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#como-usar-este-dosier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo usar este dosier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo usar este dosier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-vas-a-aprender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué vas a aprender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-8-imagenes-contenedores-y-donde-vive-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 8. Imágenes, contenedores y dónde vive todo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 8. Imágenes, contenedores y dónde vive todo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-todo-por-la-linea-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Todo por la línea de comandos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-la-imagen-una-plantilla-de-solo-lectura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 La imagen: una plantilla de solo lectura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-el-contenedor-la-imagen-mas-una-capa-de-escritura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 El contenedor: la imagen más una capa de escritura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-una-analogia-el-dvd-de-instalacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Una analogía: el DVD de instalación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-donde-guarda-docker-todo-esto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Dónde guarda Docker todo esto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-el-registro-docker-hub-y-registros-privados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 El registro: Docker Hub y registros privados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 El registro: Docker Hub y registros privados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-se-nombra-una-imagen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo se nombra una imagen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-9-crear-arrancar-y-parar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 9. Crear, arrancar y parar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 9. Crear, arrancar y parar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-docker-run-docker-create-docker-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 docker run = docker create + docker start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-hello-world-otra-vez" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 hello-world, otra vez
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-id-y-nombres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 ID y nombres
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.3 ID y nombres">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cambiar-el-nombre-docker-rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cambiar el nombre: docker rename
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-arrancar-parar-y-reiniciar-start-stop-y-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 Arrancar, parar y reiniciar: start, stop y restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-contenedores-interactivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 Contenedores interactivos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.5 Contenedores interactivos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volver-a-entrar-en-un-contenedor-detenido-docker-start-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volver a entrar en un contenedor detenido: docker start -ai
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#96-usar-y-tirar-con-una-version-concreta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6 Usar y tirar con una versión concreta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-10-mirar-y-trabajar-dentro-de-un-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 10. Mirar y trabajar dentro de un contenedor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 10. Mirar y trabajar dentro de un contenedor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-docker-inspect-toda-la-ficha-del-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 docker inspect: toda la ficha del contenedor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.1 docker inspect: toda la ficha del contenedor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lo-que-trae-la-imagen-entrypoint-cmd-y-compania" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lo que trae la imagen: Entrypoint, Cmd y compañía
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuantas-veces-lo-ha-reiniciado-docker-restartcount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuántas veces lo ha reiniciado Docker: RestartCount
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-docker-exec-ejecutar-una-orden-dentro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 docker exec: ejecutar una orden dentro
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.2 docker exec: ejecutar una orden dentro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ordenes-con-o-sh-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Órdenes con &gt;, |, &amp;&amp; o $( ): sh -c
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalar-un-programa-dentro-apt-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instalar un programa dentro: apt-get
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-docker-attach-frente-a-docker-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 docker attach frente a docker exec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-soltarse-sin-parar-ctrl-p-ctrl-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Soltarse sin parar: Ctrl + P, Ctrl + Q
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-docker-cp-copiar-entre-el-anfitrion-y-un-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 docker cp: copiar entre el anfitrión y un contenedor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#106-docker-logs-a-fondo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 docker logs a fondo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#107-direcciones-ip-y-nombres-en-la-red-por-defecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7 Direcciones IP y nombres en la red por defecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-11-caso-practico-un-servidor-web-que-se-toca-en-caliente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 11. Caso práctico: un servidor web que se toca en caliente
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 11. Caso práctico: un servidor web que se toca en caliente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-un-nginx-en-segundo-plano-y-su-puerto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Un Nginx en segundo plano y su puerto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.1 Un Nginx en segundo plano y su puerto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#puertos-aleatorios-y-docker-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Puertos aleatorios y docker port
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-los-puertos-se-fijan-al-crear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Los puertos se fijan al crear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-cambiar-la-pagina-sin-recrear-el-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Cambiar la página sin recrear el contenedor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-comprobar-con-los-registros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Comprobar con los registros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115-variables-de-entorno-en-un-contenedor-interactivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Variables de entorno en un contenedor interactivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapa-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapa resumen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autoevaluación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soluciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Soluciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Soluciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT3-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT3. Gestión de imágenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UT4-dosier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UT4. Redes y volúmenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#como-usar-este-dosier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo usar este dosier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cómo usar este dosier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-vas-a-aprender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué vas a aprender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Índice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-8-imagenes-contenedores-y-donde-vive-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 8. Imágenes, contenedores y dónde vive todo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 8. Imágenes, contenedores y dónde vive todo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-todo-por-la-linea-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Todo por la línea de comandos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-la-imagen-una-plantilla-de-solo-lectura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 La imagen: una plantilla de solo lectura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-el-contenedor-la-imagen-mas-una-capa-de-escritura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 El contenedor: la imagen más una capa de escritura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-una-analogia-el-dvd-de-instalacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Una analogía: el DVD de instalación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-donde-guarda-docker-todo-esto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Dónde guarda Docker todo esto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-el-registro-docker-hub-y-registros-privados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 El registro: Docker Hub y registros privados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 El registro: Docker Hub y registros privados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-se-nombra-una-imagen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo se nombra una imagen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-9-crear-arrancar-y-parar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 9. Crear, arrancar y parar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 9. Crear, arrancar y parar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-docker-run-docker-create-docker-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 docker run = docker create + docker start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-hello-world-otra-vez" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 hello-world, otra vez
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-id-y-nombres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 ID y nombres
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.3 ID y nombres">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cambiar-el-nombre-docker-rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cambiar el nombre: docker rename
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-arrancar-parar-y-reiniciar-start-stop-y-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 Arrancar, parar y reiniciar: start, stop y restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#95-contenedores-interactivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 Contenedores interactivos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.5 Contenedores interactivos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volver-a-entrar-en-un-contenedor-detenido-docker-start-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volver a entrar en un contenedor detenido: docker start -ai
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#96-usar-y-tirar-con-una-version-concreta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6 Usar y tirar con una versión concreta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-10-mirar-y-trabajar-dentro-de-un-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 10. Mirar y trabajar dentro de un contenedor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 10. Mirar y trabajar dentro de un contenedor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-docker-inspect-toda-la-ficha-del-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 docker inspect: toda la ficha del contenedor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.1 docker inspect: toda la ficha del contenedor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lo-que-trae-la-imagen-entrypoint-cmd-y-compania" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lo que trae la imagen: Entrypoint, Cmd y compañía
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuantas-veces-lo-ha-reiniciado-docker-restartcount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuántas veces lo ha reiniciado Docker: RestartCount
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-docker-exec-ejecutar-una-orden-dentro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 docker exec: ejecutar una orden dentro
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.2 docker exec: ejecutar una orden dentro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ordenes-con-o-sh-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Órdenes con &gt;, |, &amp;&amp; o $( ): sh -c
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalar-un-programa-dentro-apt-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instalar un programa dentro: apt-get
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-docker-attach-frente-a-docker-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 docker attach frente a docker exec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-soltarse-sin-parar-ctrl-p-ctrl-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Soltarse sin parar: Ctrl + P, Ctrl + Q
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-docker-cp-copiar-entre-el-anfitrion-y-un-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 docker cp: copiar entre el anfitrión y un contenedor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#106-docker-logs-a-fondo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 docker logs a fondo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#107-direcciones-ip-y-nombres-en-la-red-por-defecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7 Direcciones IP y nombres en la red por defecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloque-11-caso-practico-un-servidor-web-que-se-toca-en-caliente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloque 11. Caso práctico: un servidor web que se toca en caliente
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloque 11. Caso práctico: un servidor web que se toca en caliente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-un-nginx-en-segundo-plano-y-su-puerto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Un Nginx en segundo plano y su puerto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.1 Un Nginx en segundo plano y su puerto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#puertos-aleatorios-y-docker-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Puertos aleatorios y docker port
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-los-puertos-se-fijan-al-crear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Los puertos se fijan al crear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-cambiar-la-pagina-sin-recrear-el-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Cambiar la página sin recrear el contenedor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-comprobar-con-los-registros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Comprobar con los registros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115-variables-de-entorno-en-un-contenedor-interactivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Variables de entorno en un contenedor interactivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miralo-en-tu-maquina_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Míralo en tu máquina
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glosario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glosario
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapa-resumen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapa resumen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Autoevaluación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#soluciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Soluciones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Soluciones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-cortas_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas cortas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipo-test_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#razona_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Razona
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ut2-principales-acciones-con-docker">UT2. Principales acciones con Docker<a class="headerlink" href="#ut2-principales-acciones-con-docker" title="Permanent link">&para;</a></h1>
+<h2 class="nobreak" id="como-usar-este-dosier">Cómo usar este dosier<a class="headerlink" href="#como-usar-este-dosier" title="Permanent link">&para;</a></h2>
+<p>En la UT1 aprendiste a <strong>arrancar</strong> contenedores: <code>docker run</code> con sus opciones más comunes, <code>docker ps</code>, los registros y las políticas de reinicio. En esta UT vas a <strong>manejarlos</strong>: entender qué hay dentro de una imagen y de un contenedor, crearlos sin arrancarlos, pararlos y volver a arrancarlos, mirar su configuración, entrar en ellos, copiar archivos de un lado a otro y tocar un servidor web en marcha sin tener que recrearlo.</p>
+<p>Es un dosier para leer con la terminal abierta. Conéctate por SSH desde Windows a tu máquina virtual de clase, <code>cont-vm</code>, y escribe cada comando a medida que lo leas. Muchas cosas se entienden mejor cuando las ves pasar en tu propia pantalla. Cuando un apartado te pida <strong>dos terminales</strong>, abre una segunda sesión SSH a la misma VM.</p>
+<p>A lo largo del texto encontrarás cuatro tipos de caja:</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p>Un término que tienes que saber explicar con tus propias palabras.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Un caso concreto, casi siempre con el comando y lo que verás en pantalla.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Un error típico, una confusión frecuente o un detalle que conviene tener muy claro.</p>
+</div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<p>Preguntas cortas al final de cada bloque. Si no sabes contestarlas sin mirar, vuelve a leer el bloque.</p>
+</div>
+<p>Cada bloque termina con un apartado <strong>«Míralo en tu máquina»</strong>: una serie corta de comandos para que veas con tus ojos lo que acabas de leer. Los bloques continúan la numeración de la UT1, que terminó en el bloque 7.</p>
+<h3 id="que-vas-a-aprender">Qué vas a aprender<a class="headerlink" href="#que-vas-a-aprender" title="Permanent link">&para;</a></h3>
+<p>Al terminar esta UT deberías ser capaz de:</p>
+<ul>
+<li><strong>Distinguir</strong> una imagen de un contenedor y explicar qué papel tienen las capas de solo lectura y la capa de escritura.</li>
+<li><strong>Localizar</strong> dónde guarda Docker sus datos en <code>cont-vm</code> con <code>docker info</code>.</li>
+<li><strong>Explicar</strong> qué es un registro, qué es Docker Hub y cómo se nombra una imagen con su etiqueta.</li>
+<li><strong>Crear</strong> contenedores sin arrancarlos con <code>docker create</code> y relacionarlo con <code>docker run</code>.</li>
+<li><strong>Identificar</strong> un contenedor por su ID completo, su ID corto o su nombre, y <strong>renombrarlo</strong> con <code>docker rename</code>.</li>
+<li><strong>Gestionar</strong> el ciclo de vida con <code>docker start</code>, <code>docker stop</code> y <code>docker restart</code>.</li>
+<li><strong>Trabajar</strong> con contenedores interactivos (<code>-it</code>, <code>docker start -ai</code>) y de usar y tirar con una versión concreta de imagen.</li>
+<li><strong>Consultar</strong> la configuración y el estado de un contenedor con <code>docker inspect --format</code>.</li>
+<li><strong>Ejecutar</strong> procesos dentro de un contenedor con <code>docker exec</code> y <strong>diferenciarlo</strong> de <code>docker attach</code>.</li>
+<li><strong>Copiar</strong> archivos entre el anfitrión y un contenedor con <code>docker cp</code>.</li>
+<li><strong>Filtrar</strong> los registros con <code>docker logs -n</code>, <code>--since</code> y <code>--until</code>.</li>
+<li><strong>Modificar</strong> la página de un servidor web en marcha y <strong>averiguar</strong> con <code>docker port</code> qué puerto le ha tocado.</li>
+</ul>
+<h3 id="indice">Índice<a class="headerlink" href="#indice" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Bloque</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#bloque-8-imagenes-contenedores-y-donde-vive-todo">8</a></td>
+<td>Imágenes, contenedores y dónde vive todo: capas, almacenamiento y registro</td>
+</tr>
+<tr>
+<td><a href="#bloque-9-crear-arrancar-y-parar">9</a></td>
+<td>Crear, arrancar y parar: <code>create</code>, ID y nombres, <code>start</code>/<code>stop</code>/<code>restart</code>, contenedores interactivos</td>
+</tr>
+<tr>
+<td><a href="#bloque-10-mirar-y-trabajar-dentro-de-un-contenedor">10</a></td>
+<td>Mirar y trabajar dentro: <code>inspect</code>, <code>exec</code>, <code>attach</code>, <code>cp</code>, <code>logs</code> a fondo, IP y nombres en la red por defecto</td>
+</tr>
+<tr>
+<td><a href="#bloque-11-caso-practico-un-servidor-web-que-se-toca-en-caliente">11</a></td>
+<td>Caso práctico: un servidor web que se toca en caliente</td>
+</tr>
+<tr>
+<td>Anexos</td>
+<td>Glosario, mapa resumen, autoevaluación y soluciones</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bloque-8-imagenes-contenedores-y-donde-vive-todo">Bloque 8. Imágenes, contenedores y dónde vive todo<a class="headerlink" href="#bloque-8-imagenes-contenedores-y-donde-vive-todo" title="Permanent link">&para;</a></h2>
+<p>Antes de tocar más comandos conviene tener muy clara la diferencia entre <strong>imagen</strong> y <strong>contenedor</strong>, porque casi todos los errores de las primeras semanas vienen de mezclarlas. En este bloque verás qué es cada cosa, cómo se relacionan, dónde las guarda Docker en tu VM y de dónde salen las imágenes.</p>
+<figure class="small"><img src="imagenes/diapositiva-01-1.png" alt=""></figure>
+
+<h3 id="81-todo-por-la-linea-de-comandos">8.1 Todo por la línea de comandos<a class="headerlink" href="#81-todo-por-la-linea-de-comandos" title="Permanent link">&para;</a></h3>
+<p>Existen herramientas gráficas para gestionar Docker (paneles web, extensiones de editores, Docker Desktop). Son cómodas, pero esconden lo que pasa por debajo, y lo que pasa por debajo es justo lo que tienes que aprender en este módulo.</p>
+<p>Por eso en clase <strong>todo se hace con la línea de comandos</strong> (CLI). Te da un control más preciso, te obliga a entender qué hace cada orden y, sobre todo, es lo que tendrás en un servidor real: una conexión SSH y una terminal, sin escritorio. Es exactamente tu situación con <code>cont-vm</code>.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Que no uses un panel gráfico no significa que no existan. Cuando administres servidores podrás usar uno si te ayuda, pero sabrás qué comandos está ejecutando por ti y podrás arreglar las cosas cuando el panel no llegue.</p>
+</div>
+<h3 id="82-la-imagen-una-plantilla-de-solo-lectura">8.2 La imagen: una plantilla de solo lectura<a class="headerlink" href="#82-la-imagen-una-plantilla-de-solo-lectura" title="Permanent link">&para;</a></h3>
+<figure class="small"><img src="imagenes/diapositiva-03-1.png" alt=""></figure>
+
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Imagen</strong> (<em>image</em>): plantilla de <strong>solo lectura</strong> a partir de la cual se crean contenedores. Contiene un sistema de archivos (programas, bibliotecas, configuración) y unos <strong>parámetros predefinidos</strong>: el comando que se ejecuta por defecto, variables de entorno, puertos que usa la aplicación…</p>
+</div>
+<p>Tres ideas sobre las imágenes:</p>
+<table>
+<thead>
+<tr>
+<th>Característica</th>
+<th>Qué significa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Solo lectura</strong></td>
+<td>Una imagen no cambia nunca. De una misma imagen puedes crear tantos contenedores como quieras</td>
+</tr>
+<tr>
+<td><strong>Parámetros predefinidos</strong></td>
+<td>La imagen trae valores por defecto (comando, variables…) que puedes cambiar al crear el contenedor, como ya hiciste con <code>-e</code> en la UT1</td>
+</tr>
+<tr>
+<td><strong>Sistema de capas</strong></td>
+<td>Una imagen se construye a partir de otra: se parte de una <strong>imagen base</strong> y cada cambio añade una <strong>capa</strong> (<em>layer</em>) encima</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Capa</strong>: cada uno de los «pisos» de solo lectura que forman una imagen. Una capa guarda solo <strong>las diferencias</strong> respecto a la capa de debajo: los archivos que se añaden, se cambian o se borran.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>La imagen oficial <code>nginx</code> parte de una imagen base de Debian. Encima lleva una capa con Nginx instalado y otras con su configuración y su comando por defecto (<code>nginx -g "daemon off;"</code>). Si otra imagen también parte de esa misma Debian, las dos <strong>comparten</strong> esas capas en disco: Docker no las guarda dos veces.</p>
+</div>
+<p>Cómo se construyen imágenes nuevas capa a capa lo verás en la unidad de gestión de imágenes. Aquí basta con la idea: <strong>una imagen es una pila de capas de solo lectura</strong>.</p>
+<h3 id="83-el-contenedor-la-imagen-mas-una-capa-de-escritura">8.3 El contenedor: la imagen más una capa de escritura<a class="headerlink" href="#83-el-contenedor-la-imagen-mas-una-capa-de-escritura" title="Permanent link">&para;</a></h3>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Contenedor</strong> (<em>container</em>): instancia en ejecución (o lista para ejecutarse) de una imagen. Encapsula una aplicación con todo su entorno, aislada del resto del sistema. Cada contenedor tiene su propio ciclo de vida, independiente del de los demás.</p>
+</div>
+<p>Si la imagen es de solo lectura, ¿dónde se guardan los archivos que crea o modifica el contenedor? Docker pone encima de las capas de la imagen una capa más, <strong>solo para ese contenedor</strong>: la <strong>capa de escritura</strong>.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Capa de escritura</strong> (<em>writable layer</em>, también llamada capa del contenedor): capa de lectura y escritura que Docker crea encima de la imagen cuando crea un contenedor. Todo lo que el contenedor escribe, cambia o borra va a esa capa. La imagen de debajo no se toca.</p>
+</div>
+<figure><img src="imagenes/UT2-diagrama-capas.png" alt="Una imagen, dos contenedores: cada uno con su capa de escritura"><figcaption>Una imagen, dos contenedores: cada uno con su capa de escritura</figcaption></figure>
+
+<p>Esto explica tres comportamientos que vas a ver una y otra vez:</p>
+<table>
+<thead>
+<tr>
+<th>Haces…</th>
+<th>Qué pasa con tus cambios</th>
+<th>Por qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker stop</code> y luego <code>docker start</code></td>
+<td><strong>Siguen ahí</strong></td>
+<td>Parar no borra la capa de escritura</td>
+</tr>
+<tr>
+<td><code>docker rm</code></td>
+<td><strong>Se pierden</strong></td>
+<td>La capa de escritura se borra con el contenedor</td>
+</tr>
+<tr>
+<td>Creas otro contenedor de la misma imagen</td>
+<td><strong>No los ve</strong></td>
+<td>Cada contenedor tiene su propia capa de escritura; la imagen no ha cambiado</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Los cambios que haces dentro de un contenedor <strong>no van a ninguna imagen</strong>, ni temporal ni definitiva: van a la capa de escritura de ese contenedor y viven lo que vive el contenedor. Si necesitas que unos datos sobrevivan a <code>docker rm</code>, la herramienta son los <strong>volúmenes</strong> (unidad de redes y volúmenes), no la capa de escritura.</p>
+</div>
+<p>Para probar el ejemplo en tu máquina, crea antes un Nginx llamado web (lo volverás a usar en los bloques 10 y 11):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>web<span class="w"> </span>-p<span class="w"> </span><span class="m">1200</span>:80<span class="w"> </span>nginx
+</code></pre></div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Con <code>docker diff</code> ves qué ha cambiado un contenedor en su capa de escritura respecto a la imagen. Las letras son <code>A</code> (nuevo, <em>added</em>), <code>C</code> (cambiado) y <code>D</code> (borrado):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker diff web
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>C /usr/share/nginx/html/index.html
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>A /root/notas
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>A /root/notas/a.txt
+</code></pre></div></p>
+</div>
+<h3 id="84-una-analogia-el-dvd-de-instalacion">8.4 Una analogía: el DVD de instalación<a class="headerlink" href="#84-una-analogia-el-dvd-de-instalacion" title="Permanent link">&para;</a></h3>
+<figure class="small"><img src="imagenes/diapositiva-06-1.png" alt=""></figure>
+
+<p>Piensa en una distribución de Linux grabada en un DVD. El DVD es la <strong>imagen</strong>; el sistema ya instalado en un ordenador es el <strong>contenedor</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>DVD de instalación</th>
+<th>Imagen</th>
+<th>Sistema instalado</th>
+<th>Contenedor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trae todos los archivos y la configuración inicial</td>
+<td>Igual</td>
+<td>Es una copia que funciona y se puede tocar</td>
+<td>Igual</td>
+</tr>
+<tr>
+<td>No cambia al instalar</td>
+<td>Solo lectura</td>
+<td>Cada ordenador tiene su configuración</td>
+<td>Cada contenedor tiene su capa de escritura</td>
+</tr>
+<tr>
+<td>Con un DVD instalas muchos equipos</td>
+<td>Muchos contenedores por imagen</td>
+<td>Instalar lleva minutos</td>
+<td>Crear y arrancar lleva segundos</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>La analogía falla en un punto importante: un sistema instalado copia <strong>todo</strong> el DVD al disco, mientras que un contenedor <strong>no copia</strong> las capas de la imagen; las usa directamente y solo guarda aparte lo que cambia. Por eso crear un contenedor es tan rápido y ocupa tan poco.</p>
+</div>
+<h3 id="85-donde-guarda-docker-todo-esto">8.5 Dónde guarda Docker todo esto<a class="headerlink" href="#85-donde-guarda-docker-todo-esto" title="Permanent link">&para;</a></h3>
+<p>Dónde se almacenan las imágenes y los contenedores depende de la distribución, de la versión de Docker y del <strong>controlador de almacenamiento</strong> (<em>storage driver</em>). La forma segura de saberlo en tu máquina es preguntarle al demonio:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>info
+</code></pre></div>
+<p>Es una salida larga. Para el almacenamiento hay dos datos clave: el <strong>controlador de almacenamiento</strong> y el <strong>directorio raíz de Docker</strong>.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Controlador de almacenamiento</strong>: la pieza de Docker que sabe apilar las capas de la imagen y la capa de escritura y presentarlas al contenedor como un único sistema de archivos. En Linux, el habitual es <code>overlay2</code>.</p>
+</div>
+<div class="g2">
+<figure><img src="imagenes/diapositiva-07-1.png" alt="Controlador de almacenamiento en `docker info`"><figcaption>Controlador de almacenamiento en <code>docker info</code></figcaption></figure>
+<figure><img src="imagenes/diapositiva-07-2.png" alt="Directorio raíz de Docker"><figcaption>Directorio raíz de Docker</figcaption></figure>
+</div>
+
+<p>En esa salida, <code>Storage Driver: overlay2</code> es el controlador y <code>Backing Filesystem: extfs</code> es el sistema de archivos del disco donde está <code>/var/lib/docker</code>. Docker llama <code>extfs</code> a toda la familia ext; en tu VM, en concreto, es <strong>ext4</strong> (lo puedes confirmar con <code>df -T /var/lib/docker</code>).</p>
+<p>Con <code>overlay2</code>, el reparto en el directorio raíz es este:</p>
+<table>
+<thead>
+<tr>
+<th>Ruta</th>
+<th>Qué guarda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/var/lib/docker/overlay2/</code></td>
+<td>Las capas de las imágenes y la capa de escritura de cada contenedor</td>
+</tr>
+<tr>
+<td><code>/var/lib/docker/containers/</code></td>
+<td>La configuración de cada contenedor y su archivo de registros</td>
+</tr>
+<tr>
+<td><code>/var/lib/docker/volumes/</code></td>
+<td>Los volúmenes (unidad de redes y volúmenes)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Desde Docker Engine 29, una <strong>instalación nueva</strong> usa por defecto el almacén de imágenes de containerd. En ese caso <code>docker info</code> muestra <code>Storage Driver: overlayfs</code> y <code>driver-type: io.containerd.snapshotter.v1</code>, y las capas pasan a <code>/var/lib/containerd/</code>; en <code>/var/lib/docker/</code> siguen la configuración de los contenedores, los registros y los volúmenes. La idea de capas de solo lectura más capa de escritura <strong>es la misma</strong>. Mira qué te sale a ti antes de buscar carpetas.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Mirar no es tocar. <code>/var/lib/docker</code> solo lo puede leer <code>root</code> y es de Docker: nunca borres ni edites nada ahí a mano. Para limpiar se usan los comandos de Docker (<code>docker rm</code> y los que verás en la unidad de imágenes).</p>
+</div>
+<h3 id="86-el-registro-docker-hub-y-registros-privados">8.6 El registro: Docker Hub y registros privados<a class="headerlink" href="#86-el-registro-docker-hub-y-registros-privados" title="Permanent link">&para;</a></h3>
+<figure><img src="imagenes/diapositiva-08-1.png" alt=""></figure>
+
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Registro</strong> (<em>registry</em>): servicio que almacena imágenes y las sirve a quien las pide. <strong>Docker Hub</strong> es el registro que Docker usa por defecto: cuando una imagen no está en local, <code>docker run</code> la busca allí.</p>
+</div>
+<p>Docker Hub ofrece repositorios públicos y privados y un buscador (<a href="https://hub.docker.com/search">https://hub.docker.com/search</a>) para localizar imágenes. Cada imagen tiene una página con su documentación: qué hace, qué puertos usa, qué variables de entorno acepta y dónde guarda sus datos. <strong>Leer esa página es lo primero que hay que hacer antes de usar una imagen nueva.</strong></p>
+<p>Docker Hub no es el único registro. Hay otros públicos (GitHub Container Registry, Quay…) y puedes montar uno <strong>privado</strong> en tu empresa con la imagen oficial <code>registry</code> (<a href="https://hub.docker.com/_/registry">https://hub.docker.com/_/registry</a>), basada en el proyecto Distribution (<a href="https://distribution.github.io/distribution/">https://distribution.github.io/distribution/</a>).</p>
+<h4 id="como-se-nombra-una-imagen">Cómo se nombra una imagen<a class="headerlink" href="#como-se-nombra-una-imagen" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Escribes</th>
+<th>Docker entiende</th>
+<th>Comentario</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nginx</code></td>
+<td><code>docker.io/library/nginx:latest</code></td>
+<td>Registro por defecto, imagen oficial, etiqueta <code>latest</code></td>
+</tr>
+<tr>
+<td><code>ubuntu:24.04</code></td>
+<td><code>docker.io/library/ubuntu:24.04</code></td>
+<td>Una versión concreta</td>
+</tr>
+<tr>
+<td><code>httpd:2.4</code></td>
+<td><code>docker.io/library/httpd:2.4</code></td>
+<td>El servidor Apache oficial se llama <code>httpd</code></td>
+</tr>
+<tr>
+<td><code>ghcr.io/usuario/app:1.0</code></td>
+<td>Registro de GitHub</td>
+<td>Si el nombre empieza por un dominio, ese es el registro</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Etiqueta</strong> (<em>tag</em>): nombre de una versión concreta de una imagen. Se escribe detrás de dos puntos: <code>imagen:etiqueta</code>. Si no la escribes, Docker usa <code>latest</code>.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>latest</code> es solo una etiqueta más: la que el autor ha decidido poner. No significa «la última comprobada» ni es siempre la misma: hoy <code>ubuntu:latest</code> es Ubuntu 26.04 y hace unos meses era la 24.04. En un servidor, fija la versión (<code>nginx:1.29</code>, <code>ubuntu:24.04</code>) para que mañana se despliegue lo mismo que hoy.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Para elegir etiqueta, abre la pestaña <strong>Tags</strong> de la página de la imagen en Docker Hub: lista todas las etiquetas publicadas, con la fecha de su última subida y su tamaño. En las imágenes oficiales, la pestaña principal (<strong>Overview</strong>) empieza además con la sección <strong>«Supported tags»</strong>, las etiquetas que se mantienen. Varias etiquetas pueden señalar la misma imagen: una de versión exacta, otra de versión mayor y <code>latest</code>, por ejemplo.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>No existe ninguna imagen oficial llamada <code>apache2</code> (ese es el nombre del paquete en Debian y Ubuntu). La imagen oficial del servidor Apache es <strong><code>httpd</code></strong>, y sirve sus páginas desde <code>/usr/local/apache2/htdocs/</code>.</p>
+</div>
+<p>Buscar, descargar, listar y borrar imágenes (<code>docker search</code>, <code>docker pull</code>, <code>docker images</code>, <code>docker rmi</code>…) se trabaja en la unidad de gestión de imágenes. En esta UT las imágenes llegan solas, con el <em>pull</em> implícito de <code>docker run</code>.</p>
+<h3 id="miralo-en-tu-maquina">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"Storage Driver|Backing Filesystem|driver-type|Docker Root Dir"</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>df<span class="w"> </span>-T<span class="w"> </span>/var/lib/docker<span class="w">              </span><span class="c1"># ¿ext4?</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>ls<span class="w"> </span>/var/lib/docker<span class="w">            </span><span class="c1"># las carpetas de la tabla</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>capas<span class="w"> </span>nginx
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>capas<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo prueba &gt; /tmp/nota.txt'</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>docker<span class="w"> </span>diff<span class="w"> </span>capas<span class="w">                  </span><span class="c1"># entre otras: A /tmp/nota.txt</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>docker<span class="w"> </span>stop<span class="w"> </span>capas<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>start<span class="w"> </span>capas
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>capas<span class="w"> </span>cat<span class="w"> </span>/tmp/nota.txt<span class="w">  </span><span class="c1"># sigue ahí</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>capas<span class="w">                 </span><span class="c1"># y ahora ya no existe</span>
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Por qué se dice que una imagen es de «solo lectura» si los contenedores escriben archivos?</li>
+<li>Paras un contenedor y lo vuelves a arrancar. ¿Conserva los archivos que creaste dentro? ¿Y si lo borras y creas otro de la misma imagen?</li>
+<li>¿Qué comando te dice qué controlador de almacenamiento usa tu Docker? ¿Qué dos valores puede mostrar según cómo se instaló?</li>
+<li>¿Qué significa <code>extfs</code> en <code>docker info</code>?</li>
+<li>¿A qué imagen exacta se refiere Docker si escribes solo <code>nginx</code>?</li>
+</ol>
+</div>
+<h2 id="bloque-9-crear-arrancar-y-parar">Bloque 9. Crear, arrancar y parar<a class="headerlink" href="#bloque-9-crear-arrancar-y-parar" title="Permanent link">&para;</a></h2>
+<p>En la UT1 viste <code>docker run</code>, <code>docker ps</code> y <code>docker ps -a</code>, y que parar no es borrar. Aquí se desmonta <code>docker run</code> en sus dos piezas y se trabaja el ciclo de vida completo de un contenedor.</p>
+<h3 id="91-docker-run-docker-create-docker-start">9.1 <code>docker run</code> = <code>docker create</code> + <code>docker start</code><a class="headerlink" href="#91-docker-run-docker-create-docker-start" title="Permanent link">&para;</a></h3>
+<p><code>docker run</code> es probablemente el comando más utilizado de Docker. Hace dos cosas seguidas: <strong>crea</strong> un contenedor a partir de una imagen y lo <strong>arranca</strong>.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Cada <code>docker run</code> crea un contenedor <strong>nuevo</strong>. Si lo ejecutas cinco veces, tienes cinco contenedores, no uno arrancado cinco veces. Para volver a arrancar uno que ya existe se usa <code>docker start</code>.</p>
+</div>
+<p>Para crear un contenedor <strong>sin arrancarlo</strong> existe <code>docker create</code>. Su sintaxis es la misma que la de <code>docker run</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>create<span class="w"> </span><span class="o">[</span>OPCIONES<span class="o">]</span><span class="w"> </span>IMAGEN<span class="w"> </span><span class="o">[</span>COMANDO<span class="o">]</span><span class="w"> </span><span class="o">[</span>ARGUMENTOS...<span class="o">]</span>
+</code></pre></div>
+<p>Sirve para dejar preparado un contenedor con una configuración concreta y arrancarlo más tarde:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>webserver<span class="w"> </span>nginx<span class="w">   </span><span class="c1"># 1. lo crea: muestra su ID completo</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w">                           </span><span class="c1"># 2. aparece en estado Created</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>docker<span class="w"> </span>start<span class="w"> </span>webserver<span class="w">                 </span><span class="c1"># 3. ahora sí, en marcha</span>
+</code></pre></div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Después del paso 1, <code>docker ps</code> no muestra nada y <code>docker ps -a</code> muestra:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>CONTAINER ID   IMAGE   COMMAND                  CREATED         STATUS    PORTS   NAMES
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>b562409fea5a   nginx   "/docker-entrypoint.…"   5 seconds ago   Created           webserver
+</code></pre></div>
+Un contenedor en <code>Created</code> tiene ya su capa de escritura y su configuración, pero ningún proceso en marcha.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Las opciones que fijan cómo es el contenedor (<code>--name</code>, <code>-p</code>, <code>-e</code>, <code>--restart</code>…) se ponen en <code>docker create</code> o en <code>docker run</code>, <strong>nunca</strong> en <code>docker start</code>. <code>start</code> solo arranca lo que ya existe, tal como se creó.</p>
+</div>
+<p>Toda la referencia está en la documentación oficial: <a href="https://docs.docker.com/reference/cli/docker/container/run/">https://docs.docker.com/reference/cli/docker/container/run/</a> y <a href="https://docs.docker.com/reference/cli/docker/container/create/">https://docs.docker.com/reference/cli/docker/container/create/</a>.</p>
+<figure><img src="imagenes/UT2-diagrama-ciclo-vida.png" alt="Ciclo de vida de un contenedor y los comandos que lo mueven"><figcaption>Ciclo de vida de un contenedor y los comandos que lo mueven</figcaption></figure>
+
+<h3 id="92-hello-world-otra-vez">9.2 <code>hello-world</code>, otra vez<a class="headerlink" href="#92-hello-world-otra-vez" title="Permanent link">&para;</a></h3>
+<p>En la UT1 usaste <code>docker run hello-world</code> para comprobar la instalación. Ahora puedes leer toda su salida.</p>
+<p><strong>Primera parte: conseguir la imagen.</strong> La primera vez verás:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Unable to find image 'hello-world:latest' locally
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>latest: Pulling from library/hello-world
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>4f55086f7dd0: Pull complete
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Digest: sha256:11a3eb1597e8…
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Status: Downloaded newer image for hello-world:latest
+</code></pre></div>
+<p>Docker no tenía la imagen en local, así que la descarga del registro por defecto (Docker Hub) y la guarda. La segunda vez esas líneas ya no salen. Fíjate en que tú escribiste <code>hello-world</code> y Docker entendió <code>hello-world:latest</code>: es la etiqueta por defecto del apartado 8.6. Su página en Docker Hub es <a href="https://hub.docker.com/_/hello-world">https://hub.docker.com/_/hello-world</a>.</p>
+<p><strong>Segunda parte: crear y ejecutar.</strong> Con la imagen ya en local, Docker crea el contenedor y lo arranca. El proceso que ejecuta puede indicarse en el propio <code>docker run</code> (detrás del nombre de la imagen) o, si no indicas nada, es el <strong>comando por defecto</strong> de la imagen. En <code>hello-world</code> es un pequeño programa, <code>/hello</code>, que escribe el mensaje y termina. Su código está en <a href="https://github.com/docker-library/hello-world">https://github.com/docker-library/hello-world</a>.</p>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Compruébalo en <code>docker ps -a</code>: la columna <code>COMMAND</code> muestra <code>"/hello"</code> y el estado es <code>Exited (0)</code>. El contenedor sigue existiendo, parado, porque su proceso principal terminó.</p>
+</div>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Comando por defecto</strong>: el proceso que la imagen ejecuta si no le pasas otro. Un contenedor vive <strong>lo que vive ese proceso principal</strong>: cuando termina, el contenedor pasa a <code>Exited</code>.</p>
+</div>
+<h3 id="93-id-y-nombres">9.3 ID y nombres<a class="headerlink" href="#93-id-y-nombres" title="Permanent link">&para;</a></h3>
+<p>Cada contenedor tiene un <strong>ID único de 64 caracteres</strong> hexadecimales. <code>docker ps</code> muestra solo los <strong>12 primeros</strong> para que quepa; <code>docker ps --no-trunc</code> o <code>docker inspect</code> muestran el completo.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>b562409fea5a                                                       ← ID corto (docker ps)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>b562409fea5a9dbd844c9a174306abb91cbeabce265a878015a752ac1b904903   ← ID completo
+</code></pre></div>
+<p>Los comandos de Docker aceptan cualquiera de estas formas para referirse a un contenedor:</p>
+<table>
+<thead>
+<tr>
+<th>Forma</th>
+<th>Ejemplo</th>
+<th>Condición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID completo</td>
+<td><code>docker stop b562409fea5a9dbd…</code></td>
+<td>Siempre funciona</td>
+</tr>
+<tr>
+<td>ID corto</td>
+<td><code>docker stop b562409fea5a</code></td>
+<td>Siempre funciona</td>
+</tr>
+<tr>
+<td>Prefijo del ID</td>
+<td><code>docker stop b56</code></td>
+<td>Que ningún otro contenedor empiece igual</td>
+</tr>
+<tr>
+<td>Nombre</td>
+<td><code>docker stop webserver</code></td>
+<td>Los nombres son únicos</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Nombre del contenedor</strong>: alias único y legible. Si no lo indicas con <code>--name</code>, Docker inventa uno combinando un adjetivo y el apellido de una figura de la ciencia (<code>stupefied_colden</code>, <code>sharp_einstein</code>).</p>
+</div>
+<h4 id="cambiar-el-nombre-docker-rename">Cambiar el nombre: <code>docker rename</code><a class="headerlink" href="#cambiar-el-nombre-docker-rename" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>rename<span class="w"> </span>nombre_actual<span class="w"> </span>nombre_nuevo
+</code></pre></div>
+<p>Funciona con el contenedor parado <strong>o en marcha</strong>, y no cambia nada más: ni el ID, ni la capa de escritura, ni los puertos. Es útil cuando Docker ha puesto un nombre aleatorio, cuando hay que seguir una nomenclatura (<code>web-prod</code>, <code>web-test</code>…) o cuando el nombre se ha quedado desfasado.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Si el nombre nuevo ya lo usa otro contenedor, Docker da el mismo error de conflicto que viste en la UT1 (<code>Conflict. The container name "/…" is already in use</code>). Los nombres son únicos en toda la máquina, estén los contenedores en marcha o parados.</p>
+</div>
+<h3 id="94-arrancar-parar-y-reiniciar-start-stop-y-restart">9.4 Arrancar, parar y reiniciar: <code>start</code>, <code>stop</code> y <code>restart</code><a class="headerlink" href="#94-arrancar-parar-y-reiniciar-start-stop-y-restart" title="Permanent link">&para;</a></h3>
+<p>Estos tres comandos trabajan con contenedores <strong>que ya existen</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker start &lt;contenedor&gt;</code></td>
+<td>Arranca un contenedor en estado <code>Created</code> o <code>Exited</code>, con el comando y la configuración con que se creó</td>
+</tr>
+<tr>
+<td><code>docker stop &lt;contenedor&gt;</code></td>
+<td>Pide al proceso principal que termine y, si no lo hace a tiempo, lo mata</td>
+</tr>
+<tr>
+<td><code>docker restart &lt;contenedor&gt;</code></td>
+<td>Hace un <code>stop</code> y un <code>start</code> seguidos</td>
+</tr>
+</tbody>
+</table>
+<p>Los tres aceptan <strong>varios</strong> contenedores a la vez: <code>docker stop web1 web2 web3</code>.</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Parada ordenada</strong>: <code>docker stop</code> envía al proceso principal la señal <code>SIGTERM</code> («termina cuando puedas»). Si a los <strong>10 segundos</strong> sigue vivo, envía <code>SIGKILL</code>, que lo mata sin contemplaciones. El plazo se cambia con <code>-t</code>: <code>docker stop -t 30 bd</code>.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Un contenedor <code>busybox</code> que ejecuta un bucle de <code>sh</code> tarda <strong>10 segundos</strong> en pararse y queda como <code>Exited (137)</code>. El proceso <code>sh</code> que hace de proceso principal ignora <code>SIGTERM</code>, así que Docker espera el plazo completo y lo mata con <code>SIGKILL</code> (137 = 128 + 9, el número de esa señal). Nginx, en cambio, sabe atender <code>SIGTERM</code> y se para en menos de un segundo con <code>Exited (0)</code>.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker restart</code> no es lo mismo que la política <code>--restart</code> de la UT1. El comando reinicia <strong>ahora y una vez</strong>; la política decide si Docker lo vuelve a arrancar <strong>solo</strong> cuando se para o cuando se reinicia el demonio.</p>
+</div>
+<p>Referencias: <a href="https://docs.docker.com/reference/cli/docker/container/start/">https://docs.docker.com/reference/cli/docker/container/start/</a>, <a href="https://docs.docker.com/reference/cli/docker/container/stop/">https://docs.docker.com/reference/cli/docker/container/stop/</a> y <a href="https://docs.docker.com/reference/cli/docker/container/restart/">https://docs.docker.com/reference/cli/docker/container/restart/</a>.</p>
+<h3 id="95-contenedores-interactivos">9.5 Contenedores interactivos<a class="headerlink" href="#95-contenedores-interactivos" title="Permanent link">&para;</a></h3>
+<p>Hasta ahora casi todos tus contenedores ejecutaban un servicio (Nginx). Con una imagen de sistema, como <code>ubuntu</code>, puedes pedir una terminal <strong>dentro</strong> del contenedor:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>miubuntu<span class="w"> </span>ubuntu<span class="w"> </span>bash
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Opción</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i</code> (<em>interactive</em>)</td>
+<td>Mantiene abierta la entrada estándar: lo que escribes le llega al proceso</td>
+</tr>
+<tr>
+<td><code>-t</code> (<em>tty</em>)</td>
+<td>Asigna una <strong>pseudoterminal</strong> (<em>pseudo-TTY</em>): el <em>prompt</em>, los colores, las teclas de edición</td>
+</tr>
+</tbody>
+</table>
+<p>Casi siempre se usan juntas, <code>-it</code>. El <em>prompt</em> cambia a algo como <code>root@e72718a5dd1a:/#</code>: el texto después de la arroba es el ID corto del contenedor, que hace de nombre de máquina.</p>
+<p>Dentro puedes trabajar como en cualquier Linux: crear carpetas, editar archivos, ejecutar programas. Todo va a la <strong>capa de escritura</strong> de <code>miubuntu</code> (apartado 8.3).</p>
+<p><strong>¿Qué pasa al salir?</strong> Con <code>exit</code>, <code>bash</code> termina. Como <code>bash</code> era el proceso principal, <strong>el contenedor se detiene</strong>. No se borra: los cambios siguen en su capa de escritura.</p>
+<h4 id="volver-a-entrar-en-un-contenedor-detenido-docker-start-ai">Volver a entrar en un contenedor detenido: <code>docker start -ai</code><a class="headerlink" href="#volver-a-entrar-en-un-contenedor-detenido-docker-start-ai" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w">                   </span><span class="c1"># localiza el contenedor: miubuntu, Exited (0)</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>docker<span class="w"> </span>start<span class="w"> </span>-ai<span class="w"> </span>miubuntu<span class="w">      </span><span class="c1"># lo arranca y te engancha a su terminal</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Opción de <code>start</code></th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-a</code> (<em>attach</em>)</td>
+<td>Conecta la salida estándar y de errores del contenedor a tu terminal</td>
+</tr>
+<tr>
+<td><code>-i</code> (<em>interactive</em>)</td>
+<td>Conecta tu entrada estándar a la del contenedor</td>
+</tr>
+</tbody>
+</table>
+<p>No se escribe ningún comando: <code>start</code> ejecuta el que se fijó al crearlo (aquí, <code>bash</code>). Verás tus carpetas y archivos de antes. Para salir, <code>exit</code> de nuevo (y el contenedor se vuelve a detener).</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker start miubuntu</code> sin <code>-ai</code> también lo arranca, pero en segundo plano: <code>bash</code> queda esperando en una terminal a la que no estás conectado. Para entrar después tendrías que usar <code>docker attach</code> o <code>docker exec</code> (bloque 10).</p>
+</div>
+<h3 id="96-usar-y-tirar-con-una-version-concreta">9.6 Usar y tirar con una versión concreta<a class="headerlink" href="#96-usar-y-tirar-con-una-version-concreta" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>ubuntu:24.04<span class="w"> </span>bash
+</code></pre></div>
+<p>Este comando junta dos ideas:</p>
+<ul>
+<li><code>ubuntu:24.04</code> pide una <strong>etiqueta concreta</strong>. Otras etiquetas de Ubuntu son <code>22.04</code>, <code>24.04</code>, <code>26.04</code> y <code>latest</code>.</li>
+<li><code>--rm</code> (UT1) borra el contenedor en cuanto se detiene. Al salir con <code>exit</code>, no queda ni en <code>docker ps -a</code>.</li>
+</ul>
+<p>Viene bien para tareas temporales, pruebas rápidas («¿qué versión de <code>bash</code> trae Ubuntu 24.04?»), <em>scripts</em> que crean contenedores de un solo uso o, simplemente, para no ir acumulando contenedores parados.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Con <code>--rm</code>, la capa de escritura se borra con el contenedor: <strong>todo lo que hayas hecho dentro se pierde al salir</strong>. Si necesitas conservar algo, no uses <code>--rm</code> o guarda los datos fuera con un volumen.</p>
+</div>
+<h3 id="miralo-en-tu-maquina_1">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>prueba<span class="w"> </span>busybox<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>hola
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>--filter<span class="w"> </span><span class="nv">name</span><span class="o">=</span>prueba<span class="w">          </span><span class="c1"># Created</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>docker<span class="w"> </span>start<span class="w"> </span>-a<span class="w"> </span>prueba<span class="w">                     </span><span class="c1"># escribe hola y termina</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>--filter<span class="w"> </span><span class="nv">name</span><span class="o">=</span>prueba<span class="w">          </span><span class="c1"># Exited (0)</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>docker<span class="w"> </span>rename<span class="w"> </span>prueba<span class="w"> </span>prueba-vieja
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>docker<span class="w"> </span>inspect<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Id}}'</span><span class="w"> </span>prueba-vieja<span class="w">   </span><span class="c1"># 64 caracteres</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>docker<span class="w"> </span>rm<span class="w"> </span>prueba-vieja
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>reloj<span class="w"> </span>busybox<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'while true; do date; sleep 1; done'</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="nb">time</span><span class="w"> </span>docker<span class="w"> </span>stop<span class="w"> </span>reloj<span class="w">                     </span><span class="c1"># ¿cuánto tarda?</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>--filter<span class="w"> </span><span class="nv">name</span><span class="o">=</span>reloj<span class="w">           </span><span class="c1"># ¿con qué código ha salido?</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>docker<span class="w"> </span>rm<span class="w"> </span>reloj
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Qué dos acciones hace <code>docker run</code>? ¿Qué comando hace solo la primera?</li>
+<li>¿En qué estado queda un contenedor recién creado con <code>docker create</code>? ¿Tiene algún proceso en marcha?</li>
+<li>Escribe tres formas distintas de referirte al mismo contenedor en <code>docker stop</code>.</li>
+<li>¿Por qué un contenedor puede tardar 10 segundos en pararse? ¿Qué significa <code>Exited (137)</code>?</li>
+<li>Sales de <code>docker run -it ubuntu bash</code> con <code>exit</code>. ¿Qué le pasa al contenedor y por qué? ¿Cómo vuelves a entrar?</li>
+</ol>
+</div>
+<h2 id="bloque-10-mirar-y-trabajar-dentro-de-un-contenedor">Bloque 10. Mirar y trabajar dentro de un contenedor<a class="headerlink" href="#bloque-10-mirar-y-trabajar-dentro-de-un-contenedor" title="Permanent link">&para;</a></h2>
+<p>Un contenedor en marcha no es una caja negra. En este bloque aprenderás a leer su configuración y su estado, a ejecutar órdenes dentro, a engancharte a su proceso principal, a copiar archivos y a leer sus registros con precisión.</p>
+<p>Para los ejemplos de este bloque usamos el Nginx llamado web que creaste en la 8.3. Compruébalo con <code>docker ps -a --filter name=web</code>: si aparece parado, arráncalo con <code>docker start web</code>; si no aparece, créalo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>web<span class="w"> </span>-p<span class="w"> </span><span class="m">1200</span>:80<span class="w"> </span>nginx
+</code></pre></div>
+<h3 id="101-docker-inspect-toda-la-ficha-del-contenedor">10.1 <code>docker inspect</code>: toda la ficha del contenedor<a class="headerlink" href="#101-docker-inspect-toda-la-ficha-del-contenedor" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>docker<span class="w"> </span>inspect<span class="w"> </span>&lt;contenedor&gt;
+</code></pre></div>
+<p>Devuelve, en formato <strong>JSON</strong>, todo lo que Docker sabe de un contenedor: el ID completo, el estado, la imagen, el comando, la configuración de red y de puertos, el almacenamiento, la política de reinicio… Es la herramienta principal para <strong>depurar</strong>: cuando algo no funciona, aquí está la verdad sobre cómo se creó el contenedor.</p>
+<p>La salida completa ocupa cientos de líneas. Para quedarte solo con lo que te interesa se usa <code>--format</code> (o <code>-f</code>) con una <strong>plantilla</strong> de Go: entre llaves dobles escribes la ruta del dato, empezando por un punto.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>docker<span class="w"> </span>inspect<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.State.Status}}'</span><span class="w"> </span>web
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{.Name}} {{.State.Status}} {{.State.StartedAt}}'</span><span class="w"> </span>web
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Quieres saber…</th>
+<th>Plantilla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estado (<code>created</code>, <code>running</code>, <code>exited</code>)</td>
+<td><code>{{.State.Status}}</code></td>
+</tr>
+<tr>
+<td>Código de salida</td>
+<td><code>{{.State.ExitCode}}</code></td>
+</tr>
+<tr>
+<td>Cuándo arrancó por última vez</td>
+<td><code>{{.State.StartedAt}}</code></td>
+</tr>
+<tr>
+<td>ID completo</td>
+<td><code>{{.Id}}</code></td>
+</tr>
+<tr>
+<td>Imagen con la que se creó</td>
+<td><code>{{.Config.Image}}</code></td>
+</tr>
+<tr>
+<td>Comando que ejecuta</td>
+<td><code>{{json .Config.Cmd}}</code></td>
+</tr>
+<tr>
+<td>Variables de entorno</td>
+<td><code>{{json .Config.Env}}</code></td>
+</tr>
+<tr>
+<td>Política de reinicio</td>
+<td><code>{{.HostConfig.RestartPolicy.Name}}</code></td>
+</tr>
+<tr>
+<td>Puertos publicados</td>
+<td><code>{{json .HostConfig.PortBindings}}</code></td>
+</tr>
+<tr>
+<td>IP en la red por defecto</td>
+<td><code>{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}</code></td>
+</tr>
+<tr>
+<td>Archivo de registros</td>
+<td><code>{{.LogPath}}</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>JSON</strong>: formato de texto para datos estructurados con pares <code>"clave": valor</code>, que se pueden anidar. <code>.State.Status</code> se lee «dentro de <code>State</code>, el campo <code>Status</code>». El prefijo <code>json</code> delante de un dato (<code>{{json .Config.Env}}</code>) lo imprime como JSON, útil para listas.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Las mayúsculas cuentan: <code>{{.state.status}}</code> da error. Copia la ruta tal como aparece en la salida completa de <code>docker inspect</code>. Un truco: <code>docker inspect web | less</code> y busca con <code>/</code> el campo que quieres.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>¿Qué IP tiene ahora mismo el contenedor <code>web</code>?
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'</span><span class="w"> </span>web
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="m">172</span>.17.0.2
+</code></pre></div>
+Si el contenedor está parado, la respuesta sale <strong>vacía</strong>: un contenedor detenido no tiene IP. Al arrancarlo, Docker le da una libre, que puede no ser la misma de antes.</p>
+</div>
+<h4 id="lo-que-trae-la-imagen-entrypoint-cmd-y-compania">Lo que trae la imagen: <code>Entrypoint</code>, <code>Cmd</code> y compañía<a class="headerlink" href="#lo-que-trae-la-imagen-entrypoint-cmd-y-compania" title="Permanent link">&para;</a></h4>
+<p>La sección <code>Config</code> de la ficha recoge cómo está pensada la imagen, más lo que añadiste al crear el contenedor (por ejemplo, las variables de <code>-e</code>). Estos campos te lo cuentan sin tener que buscar cómo se construyó la imagen:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Plantilla</th>
+<th>Qué te dice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Entrypoint</code></td>
+<td><code>{{json .Config.Entrypoint}}</code></td>
+<td>El programa que se ejecuta <strong>siempre</strong> al arrancar</td>
+</tr>
+<tr>
+<td><code>Cmd</code></td>
+<td><code>{{json .Config.Cmd}}</code></td>
+<td>La orden por defecto o, si hay <code>Entrypoint</code>, sus argumentos por defecto</td>
+</tr>
+<tr>
+<td><code>ExposedPorts</code></td>
+<td><code>{{json .Config.ExposedPorts}}</code></td>
+<td>Los puertos en los que la imagen <strong>dice</strong> que escucha</td>
+</tr>
+<tr>
+<td><code>User</code></td>
+<td><code>{{.Config.User}}</code></td>
+<td>El usuario del proceso principal; vacío significa <code>root</code></td>
+</tr>
+<tr>
+<td><code>WorkingDir</code></td>
+<td><code>{{.Config.WorkingDir}}</code></td>
+<td>La carpeta de trabajo del proceso; vacío significa <code>/</code></td>
+</tr>
+<tr>
+<td><code>Volumes</code></td>
+<td><code>{{json .Config.Volumes}}</code></td>
+<td>Las carpetas que la imagen declara para guardar datos</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><code>Entrypoint</code> y <code>Cmd</code></strong>: juntos forman la orden que arranca el proceso principal. Si la imagen tiene <code>Entrypoint</code>, ese programa se ejecuta siempre y <code>Cmd</code> son los argumentos que recibe por defecto. Si <code>Entrypoint</code> es <code>null</code>, <code>Cmd</code> es la orden entera. Lo que escribes detrás del nombre de la imagen en <code>docker run</code> <strong>sustituye a <code>Cmd</code></strong>, no al <code>Entrypoint</code>.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p><code>ubuntu:24.04</code> no tiene <code>Entrypoint</code> y su <code>Cmd</code> es <code>["/bin/bash"]</code>: por eso <code>docker run -it ubuntu:24.04</code> abre <code>bash</code>. Con <code>docker run --rm ubuntu:24.04 ls /</code>, <code>ls /</code> sustituye a <code>bash</code>: el contenedor lista la raíz y termina.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>ExposedPorts</code> solo <strong>documenta</strong> en qué puerto escucha la aplicación: no publica nada. Si creas el contenedor sin <code>-p</code>, desde fuera no se llega aunque el puerto aparezca ahí. Lo que está publicado de verdad lo muestra <code>docker port</code> (apartado 11.1).</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Si una carpeta aparece en <code>Volumes</code>, sus datos no van a la capa de escritura: al crear el contenedor, Docker monta ahí un <strong>volumen anónimo</strong>, uno nuevo para cada contenedor. Si borras el contenedor y creas otro igual, el nuevo no ve lo que guardó el anterior. Los volúmenes se trabajan en la unidad de almacenamiento.</p>
+</div>
+<h4 id="cuantas-veces-lo-ha-reiniciado-docker-restartcount">Cuántas veces lo ha reiniciado Docker: <code>RestartCount</code><a class="headerlink" href="#cuantas-veces-lo-ha-reiniciado-docker-restartcount" title="Permanent link">&para;</a></h4>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><code>RestartCount</code></strong> (<code>{{.RestartCount}}</code>, fuera de <code>State</code>): número de veces que <strong>Docker</strong> ha vuelto a arrancar el contenedor por su política de reinicio (<code>--restart</code>, UT1). Los reinicios que haces tú con <code>docker restart</code>, o con <code>docker stop</code> y <code>docker start</code>, <strong>no</strong> lo suben.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Para saber si un contenedor ha arrancado a mano o lo ha levantado su política, mira dos datos juntos: <code>docker inspect -f '{{.State.StartedAt}} {{.RestartCount}}' web</code>. <code>StartedAt</code> cambia con cualquier arranque; <code>RestartCount</code> solo con los automáticos. Un contenedor con <code>--restart always</code> cuyo proceso termina una y otra vez aparece en <code>docker ps</code> como <code>Restarting</code> y su <code>RestartCount</code> va subiendo.</p>
+</div>
+<p>Referencia: <a href="https://docs.docker.com/reference/cli/docker/inspect/">https://docs.docker.com/reference/cli/docker/inspect/</a>.</p>
+<h3 id="102-docker-exec-ejecutar-una-orden-dentro">10.2 <code>docker exec</code>: ejecutar una orden dentro<a class="headerlink" href="#102-docker-exec-ejecutar-una-orden-dentro" title="Permanent link">&para;</a></h3>
+<p><code>docker exec</code> ejecuta un <strong>proceso nuevo</strong> dentro de un contenedor <strong>en marcha</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="o">[</span>OPCIONES<span class="o">]</span><span class="w"> </span>&lt;contenedor&gt;<span class="w"> </span>COMANDO<span class="w"> </span><span class="o">[</span>ARGUMENTOS...<span class="o">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Ejemplo</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker exec web ls /usr/share/nginx/html</code></td>
+<td>Ejecuta <code>ls</code> dentro y te muestra la salida</td>
+</tr>
+<tr>
+<td><code>docker exec -it web bash</code></td>
+<td>Abre una terminal interactiva dentro del contenedor</td>
+</tr>
+<tr>
+<td><code>docker exec -d web touch /tmp/prueba</code></td>
+<td>Lanza la orden en segundo plano y te devuelve la terminal al momento</td>
+</tr>
+<tr>
+<td><code>docker exec -it -e VAR1=1 web bash</code></td>
+<td>Abre una terminal en la que existe la variable <code>VAR1=1</code> (compruébalo con <code>echo $VAR1</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>No todas las imágenes traen <code>bash</code>. Las muy ligeras (<code>busybox</code>, <code>alpine</code>) solo tienen <code>sh</code>. Si <code>docker exec -it web bash</code> responde <code>executable file not found in $PATH</code>, prueba <code>docker exec -it web sh</code>.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>La variable de <code>docker exec -e</code> solo existe <strong>en ese proceso nuevo</strong>. El proceso principal no la ve, y un segundo <code>docker exec</code> sin <code>-e</code> tampoco. Para que todo el contenedor tenga una variable hay que ponerla al crearlo (<code>docker run -e</code>, UT1).</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p><code>docker exec</code> solo funciona con el contenedor <strong>en marcha</strong>. Con uno parado responde <code>container … is not running</code>: primero <code>docker start</code>.</p>
+</div>
+<p>Cuando sales de un <code>docker exec -it … bash</code> con <code>exit</code>, termina <strong>ese</strong> <code>bash</code>, no el contenedor: el proceso principal sigue como si nada. Referencia: <a href="https://docs.docker.com/reference/cli/docker/container/exec/">https://docs.docker.com/reference/cli/docker/container/exec/</a>.</p>
+<h4 id="ordenes-con-o-sh-c">Órdenes con <code>&gt;</code>, <code>|</code>, <code>&amp;&amp;</code> o <code>$( )</code>: <code>sh -c</code><a class="headerlink" href="#ordenes-con-o-sh-c" title="Permanent link">&para;</a></h4>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>En <code>docker exec web echo hola &gt; /tmp/a.txt</code>, el <code>&gt;</code> <strong>no</strong> llega al contenedor: lo interpreta antes la shell de la VM, que intenta crear <code>/tmp/a.txt</code> en la VM con lo que escriba <code>docker exec</code>. Para que la redirección (<code>&gt;</code>, <code>&gt;&gt;</code>), las tuberías (<code>|</code>), <code>&amp;&amp;</code> o <code>$( )</code> se hagan <strong>dentro</strong>, pasa la orden entera entre comillas simples a una shell del contenedor: <code>docker exec web sh -c 'echo hola &gt; /tmp/a.txt'</code>. Lo volverás a usar en el apartado 11.3.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p><code>$(orden)</code> es la <strong>sustitución de órdenes</strong> de la shell: se cambia por lo que escribe esa orden. <code>docker exec web sh -c 'echo "Creado: $(date)" &gt; /tmp/hora.txt'</code> ejecuta <code>date</code> una sola vez, al lanzar el <code>exec</code>, y guarda el texto ya hecho: el archivo conserva esa hora aunque lo leas más tarde. Con comillas simples, el <code>$(date)</code> lo resuelve la shell del contenedor; con comillas dobles lo resolvería antes la de la VM.</p>
+</div>
+<h4 id="instalar-un-programa-dentro-apt-get">Instalar un programa dentro: <code>apt-get</code><a class="headerlink" href="#instalar-un-programa-dentro-apt-get" title="Permanent link">&para;</a></h4>
+<p>Las imágenes de Debian y Ubuntu traen lo justo: <code>ubuntu:24.04</code> no trae <code>curl</code>, <code>ping</code> ni <code>nano</code>. Se instalan con <code>apt-get</code> como en cualquier Ubuntu, con dos diferencias: dentro ya eres <code>root</code> (no hace falta <code>sudo</code>) y la imagen viene sin la lista de paquetes, así que primero hay que hacer <code>apt-get update</code>. La opción <code>-y</code> contesta «sí» a la confirmación:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-dit<span class="w"> </span>--name<span class="w"> </span>caja<span class="w"> </span>ubuntu:24.04
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>caja<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'apt-get update &amp;&amp; apt-get install -y curl'</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>caja<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>-I<span class="w"> </span>https://www.docker.com
+</code></pre></div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Lo que instalas va a la <strong>capa de escritura</strong> de ese contenedor: se conserva con <code>stop</code> y <code>start</code>, pero un contenedor nuevo de la misma imagen sale sin ello. Instalar a mano dentro sirve para probar o depurar; en un servicio real, el programa tiene que venir ya en la imagen (unidad de gestión de imágenes). Hace falta Internet en la VM.</p>
+</div>
+<h3 id="103-docker-attach-frente-a-docker-exec">10.3 <code>docker attach</code> frente a <code>docker exec</code><a class="headerlink" href="#103-docker-attach-frente-a-docker-exec" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker<span class="w"> </span>attach<span class="w"> </span>&lt;contenedor&gt;
+</code></pre></div>
+<p><code>docker attach</code> conecta tu terminal a la entrada y la salida del <strong>proceso principal</strong> de un contenedor en marcha. No crea nada nuevo: te engancha al proceso que ya existe.</p>
+<figure><img src="imagenes/UT2-diagrama-exec-attach.png" alt="attach se engancha al proceso principal; exec crea un proceso nuevo"><figcaption>attach se engancha al proceso principal; exec crea un proceso nuevo</figcaption></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>docker attach</code></th>
+<th><code>docker exec</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Con qué proceso trabajas</td>
+<td>El <strong>principal</strong> (PID 1), el que ya existe</td>
+<td>Uno <strong>nuevo</strong>, que crea el propio comando</td>
+</tr>
+<tr>
+<td>Puedes elegir el comando</td>
+<td>No</td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>Al pulsar Ctrl + C</td>
+<td>La señal llega al proceso principal: <strong>normalmente el contenedor se para</strong></td>
+<td>Termina solo el proceso nuevo</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td>Ver la salida de un proceso en primer plano o hablar con un programa interactivo</td>
+<td>Revisar, depurar, administrar</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Un contenedor que escribe la hora cada segundo:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-dit<span class="w"> </span>--name<span class="w"> </span>muchotexto<span class="w"> </span>busybox<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'while true; do date; sleep 1; done'</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>docker<span class="w"> </span>attach<span class="w"> </span>muchotexto
+</code></pre></div>
+Al engancharte verás aparecer una fecha por segundo: es la salida del proceso principal. El bucle es <code>while true; do date; sleep 1; done</code>: <code>date</code> escribe la fecha y <code>sleep 1</code> espera un segundo.</p>
+</div>
+<h3 id="104-soltarse-sin-parar-ctrl-p-ctrl-q">10.4 Soltarse sin parar: Ctrl + P, Ctrl + Q<a class="headerlink" href="#104-soltarse-sin-parar-ctrl-p-ctrl-q" title="Permanent link">&para;</a></h3>
+<p>Para salir de un <code>attach</code> <strong>sin parar</strong> el contenedor existe la secuencia de desenganche (<em>detach keys</em>): <strong>Ctrl + P y, sin soltar Ctrl, Q</strong>. Pero solo funciona en un caso:</p>
+<table>
+<thead>
+<tr>
+<th>El contenedor se creó con…</th>
+<th>Ctrl + P, Ctrl + Q en un <code>attach</code></th>
+<th>Ctrl + C en un <code>attach</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-it</code> (o <code>-dit</code>)</td>
+<td>Te sueltas; el contenedor <strong>sigue</strong></td>
+<td>Le llega al proceso principal; el contenedor <strong>se para</strong></td>
+</tr>
+<tr>
+<td>Sin <code>-it</code> (solo <code>-d</code>)</td>
+<td><strong>No hace nada</strong>: no hay terminal que reciba las teclas</td>
+<td>Le llega al proceso principal; el contenedor <strong>se para</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Por eso el ejemplo de <code>muchotexto</code> usa <code>-dit</code> y no solo <code>-d</code>. Con un Nginx lanzado con <code>-d</code>, como los de la UT1, no hay forma limpia de soltarse de un <code>attach</code>: si lo que quieres es <strong>mirar</strong>, usa <code>docker logs -f</code>, y si quieres <strong>trabajar dentro</strong>, <code>docker exec</code>.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Lo mismo vale para <code>docker start -ai miubuntu</code> y <code>docker run -it ubuntu bash</code>: Ctrl + P, Ctrl + Q te devuelve a la VM y deja el <code>bash</code> del contenedor esperando. <code>docker ps</code> lo mostrará <code>Up</code>.</p>
+</div>
+<p>Referencia: <a href="https://docs.docker.com/reference/cli/docker/container/attach/">https://docs.docker.com/reference/cli/docker/container/attach/</a>.</p>
+<h3 id="105-docker-cp-copiar-entre-el-anfitrion-y-un-contenedor">10.5 <code>docker cp</code>: copiar entre el anfitrión y un contenedor<a class="headerlink" href="#105-docker-cp-copiar-entre-el-anfitrion-y-un-contenedor" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker<span class="w"> </span>cp<span class="w"> </span>ORIGEN<span class="w"> </span>DESTINO
+</code></pre></div>
+<p>Uno de los dos lados es una ruta del anfitrión y el otro, una ruta del contenedor escrita como <code>contenedor:/ruta</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker<span class="w"> </span>cp<span class="w"> </span>web:/tmp/prueba<span class="w"> </span>./<span class="w">               </span><span class="c1"># del contenedor al directorio actual de la VM</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>docker<span class="w"> </span>cp<span class="w"> </span>./miFichero<span class="w"> </span>web:/tmp<span class="w">             </span><span class="c1"># de la VM al /tmp del contenedor</span>
+</code></pre></div>
+<figure><img src="imagenes/UT2-diagrama-cp.png" alt="docker cp en los dos sentidos"><figcaption>docker cp en los dos sentidos</figcaption></figure>
+
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Tres detalles que suelen sorprender:
+1. <code>docker cp</code> <strong>funciona con el contenedor parado</strong>: copia de y hacia su capa de escritura. Es una forma de rescatar un archivo de un contenedor que no arranca.
+2. No se puede copiar <strong>directamente entre dos contenedores</strong>: hay que hacerlo en dos pasos, pasando por el anfitrión.
+3. Copia también carpetas enteras, con todo su contenido.</p>
+</div>
+<p>Referencia: <a href="https://docs.docker.com/reference/cli/docker/container/cp/">https://docs.docker.com/reference/cli/docker/container/cp/</a>.</p>
+<h3 id="106-docker-logs-a-fondo">10.6 <code>docker logs</code> a fondo<a class="headerlink" href="#106-docker-logs-a-fondo" title="Permanent link">&para;</a></h3>
+<p>En la UT1 usaste <code>docker logs</code> y <code>docker logs -f</code>. Con muchos registros (<em>logs</em>) hace falta filtrar:</p>
+<table>
+<thead>
+<tr>
+<th>Opción</th>
+<th>Qué muestra</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-n N</code> (<code>--tail</code>)</td>
+<td>Solo las <strong>últimas N líneas</strong></td>
+<td><code>docker logs -n 10 web</code></td>
+</tr>
+<tr>
+<td><code>--since</code></td>
+<td>Lo escrito <strong>desde</strong> un momento</td>
+<td><code>docker logs --since 5m web</code></td>
+</tr>
+<tr>
+<td><code>--until</code></td>
+<td>Lo escrito <strong>hasta</strong> un momento</td>
+<td><code>docker logs --until 2s web</code></td>
+</tr>
+<tr>
+<td><code>-t</code></td>
+<td>Añade a cada línea la marca de tiempo de Docker</td>
+<td><code>docker logs -t -n 3 web</code></td>
+</tr>
+<tr>
+<td><code>-f</code></td>
+<td>Sigue en tiempo real (UT1)</td>
+<td><code>docker logs -f -n 0 web</code></td>
+</tr>
+</tbody>
+</table>
+<p>El momento se puede escribir de forma <strong>relativa</strong> (<code>30s</code>, <code>5m</code>, <code>2h</code>) o <strong>absoluta</strong> (<code>2026-11-10T09:30:00</code>). Las opciones se combinan: <code>docker logs --since 10m --until 5m web</code> muestra lo que pasó entre hace diez minutos y hace cinco.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Las duraciones relativas cuentan <strong>hacia atrás desde ahora</strong>. <code>--until 2s</code> no significa «durante dos segundos»: significa «hasta hace dos segundos». <code>docker logs -f --until 2s muchotexto</code> muestra el historial hasta hace dos segundos y <strong>termina</strong>; no se queda siguiendo nada. Para seguir en tiempo real un rato y que pare solo, <code>--until</code> necesita un momento <strong>futuro</strong> en formato absoluto.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p><code>docker logs -f -n 0 web</code> es muy práctico: no muestra el historial (cero líneas) y se queda esperando solo lo nuevo. Recarga la página en el navegador y verás aparecer únicamente tu petición.</p>
+</div>
+<p>Referencia: <a href="https://docs.docker.com/reference/cli/docker/container/logs/">https://docs.docker.com/reference/cli/docker/container/logs/</a>.</p>
+<h3 id="107-direcciones-ip-y-nombres-en-la-red-por-defecto">10.7 Direcciones IP y nombres en la red por defecto<a class="headerlink" href="#107-direcciones-ip-y-nombres-en-la-red-por-defecto" title="Permanent link">&para;</a></h3>
+<p>Si no indicas otra cosa, cada contenedor se conecta a la <strong>red por defecto</strong> de Docker, llamada <code>bridge</code>. En ella, cada contenedor en marcha recibe una dirección IP privada, normalmente del rango <code>172.17.0.0/16</code>: la <code>172.17.0.1</code> es la de la VM y los contenedores reciben otras (<code>172.17.0.2</code>, <code>172.17.0.3</code>…). La VM y los demás contenedores de esa red llegan a un contenedor por su IP. Ya sabes sacarla con <code>inspect</code> (apartado 10.1).</p>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong>Red <code>bridge</code> por defecto</strong>: red privada que Docker crea al instalarse y a la que conecta todo contenedor nuevo si no se indica otra. En ella los contenedores se comunican entre sí <strong>solo por su dirección IP</strong>.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>La IP <strong>no es fija</strong>. Un contenedor parado no tiene IP y, al arrancarlo, Docker le da una dirección libre de la red. Si mientras estaba parado otro contenedor ha ocupado su dirección antigua, recibirá otra distinta. Cualquier configuración que apunte a la IP de un contenedor puede dejar de funcionar después de un <code>stop</code> y un <code>start</code>.</p>
+</div>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><code>/etc/hosts</code></strong>: archivo que asocia nombres con direcciones IP; el sistema lo consulta antes de preguntar a un servidor DNS. Docker escribe el de cada contenedor al arrancarlo, y en la red por defecto solo trae <code>localhost</code> y el propio contenedor (con su nombre de máquina, que es su ID corto), <strong>no</strong> a los demás contenedores.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Con dos contenedores en marcha, <code>uno</code> y <code>dos</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker exec dos cat /etc/hosts
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>127.0.0.1       localhost
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>…
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>172.17.0.3      5f0c2b1e9a7d
+</code></pre></div>
+No hay ninguna línea para <code>uno</code>, así que desde <code>dos</code> el nombre <code>uno</code> no se resuelve: hay que usar su IP.</p>
+</div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>En las <strong>redes definidas por el usuario</strong> los contenedores sí se encuentran por su nombre. Las verás más adelante en el módulo; en esta UT todo va en la red por defecto.</p>
+</div>
+<p>Referencia: <a href="https://docs.docker.com/engine/network/drivers/bridge/">https://docs.docker.com/engine/network/drivers/bridge/</a>.</p>
+<h3 id="miralo-en-tu-maquina_2">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_2" title="Permanent link">&para;</a></h3>
+<p>Abre <strong>dos</strong> terminales SSH a <code>cont-vm</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Terminal 1</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-dit<span class="w"> </span>--name<span class="w"> </span>muchotexto<span class="w"> </span>busybox<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'while true; do date; sleep 1; done'</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>docker<span class="w"> </span>inspect<span class="w"> </span>-f<span class="w"> </span><span class="s1">'{{.State.Status}} {{.State.StartedAt}}'</span><span class="w"> </span>muchotexto
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>docker<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span><span class="w"> </span>muchotexto
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>docker<span class="w"> </span>logs<span class="w"> </span>--since<span class="w"> </span>5s<span class="w"> </span>muchotexto
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>docker<span class="w"> </span>attach<span class="w"> </span>muchotexto<span class="w">           </span><span class="c1"># ves la hora; suéltate con Ctrl+P, Ctrl+Q</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>muchotexto<span class="w"> </span>sh<span class="w">      </span><span class="c1"># dentro: ps   (¿qué es el PID 1?)  y luego exit</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="c1"># Terminal 2, mientras tanto</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>docker<span class="w"> </span>ps<span class="w">                          </span><span class="c1"># muchotexto sigue Up</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="c1"># Terminal 1 otra vez</span>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>docker<span class="w"> </span>cp<span class="w"> </span>muchotexto:/etc/hostname<span class="w"> </span>.
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>cat<span class="w"> </span>hostname<span class="w">                       </span><span class="c1"># ¿te suena ese texto?</span>
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>muchotexto
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Qué plantilla de <code>--format</code> usarías para saber si un contenedor está en marcha? ¿Y la imagen con la que se creó?</li>
+<li>¿Por qué <code>docker exec -it web bash</code> puede fallar en un contenedor y <code>docker exec -it web sh</code> no?</li>
+<li>Explica con tus palabras la diferencia entre <code>attach</code> y <code>exec</code>. ¿Con cuál es peligroso pulsar Ctrl + C?</li>
+<li>¿En qué caso funciona Ctrl + P, Ctrl + Q?</li>
+<li>¿Qué muestra <code>docker logs --until 2s web</code>? ¿Y <code>docker logs --since 2m web</code>?</li>
+<li>¿Qué relación hay entre <code>Entrypoint</code> y <code>Cmd</code>? ¿Qué cuenta <code>RestartCount</code>?</li>
+<li>¿Por qué <code>docker exec web echo hola &gt; /tmp/a.txt</code> no crea el archivo dentro del contenedor?</li>
+<li>Paras un contenedor y arrancas otro. ¿Tendrá el primero la misma IP cuando vuelva a arrancar? ¿Puede el segundo llegar a él por su nombre?</li>
+</ol>
+</div>
+<h2 id="bloque-11-caso-practico-un-servidor-web-que-se-toca-en-caliente">Bloque 11. Caso práctico: un servidor web que se toca en caliente<a class="headerlink" href="#bloque-11-caso-practico-un-servidor-web-que-se-toca-en-caliente" title="Permanent link">&para;</a></h2>
+<p>Toca juntar todo en un caso real: un servidor web en segundo plano, accesible desde fuera, al que le cambias la página y le miras los registros sin pararlo nunca.</p>
+<h3 id="111-un-nginx-en-segundo-plano-y-su-puerto">11.1 Un Nginx en segundo plano y su puerto<a class="headerlink" href="#111-un-nginx-en-segundo-plano-y-su-puerto" title="Permanent link">&para;</a></h3>
+<p>Si todavía tienes el <code>web</code> de la 8.3 y del bloque 10, puedes reutilizarlo y saltarte este <code>docker run</code>. Si prefieres empezar de cero, bórralo antes con <code>docker rm -f web</code>: dos contenedores no pueden llamarse igual ni publicar el mismo puerto 1200.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>web<span class="w"> </span>-p<span class="w"> </span><span class="m">1200</span>:80<span class="w"> </span>nginx
+</code></pre></div>
+<p>Ya conoces todas las piezas de la UT1: <code>-d</code> lo deja en segundo plano y solo muestra el ID; <code>-p 1200:80</code> publica el 80 del contenedor en el 1200 del anfitrión. Desde la VM, <code>curl http://localhost:1200</code> devuelve la página de bienvenida de Nginx (y desde el navegador de Windows, si VirtualBox reenvía ese puerto, como en la UT1). La documentación de la imagen está en <a href="https://hub.docker.com/_/nginx">https://hub.docker.com/_/nginx</a>.</p>
+<h4 id="puertos-aleatorios-y-docker-port">Puertos aleatorios y <code>docker port</code><a class="headerlink" href="#puertos-aleatorios-y-docker-port" title="Permanent link">&para;</a></h4>
+<p>Si en <code>-p</code> escribes <strong>solo el puerto del contenedor</strong>, Docker elige por ti un puerto libre del anfitrión:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>web-azar<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span><span class="w"> </span>nginx
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>docker<span class="w"> </span>port<span class="w"> </span>web-azar
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="m">80</span>/tcp<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">0</span>.0.0.0:32768
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="m">80</span>/tcp<span class="w"> </span>-&gt;<span class="w"> </span><span class="o">[</span>::<span class="o">]</span>:32768
+</code></pre></div>
+<div class="admonition definicion">
+<p class="admonition-title">Definición</p>
+<p><strong><code>docker port</code></strong>: muestra los puertos publicados de un contenedor, con el formato <code>puerto_contenedor -&gt; IP:puerto_anfitrión</code>. Con <code>docker port web-azar 80</code> te dice solo a qué puerto del anfitrión va el 80. Lo mismo aparece en la columna <code>PORTS</code> de <code>docker ps</code>.</p>
+</div>
+<div class="admonition ejemplo">
+<p class="admonition-title">Ejemplo</p>
+<p>Con dos contenedores lanzados así, cada uno recibe un puerto distinto (32768, 32769…). Sirve cuando te da igual el número porque lo va a averiguar otro programa, o cuando quieres evitar choques; para un servicio al que entra gente, lo normal es fijarlo.</p>
+</div>
+<h3 id="112-los-puertos-se-fijan-al-crear">11.2 Los puertos se fijan al crear<a class="headerlink" href="#112-los-puertos-se-fijan-al-crear" title="Permanent link">&para;</a></h3>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Los puertos publicados forman parte de la configuración del contenedor y <strong>solo se pueden indicar al crearlo</strong> (<code>docker run</code> o <code>docker create</code>). No existe un <code>docker start -p</code> ni un comando para añadir un puerto a un contenedor que ya existe. Si te has equivocado, hay que borrarlo y crear otro. Si el contenido importaba, primero rescátalo con <code>docker cp</code>.</p>
+</div>
+<h3 id="113-cambiar-la-pagina-sin-recrear-el-contenedor">11.3 Cambiar la página sin recrear el contenedor<a class="headerlink" href="#113-cambiar-la-pagina-sin-recrear-el-contenedor" title="Permanent link">&para;</a></h3>
+<p>Según la documentación de la imagen, Nginx sirve las páginas desde <code>/usr/share/nginx/html</code>. La portada es <code>index.html</code>. Para cambiarla con el contenedor <strong>en marcha</strong> tienes dos caminos.</p>
+<p><strong>Opción 1: copiar desde el anfitrión con <code>docker cp</code>.</strong> Preparas el archivo en la VM y lo copias encima:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'&lt;h1&gt;Hola mundo desde Docker&lt;/h1&gt;'</span><span class="w"> </span>&gt;<span class="w"> </span>nuevo_index.html
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>docker<span class="w"> </span>cp<span class="w"> </span>nuevo_index.html<span class="w"> </span>web:/usr/share/nginx/html/index.html
+</code></pre></div>
+<p><strong>Opción 2: editar dentro con <code>docker exec</code>.</strong> Puedes escribir el archivo directamente con una orden:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>web<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo "&lt;h1&gt;Editado desde dentro&lt;/h1&gt;" &gt; /usr/share/nginx/html/index.html'</span>
+</code></pre></div>
+<p>o abrir una terminal e instalar un editor, porque la imagen no trae ninguno:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>web<span class="w"> </span>bash
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nano
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>nano<span class="w"> </span>/usr/share/nginx/html/index.html
+</code></pre></div>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>En la opción 2, <code>sh -c '…'</code> hace falta porque la redirección <code>&gt;</code> la tiene que interpretar un <em>shell</em> <strong>dentro</strong> del contenedor. Si escribes <code>docker exec web echo hola &gt; /usr/share/nginx/html/index.html</code>, la redirección la hace el <em>shell</em> de tu VM y Docker intenta escribir en esa ruta <strong>de la VM</strong>.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>docker cp</code></th>
+<th><code>docker exec</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dónde editas</td>
+<td>En la VM, con tus herramientas</td>
+<td>Dentro del contenedor</td>
+</tr>
+<tr>
+<td>Necesita el contenedor en marcha</td>
+<td>No</td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>Deja rastro en la imagen</td>
+<td>No: va a la capa de escritura</td>
+<td>No: va a la capa de escritura</td>
+</tr>
+<tr>
+<td>Si instalas <code>nano</code></td>
+<td>No aplica</td>
+<td>También va a la capa de escritura; se pierde con <code>docker rm</code></td>
+</tr>
+</tbody>
+</table>
+<p>Tras cualquiera de las dos, recarga <code>http://localhost:1200</code> (o haz <code>curl</code>) y verás la página nueva: <strong>no ha hecho falta reiniciar Nginx</strong>, porque sirve el archivo tal como está en disco en cada petición.</p>
+<div class="admonition ojo">
+<p class="admonition-title">Ojo</p>
+<p>Esto es perfecto para practicar y para un arreglo urgente, pero no es como se publica una web de verdad: el cambio vive en la capa de escritura y desaparece con <code>docker rm</code>. La forma correcta (un volumen o una imagen propia) llega en las próximas unidades.</p>
+</div>
+<h3 id="114-comprobar-con-los-registros">11.4 Comprobar con los registros<a class="headerlink" href="#114-comprobar-con-los-registros" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>web<span class="w">     </span><span class="c1"># las diez últimas peticiones</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>docker<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>web<span class="w">        </span><span class="c1"># en tiempo real mientras navegas</span>
+</code></pre></div>
+<p>Cada visita deja una línea con la IP de origen, la fecha, la petición (<code>GET / HTTP/1.1</code>) y el código de respuesta: <code>200</code> si ha servido la página, <code>304</code> si el navegador ya la tenía y no ha cambiado, <code>404</code> si la página no existe.</p>
+<h3 id="115-variables-de-entorno-en-un-contenedor-interactivo">11.5 Variables de entorno en un contenedor interactivo<a class="headerlink" href="#115-variables-de-entorno-en-un-contenedor-interactivo" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-e<span class="w"> </span><span class="nv">MENSAJE</span><span class="o">=</span>HOLA<span class="w"> </span>ubuntu<span class="w"> </span>bash
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$MENSAJE</span><span class="w">        </span><span class="c1"># dentro del contenedor → HOLA</span>
+</code></pre></div>
+<p><code>-e</code> (UT1) fija la variable al <strong>crear</strong> el contenedor, así que la ven el proceso principal y cualquier <code>docker exec</code> posterior. Compáralo con <code>docker exec -e</code> (apartado 10.2), que solo la da a un proceso concreto. Para comprobar qué variables tiene un contenedor sin entrar: <code>docker inspect -f '{{json .Config.Env}}' &lt;contenedor&gt;</code>.</p>
+<h3 id="miralo-en-tu-maquina_3">Míralo en tu máquina<a class="headerlink" href="#miralo-en-tu-maquina_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>web<span class="w">                             </span><span class="c1"># por si queda el de antes</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>web<span class="w"> </span>-p<span class="w"> </span><span class="m">1200</span>:80<span class="w"> </span>nginx
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>web-azar<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span><span class="w"> </span>nginx
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>docker<span class="w"> </span>port<span class="w"> </span>web-azar<span class="w">                         </span><span class="c1"># ¿qué puerto le ha tocado?</span>
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:1200<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-4<span class="w">             </span><span class="c1"># bienvenida de Nginx</span>
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>web<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo "&lt;h1&gt;Hola&lt;/h1&gt;" &gt; /usr/share/nginx/html/index.html'</span>
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:1200<span class="w">                       </span><span class="c1"># &lt;h1&gt;Hola&lt;/h1&gt;</span>
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>docker<span class="w"> </span>diff<span class="w"> </span>web<span class="w">                              </span><span class="c1"># C .../index.html</span>
+<a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>docker<span class="w"> </span>restart<span class="w"> </span>web<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>localhost:1200<span class="w"> </span><span class="c1"># ¿sigue tu página?</span>
+<a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>docker<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span><span class="w"> </span>web
+<a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>web<span class="w"> </span>web-azar
+</code></pre></div>
+<div class="admonition comprueba">
+<p class="admonition-title">Comprueba</p>
+<ol>
+<li>¿Qué hace <code>-p 80</code>, sin puerto del anfitrión? ¿Cómo averiguas qué puerto se ha usado?</li>
+<li>Has creado un Nginx sin <code>-p</code>. ¿Puedes publicar ahora el puerto 80 sin borrar el contenedor?</li>
+<li>Escribe dos formas de cambiar el <code>index.html</code> de un Nginx en marcha.</li>
+<li>¿Por qué hace falta <code>sh -c</code> en <code>docker exec web sh -c 'echo hola &gt; /ruta'</code>?</li>
+<li>Cambias la portada, haces <code>docker restart web</code> y luego <code>docker rm -f web</code> y lo vuelves a crear. ¿En qué momento se pierde tu cambio?</li>
+</ol>
+</div>
+<h2 id="glosario">Glosario<a class="headerlink" href="#glosario" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Término</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>docker attach</code></strong></td>
+<td>Conecta tu terminal a la entrada y salida del proceso principal de un contenedor en marcha</td>
+</tr>
+<tr>
+<td><strong><code>docker cp</code></strong></td>
+<td>Copia archivos o carpetas entre el anfitrión y un contenedor, en los dos sentidos; funciona con el contenedor parado</td>
+</tr>
+<tr>
+<td><strong><code>docker create</code></strong></td>
+<td>Crea un contenedor sin arrancarlo; queda en estado <code>Created</code></td>
+</tr>
+<tr>
+<td><strong><code>docker exec</code></strong></td>
+<td>Ejecuta un proceso nuevo dentro de un contenedor en marcha</td>
+</tr>
+<tr>
+<td><strong><code>docker info</code></strong></td>
+<td>Muestra el estado y la configuración del demonio, incluido el controlador de almacenamiento y el directorio raíz</td>
+</tr>
+<tr>
+<td><strong><code>docker inspect</code></strong></td>
+<td>Muestra en JSON toda la configuración y el estado de un contenedor; con <code>--format</code>, solo los datos elegidos</td>
+</tr>
+<tr>
+<td><strong><code>docker port</code></strong></td>
+<td>Muestra a qué puertos del anfitrión están publicados los puertos de un contenedor</td>
+</tr>
+<tr>
+<td><strong><code>docker rename</code></strong></td>
+<td>Cambia el nombre de un contenedor, en marcha o parado</td>
+</tr>
+<tr>
+<td><strong><code>docker start</code> / <code>stop</code> / <code>restart</code></strong></td>
+<td>Arranca, para o reinicia un contenedor que ya existe</td>
+</tr>
+<tr>
+<td><strong><code>apt-get</code></strong></td>
+<td>Instalador de paquetes de Debian y Ubuntu; dentro de un contenedor lo instalado va a su capa de escritura</td>
+</tr>
+<tr>
+<td><strong>Capa</strong></td>
+<td>Cada nivel de solo lectura de una imagen; guarda las diferencias respecto al de debajo</td>
+</tr>
+<tr>
+<td><strong>Capa de escritura</strong></td>
+<td>Capa de lectura y escritura propia de cada contenedor; se conserva al parar y se borra con <code>docker rm</code></td>
+</tr>
+<tr>
+<td><strong>Comando por defecto</strong></td>
+<td>Proceso que ejecuta un contenedor si no se indica otro al crearlo</td>
+</tr>
+<tr>
+<td><strong>Contenedor</strong></td>
+<td>Instancia de una imagen, con su propia capa de escritura y su ciclo de vida</td>
+</tr>
+<tr>
+<td><strong>Controlador de almacenamiento</strong></td>
+<td>Componente que apila las capas y las presenta como un único sistema de archivos (<code>overlay2</code>, <code>overlayfs</code>)</td>
+</tr>
+<tr>
+<td><strong>Docker Hub</strong></td>
+<td>Registro público que Docker usa por defecto</td>
+</tr>
+<tr>
+<td><strong><code>Entrypoint</code> / <code>Cmd</code></strong></td>
+<td>Programa que se ejecuta siempre al arrancar / orden o argumentos por defecto; lo escrito tras la imagen en <code>docker run</code> sustituye a <code>Cmd</code></td>
+</tr>
+<tr>
+<td><strong>Etiqueta</strong></td>
+<td>Nombre de una versión de una imagen (<code>ubuntu:24.04</code>); por defecto, <code>latest</code></td>
+</tr>
+<tr>
+<td><strong>ID del contenedor</strong></td>
+<td>Identificador único de 64 caracteres; se suele usar el corto, de 12</td>
+</tr>
+<tr>
+<td><strong>Imagen</strong></td>
+<td>Plantilla de solo lectura, formada por capas, a partir de la que se crean contenedores</td>
+</tr>
+<tr>
+<td><strong>Imagen base</strong></td>
+<td>Imagen de la que parte otra imagen y sobre la que se añaden capas</td>
+</tr>
+<tr>
+<td><strong><code>/etc/hosts</code></strong></td>
+<td>Archivo que asocia nombres e IP; en la red por defecto no incluye a los otros contenedores</td>
+</tr>
+<tr>
+<td><strong>JSON</strong></td>
+<td>Formato de texto con pares clave-valor anidados; es el de la salida de <code>docker inspect</code></td>
+</tr>
+<tr>
+<td><strong>Parada ordenada</strong></td>
+<td><code>SIGTERM</code>, espera (10 s por defecto) y <code>SIGKILL</code> si el proceso no ha terminado</td>
+</tr>
+<tr>
+<td><strong>Proceso principal</strong></td>
+<td>El primer proceso del contenedor (PID 1); cuando termina, el contenedor se detiene</td>
+</tr>
+<tr>
+<td><strong>Pseudoterminal</strong></td>
+<td>Terminal simulada que Docker asigna con <code>-t</code></td>
+</tr>
+<tr>
+<td><strong>Red <code>bridge</code> por defecto</strong></td>
+<td>Red a la que Docker conecta los contenedores si no se indica otra; en ella se comunican solo por IP</td>
+</tr>
+<tr>
+<td><strong>Registro</strong></td>
+<td>Servicio que almacena y distribuye imágenes; puede ser público o privado</td>
+</tr>
+<tr>
+<td><strong><code>RestartCount</code></strong></td>
+<td>Reinicios automáticos hechos por la política <code>--restart</code>; los manuales no cuentan</td>
+</tr>
+<tr>
+<td><strong>Secuencia de desenganche</strong></td>
+<td>Ctrl + P, Ctrl + Q: suelta un <code>attach</code> sin parar el contenedor, si se creó con <code>-it</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="mapa-resumen">Mapa resumen<a class="headerlink" href="#mapa-resumen" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>IMAGEN (solo lectura, por capas)
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>   │  nombre: [registro/]repositorio[:etiqueta]
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>   │          nginx = docker.io/library/nginx:latest
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>   │  registro por defecto: Docker Hub; Apache oficial = httpd
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>   │  dónde vive (docker info):
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>   │     overlay2  → /var/lib/docker
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>   │     overlayfs → /var/lib/containerd (Engine 29, instalación nueva)
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>   ▼ create
+<a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a>CONTENEDOR = capas de la imagen + capa de escritura propia
+<a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>   │
+<a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a>CICLO DE VIDA
+<a id="__codelineno-34-12" name="__codelineno-34-12" href="#__codelineno-34-12"></a>   create ─► Created ─start─► Up ─stop─► Exited ─rm─► (borrado)
+<a id="__codelineno-34-13" name="__codelineno-34-13" href="#__codelineno-34-13"></a>   run = create + start          restart = stop + start
+<a id="__codelineno-34-14" name="__codelineno-34-14" href="#__codelineno-34-14"></a>   stop = SIGTERM … 10 s … SIGKILL (Exited 137)
+<a id="__codelineno-34-15" name="__codelineno-34-15" href="#__codelineno-34-15"></a>   stop/start: la capa de escritura se CONSERVA; rm: se PIERDE
+<a id="__codelineno-34-16" name="__codelineno-34-16" href="#__codelineno-34-16"></a>   ID de 64 caracteres (12 en ps, o un prefijo único)
+<a id="__codelineno-34-17" name="__codelineno-34-17" href="#__codelineno-34-17"></a>   nombre único; rename en marcha o parado
+<a id="__codelineno-34-18" name="__codelineno-34-18" href="#__codelineno-34-18"></a>   │
+<a id="__codelineno-34-19" name="__codelineno-34-19" href="#__codelineno-34-19"></a>INTERACTIVOS
+<a id="__codelineno-34-20" name="__codelineno-34-20" href="#__codelineno-34-20"></a>   run -it ubuntu bash             exit para el contenedor
+<a id="__codelineno-34-21" name="__codelineno-34-21" href="#__codelineno-34-21"></a>   start -ai &lt;c&gt;                   volver a entrar
+<a id="__codelineno-34-22" name="__codelineno-34-22" href="#__codelineno-34-22"></a>   run -it --rm ubuntu:24.04 bash  usar y tirar, versión fija
+<a id="__codelineno-34-23" name="__codelineno-34-23" href="#__codelineno-34-23"></a>   │
+<a id="__codelineno-34-24" name="__codelineno-34-24" href="#__codelineno-34-24"></a>MIRAR Y TRABAJAR DENTRO
+<a id="__codelineno-34-25" name="__codelineno-34-25" href="#__codelineno-34-25"></a>   inspect -f '{{.State.Status}}' &lt;c&gt;
+<a id="__codelineno-34-26" name="__codelineno-34-26" href="#__codelineno-34-26"></a>   inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' &lt;c&gt;
+<a id="__codelineno-34-27" name="__codelineno-34-27" href="#__codelineno-34-27"></a>   exec [-it] [-d] [-e V=x] &lt;c&gt; cmd   proceso NUEVO; exit no lo para
+<a id="__codelineno-34-28" name="__codelineno-34-28" href="#__codelineno-34-28"></a>   attach &lt;c&gt;                         proceso PRINCIPAL; Ctrl+C lo para
+<a id="__codelineno-34-29" name="__codelineno-34-29" href="#__codelineno-34-29"></a>      Ctrl+P Ctrl+Q                   soltarse, solo si se creó con -it
+<a id="__codelineno-34-30" name="__codelineno-34-30" href="#__codelineno-34-30"></a>   cp origen destino (c:/ruta)        también con el contenedor parado
+<a id="__codelineno-34-31" name="__codelineno-34-31" href="#__codelineno-34-31"></a>   logs -n N | --since T | --until T | -t
+<a id="__codelineno-34-32" name="__codelineno-34-32" href="#__codelineno-34-32"></a>      T relativo = hacia atrás desde ahora
+<a id="__codelineno-34-33" name="__codelineno-34-33" href="#__codelineno-34-33"></a>   inspect: Entrypoint (siempre) + Cmd (por defecto); ExposedPorts no publica
+<a id="__codelineno-34-34" name="__codelineno-34-34" href="#__codelineno-34-34"></a>   RestartCount = reinicios de la política, no los manuales
+<a id="__codelineno-34-35" name="__codelineno-34-35" href="#__codelineno-34-35"></a>   exec &lt;c&gt; sh -c '… &gt; … $(date)'  la redirección, dentro
+<a id="__codelineno-34-36" name="__codelineno-34-36" href="#__codelineno-34-36"></a>   red bridge por defecto: solo por IP; la IP cambia al parar y arrancar
+<a id="__codelineno-34-37" name="__codelineno-34-37" href="#__codelineno-34-37"></a>   │
+<a id="__codelineno-34-38" name="__codelineno-34-38" href="#__codelineno-34-38"></a>SERVIDOR WEB EN CALIENTE
+<a id="__codelineno-34-39" name="__codelineno-34-39" href="#__codelineno-34-39"></a>   run -d -p 1200:80 nginx
+<a id="__codelineno-34-40" name="__codelineno-34-40" href="#__codelineno-34-40"></a>   -p 80 → puerto aleatorio → docker port &lt;c&gt;
+<a id="__codelineno-34-41" name="__codelineno-34-41" href="#__codelineno-34-41"></a>   los puertos solo se fijan al crear
+<a id="__codelineno-34-42" name="__codelineno-34-42" href="#__codelineno-34-42"></a>   index.html en /usr/share/nginx/html → docker cp o exec sh -c '…'
+</code></pre></div>
+<h2 id="autoevaluacion">Autoevaluación<a class="headerlink" href="#autoevaluacion" title="Permanent link">&para;</a></h2>
+<h3 id="preguntas-cortas">Preguntas cortas<a class="headerlink" href="#preguntas-cortas" title="Permanent link">&para;</a></h3>
+<ol>
+<li>¿Qué diferencia hay entre una imagen y un contenedor?</li>
+<li>¿Dónde se guardan los cambios que haces dentro de un contenedor?</li>
+<li>¿Qué comando muestra el controlador de almacenamiento de Docker?</li>
+<li>¿Qué es Docker Hub?</li>
+<li>¿Qué etiqueta usa Docker si no indicas ninguna?</li>
+<li>¿Qué diferencia hay entre <code>docker run</code> y <code>docker create</code>?</li>
+<li>¿Cuántos caracteres tiene el ID de un contenedor? ¿Cuántos muestra <code>docker ps</code>?</li>
+<li>¿Qué hace <code>docker start -ai</code>?</li>
+<li>¿Qué plantilla de <code>docker inspect</code> muestra el estado de un contenedor?</li>
+<li>¿Qué hace <code>docker port</code>?</li>
+</ol>
+<h3 id="tipo-test">Tipo test<a class="headerlink" href="#tipo-test" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Un contenedor parado con <code>docker stop</code> y vuelto a arrancar con <code>docker start</code>…
+   a) Pierde los archivos creados dentro  b) Conserva los archivos creados dentro  c) Vuelve a descargar la imagen  d) Cambia de ID</li>
+<li>¿Cuál es la imagen oficial del servidor Apache?
+   a) <code>apache2</code>  b) <code>apache</code>  c) <code>httpd</code>  d) <code>lamp</code></li>
+<li>En <code>docker exec -it web bash</code>, al escribir <code>exit</code>…
+   a) Se para el contenedor  b) Se borra el contenedor  c) Termina el <code>bash</code> de <code>exec</code> y el contenedor sigue  d) Se reinicia el contenedor</li>
+<li>Ctrl + P, Ctrl + Q en un <code>docker attach</code> suelta tu terminal sin parar el contenedor…
+   a) Siempre  b) Solo si el contenedor se creó con <code>-it</code>  c) Solo con imágenes de Ubuntu  d) Nunca</li>
+<li><code>docker logs --until 30s web</code> muestra…
+   a) Los registros de los próximos 30 segundos  b) Los registros hasta hace 30 segundos  c) Las últimas 30 líneas  d) Los registros de los últimos 30 segundos</li>
+<li>¿Cuál de estos comandos funciona con el contenedor <strong>parado</strong>?
+   a) <code>docker exec web ls</code>  b) <code>docker attach web</code>  c) <code>docker cp web:/etc/hostname .</code>  d) Ninguno</li>
+</ol>
+<h3 id="razona">Razona<a class="headerlink" href="#razona" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Un compañero ha entrado en un contenedor con <code>docker run -it ubuntu bash</code>, ha creado una carpeta <code>/proyecto</code>, ha salido con <code>exit</code> y luego ha vuelto a escribir <code>docker run -it ubuntu bash</code>. Dice que «Docker le ha borrado la carpeta». Explica qué ha pasado y cómo debería haber vuelto a entrar.</li>
+<li>Lanzas <code>docker run -d --name web -p 80 nginx</code>. Tu compañera abre <code>http://localhost:80</code> y no ve nada. Explica por qué y cómo averiguas la dirección correcta.</li>
+<li>Te enganchas con <code>docker attach</code> a un Nginx creado con <code>-d</code> para ver sus peticiones. Al pulsar Ctrl + C, la web deja de funcionar. ¿Qué ha pasado? ¿Por qué no sirve Ctrl + P, Ctrl + Q? ¿Qué tendrías que haber usado?</li>
+</ol>
+<h2 id="soluciones">Soluciones<a class="headerlink" href="#soluciones" title="Permanent link">&para;</a></h2>
+<h3 id="preguntas-cortas_1">Preguntas cortas<a class="headerlink" href="#preguntas-cortas_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>La imagen es una plantilla de solo lectura formada por capas; el contenedor es una instancia de esa imagen, con su propia capa de escritura y su propio ciclo de vida. De una imagen salen muchos contenedores.</li>
+<li>En la capa de escritura de ese contenedor. La imagen no cambia.</li>
+<li><code>docker info</code> (línea <code>Storage Driver</code>).</li>
+<li>El registro público que Docker usa por defecto para buscar y descargar imágenes.</li>
+<li><code>latest</code>.</li>
+<li><code>docker run</code> crea el contenedor y lo arranca; <code>docker create</code> solo lo crea, y queda en estado <code>Created</code> hasta que haces <code>docker start</code>.</li>
+<li>64 caracteres; <code>docker ps</code> muestra los 12 primeros.</li>
+<li>Arranca un contenedor existente y conecta tu terminal a su entrada (<code>-i</code>) y a su salida (<code>-a</code>). Sirve para volver a entrar en un contenedor interactivo detenido.</li>
+<li><code>docker inspect -f '{{.State.Status}}' &lt;contenedor&gt;</code>.</li>
+<li>Muestra a qué puerto e IP del anfitrión está publicado cada puerto del contenedor.</li>
+</ol>
+<h3 id="tipo-test_1">Tipo test<a class="headerlink" href="#tipo-test_1" title="Permanent link">&para;</a></h3>
+<p>1: <strong>b</strong>; 2: <strong>c</strong>; 3: <strong>c</strong>; 4: <strong>b</strong>; 5: <strong>b</strong>; 6: <strong>c</strong></p>
+<h3 id="razona_1">Razona<a class="headerlink" href="#razona_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>No se ha borrado nada. Cada <code>docker run</code> crea un contenedor <strong>nuevo</strong>, con su capa de escritura vacía. La carpeta <code>/proyecto</code> sigue en la capa de escritura del primer contenedor, que está parado (<code>Exited</code>) porque al salir de <code>bash</code> terminó su proceso principal. Con <code>docker ps -a</code> lo localiza y con <code>docker start -ai &lt;nombre o ID&gt;</code> vuelve a entrar y encuentra su carpeta.</li>
+<li><code>-p 80</code> solo indica el puerto del contenedor: Docker publica el 80 del contenedor en un puerto <strong>aleatorio</strong> libre del anfitrión, no en el 80. Con <code>docker port web</code> (o en la columna <code>PORTS</code> de <code>docker ps</code>) se ve cuál ha tocado, por ejemplo <code>0.0.0.0:32768</code>, y la dirección correcta es <code>http://localhost:32768</code>.</li>
+<li><code>docker attach</code> te engancha al proceso principal, así que Ctrl + C le llega a Nginx, que termina, y el contenedor se para. Ctrl + P, Ctrl + Q no funciona porque el contenedor se creó sin <code>-it</code>: no hay terminal que reciba esa secuencia. Para ver las peticiones tendría que haber usado <code>docker logs -f web</code>; Ctrl + C ahí solo corta el <code>logs</code>. Ahora hay que volver a arrancarlo con <code>docker start web</code>.</li>
+</ol>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../UT1-dosier/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: UT1. Introducción a los contenedores y a Docker">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                UT1. Introducción a los contenedores y a Docker
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../UT3-dosier/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: UT3. Gestión de imágenes">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                UT3. Gestión de imágenes
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Dustin Randel de Lara García, Sant Josep Obrer. Material docente del módulo IB1107.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
