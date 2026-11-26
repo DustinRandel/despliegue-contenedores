@@ -3,6 +3,7 @@ nav:
     - UT1. Introducción a los contenedores y a Docker: UT1-dosier.md
     - UT2. Principales acciones con Docker: UT2-dosier.md
     - UT3. Gestión de imágenes: UT3-dosier.md
+    - UT4. Redes y volúmenes: UT4-dosier.md
 
 # Cómo funciona este fichero:
 #   - Define el menú lateral. Si una página .md no aparece aquí, NO se ve en el menú.
